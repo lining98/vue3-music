@@ -1,0 +1,114 @@
+$whiteColor: #fff;
+$greyColor: #f9fafb;
+$greenColor: #f9fafb;
+$padding-10: 10px;
+$padding-20: 20px;
+
+html,
+body {
+  font-family: "Helvetica Neue", Helvetica, "PingFang sC", "Hiragino Sans GB",
+    "Microsoft YaHei" ， "微软雅黑" ，Arial, sans-serif;
+}
+/*先删除默认的内外边距*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body,
+input,
+button,
+a,
+textarea,
+select {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, "PingFang sC", "Hiragino Sans GB",
+    "Microsoft YaHei" ， "微软雅黑" ，Arial, sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: #333;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+a:hover {
+  filter: alpha(opacity=90);
+}
+
+/* 文本对齐 */
+.tc {
+  text-align: center;
+}
+.tr {
+  text-align: right;
+}
+.tl {
+  text-align-last: left;
+}
+
+#app,
+.content {
+  color: #333;
+  width: 100%;
+  height: 10vh;
+}
+
+.module {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  .module-left {
+    width: 200px;
+    background: $greyColor;
+    .module-menu {
+      .title {
+        margin: $padding-20 0;
+      }
+      .menus {
+        & > a {
+          display: block;
+          padding: 0 $padding-20;
+        }
+      }
+      .active {
+        background: $greenColor;
+        color: $whiteColor;
+        border-radius: 5px;
+      }
+    }
+  }
+  .module-main {
+    flex: 1;
+    width: 100%;
+    background: $whiteColor;
+  }
+}
+
+// 轮播
+.swiper {
+  .swiper-slide {
+    @media (min-width:1024px) {
+      width: 25%;
+    }
+    @media (min-width:768px) {
+      width: 50%;
+    }
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+  }
+  .banner-image{
+    max-width:100%;
+    height: auto;
+  }
+}
