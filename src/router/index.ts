@@ -4,27 +4,27 @@ const routes = [
     {
         path:'/',
         name:'home',
-        component:()=>import('../views/Root.vue'),
+        component:()=>import('@/views/Root.vue'),
         children:[
             {
                 path:'discover',
                 name:'discover',
-                component:()=>import('../views/discover/index.vue')
+                component:()=>import('@/views/discover/index.vue')
             },
             {
                 path:'music',
                 name:'music',
-                component:()=>import('../views/music/index.vue')
+                component:()=>import('@/views/music/index.vue')
             },
             {
                 path:'video',
                 name:'video',
-                component:()=>import('../views/video/index.vue')
+                component:()=>import('@/views/video/index.vue')
             },
             {
                 path:'dj',
                 name:'dj',
-                component:()=>import('../views/dj/index.vue')
+                component:()=>import('@/views/dj/index.vue')
             }
         ]
     }
@@ -32,6 +32,7 @@ const routes = [
 
 const router = createRouter({
     history:createWebHashHistory(),
+    linkActiveClass:'active',
     routes
 })
 

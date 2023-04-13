@@ -1,15 +1,10 @@
-<script setup lang='ts'>
-import {ref} from 'vue'
+<script setup lang="ts">
+import MenuList from "./menuList.vue";
 
-const msg = ref('menu')
 </script>
 
-
 <template>
-    <h1>{{msg}}</h1>
+  <MenuList />
 </template>
 
-
-<style lang='' scoped>
-
-</style>
+<style lang="" scoped></style>
