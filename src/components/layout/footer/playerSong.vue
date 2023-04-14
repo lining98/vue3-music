@@ -10,8 +10,17 @@ const { song, songUrl } = toRefs(usePlayerStore());
   <div class="player-song">
     <!-- {{ song }} -->
     <img alt="" :src="song?.picUrl || defaultImg" />
-    <span>{{ song.name || "云音乐 - 作者" }}</span>
+    <span class="title">{{ song.name || "云音乐 - 作者" }}</span>
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.player-song{
+  img{
+    width: 50px;
+  }
+  .title{
+    font-size: 14px;
+  }
+}
+</style>
