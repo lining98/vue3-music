@@ -7,6 +7,10 @@ const routes = [
         component:()=>import('@/views/Root.vue'),
         children:[
             {
+                path:'/',
+                redirect:'/discover'
+            },
+            {
                 path:'discover',
                 name:'discover',
                 component:()=>import('@/views/discover/index.vue')

@@ -7,11 +7,18 @@ export const usePlayerStore = defineStore({
   id: "player",
   state: () => ({
     audio: new Audio(), // Audio实例化
-    isPause: false, // 是否暂停状态
 
     id: 0,
     songUrl: "",
     song: {}, // 音乐详情
+
+    isPlaying: false, //是否播放中
+    isPause: false,//是否暂停
+    sliderInput: false,//是否正在拖动进度条
+    ended: false,//是否播放结束
+    muted: false,//是否静音
+    currentTime: 0,//当前播放时间
+    duration: 0,//总播放时长
   }),
   actions: {
     async play(id: number) {

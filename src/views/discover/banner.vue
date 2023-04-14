@@ -36,7 +36,21 @@ function handle(id: number) {
 </template>
 
 <style lang="scss" scoped>
-// .banner-image {
-// height: 40px;
-// }
+// 轮播
+.swiper {
+  .swiper-slide {
+    @media (min-width: 1024px) {
+      width: 50%;
+    }
+    @media (min-width: 768px) {
+      width: 25%;
+    }
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+  }
+  .banner-image {
+    max-width: 100%;
+    height: auto;
+  }
+}
 </style>
