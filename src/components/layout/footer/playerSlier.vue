@@ -3,6 +3,7 @@
     <el-slider
       v-model="currentTime"
       :show-tooltip="false"
+      :disabled='currentTime == 0'
       :min="0"
       :max="duration"
       @change="onSliderChange"

@@ -64,6 +64,7 @@ export const usePlayerStore = defineStore({
     },
     // 获取id播放音乐
     async play(id: number) {
+      this.audio.currentTime = 0
       if (id == 0) {
         //获取不到歌曲的id
         ElMessage.error("找不到歌曲！");
@@ -183,8 +184,6 @@ export const usePlayerStore = defineStore({
 
     // 播放时间拖动中
     onSliderInput() {
-      console.log("11");
-
       this.sliderInput = true;
     },
 
