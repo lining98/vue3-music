@@ -27,6 +27,7 @@ import { ref } from "vue";
   justify-content: space-between;
   height: 100%;
   .module-left {
+    flex-shrink: 0;
     width: 220px;
     background: #f9fafb;
     padding-top: 30px;
@@ -64,13 +65,16 @@ import { ref } from "vue";
     flex: 1;
     width: 100%;
     background: #fff;
-    // position: relative;
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
+    justify-content: space-between;
     .main {
-      padding-top: 56px;
-      margin: 0 auto;
+      h1{
+        font-size: 30px;
+        margin-bottom: 10px;
+      }
+      padding: 20px 50px 0;
+      // margin: 0 auto;
       flex: 1;
     }
   }

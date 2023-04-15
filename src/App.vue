@@ -1,13 +1,16 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
 <div class="content">
   <router-view></router-view>
 </div>
 </template>
 
-<style scoped>
+<script setup lang="ts">
+import {userPlayerInit} from '@/store/player'
+import{toRefs} from 'vue'
+import {useHostStore} from "@/store/host"
+import Host from "@/Host.vue";
 
-</style>
+userPlayerInit();
+
+const {isInit} = toRefs(useHostStore())
+</script>

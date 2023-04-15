@@ -39,18 +39,34 @@ function handle(id: number) {
 // 轮播
 .swiper {
   .swiper-slide {
+    overflow: hidden;
+    border-radius: 5px;
+    // height: 140px;
+    @media (min-width: 768px) {
+      width: 100%;
+    }
     @media (min-width: 1024px) {
       width: 50%;
     }
-    @media (min-width: 768px) {
+    @media (min-width: 1280px) {
+      width: 33.33%;
+    }
+    @media (min-width: 1536px) {
       width: 25%;
     }
+    box-sizing: border-box;
     padding-left: 0.625rem;
     padding-right: 0.625rem;
   }
   .banner-image {
     max-width: 100%;
     height: auto;
+    border-radius: 5px;
+    transition: all 0.3s;
+  }
+  .banner-image:hover {
+    // transform: scale(1.05);
+    opacity: 0.8;
   }
 }
 </style>

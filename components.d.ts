@@ -9,15 +9,16 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    ElButton: typeof import('element-plus/es')['ElButton']
+    ElCol: typeof import('element-plus/es')['ElCol']
+    ElRow: typeof import('element-plus/es')['ElRow']
     ElSlider: typeof import('element-plus/es')['ElSlider']
-    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     Footer: typeof import('./src/components/layout/footer/Footer.vue')['default']
     Header: typeof import('./src/components/layout/header/Header.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconPark: typeof import('./src/components/common/iconPark.vue')['default']
     Menu: typeof import('./src/components/layout/menu/Menu.vue')['default']
     MenuList: typeof import('./src/components/layout/menu/menuList.vue')['default']
+    PlayerAction: typeof import('./src/components/layout/footer/playerAction.vue')['default']
     PlayerController: typeof import('./src/components/layout/footer/playerController.vue')['default']
     PlayerSlier: typeof import('./src/components/layout/footer/playerSlier.vue')['default']
     PlayerSong: typeof import('./src/components/layout/footer/playerSong.vue')['default']

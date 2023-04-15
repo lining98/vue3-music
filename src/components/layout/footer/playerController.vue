@@ -26,6 +26,7 @@ const { isPause, togglePlay } = toRefs(usePlayerStore());
       :icon="isPause ? PauseOne : Play"
       size="45"
       theme="filled"
+      fill='#39c6ad'
       class="player-btn"
       @click="togglePlay"
     />
@@ -34,4 +35,11 @@ const { isPause, togglePlay } = toRefs(usePlayerStore());
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.player-controller{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>

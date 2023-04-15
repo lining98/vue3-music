@@ -1,15 +1,11 @@
 <template>
   <div class="music-player">
-    <div class="player-l">
-      <PlayerSong />
-    </div>
+    <PlayerSong />
     <div class="player-m">
+      <PlayerController />
       <PlayerSlier />
-      <!-- <PlayerController /> -->
     </div>
-    <div class="player-r">
-      11
-    </div>
+    <PlayerAction />
   </div>
 </template>
 
@@ -17,18 +13,25 @@
 import PlayerSong from "./playerSong.vue";
 import PlayerController from "./playerController.vue";
 import PlayerSlier from "./playerSlier.vue";
+import PlayerAction from "./playerAction.vue";
 </script>
 
 <style lang="scss">
 .music-player {
   width: 100%;
+  height: 70px;
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
-  border-top: 1px solid #000;
-  .player-m{
+  .player-m {
     flex: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>

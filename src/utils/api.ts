@@ -22,5 +22,5 @@ export async function getSongDetail(id: number) {
   const { songs } = await http.get<{ songs: ISongDetail }>("/song/detail", {
     ids: id,
   });
-  return songs[0].al;
+  return songs[0];
 }
