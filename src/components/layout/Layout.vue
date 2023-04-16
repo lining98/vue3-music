@@ -12,10 +12,11 @@ import { ref } from "vue";
     </div>
     <div class="module-main">
       <Header />
-      <div class="main">
-        <router-view />
-      </div>
-
+      <ElScrollbar>
+        <div class="main">
+          <router-view />
+        </div>
+      </ElScrollbar>
       <Footer />
     </div>
   </div>
@@ -67,13 +68,12 @@ import { ref } from "vue";
     background: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     .main {
-      h1{
+      h1 {
         font-size: 30px;
         margin-bottom: 10px;
       }
-      padding: 20px 50px 0;
+      // padding: 20px 50px 0;
       // margin: 0 auto;
       flex: 1;
     }

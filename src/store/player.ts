@@ -64,21 +64,19 @@ export const usePlayerStore = defineStore({
     },
     // 获取id播放音乐
     async play(id: number) {
-      this.audio.currentTime = 0
-      if (id == 0) {
-        //获取不到歌曲的id
-        ElMessage.error("找不到歌曲！");
-        return;
-      }
+      if (id == this.id) return;
       const data = await getSongUrl(id);
 
       this.audio.src = data.url;
       if (!data.url) {
+        this.currentTime = 0
         ElMessage.error("找不到歌曲地址！");
         this.song = {} as ISongDetail;
         this.author = "";
         return;
       }
+      console.log('play');
+
       this.audio.play().then(() => {
         this.isPause = true;
         this.songUrl = data;
