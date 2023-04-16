@@ -1,0 +1,26 @@
+import http from "@/utils/http";
+import { IUserProfile } from "@/models/user";
+
+/* 登录 */
+// 手机号密码登录
+// export async function useLogin() {
+//     const { banners } = await http.get<{ banners: IBanner }>("/banner", {
+//       type: 0,
+//     });
+//     return banners;
+//   }
+
+// 邮箱密码登录
+export async function useLoginEmail(email: string, password: string) {
+  const data = await http.get<{ data: IUserProfile }>("/login", {
+    email: email,
+    password: password,
+  });
+  return data;
+}
+
+// 登录状态
+export async function useLoginStatus() {
+  const data = await http.get<{ data: IUserProfile }>("/login/status");
+  return data;
+}
