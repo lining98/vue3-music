@@ -24,3 +24,9 @@ export async function useLoginStatus() {
   const data = await http.get<{ data: IUserProfile }>("/login/status");
   return data;
 }
+
+
+// 退出登录 getLogout
+export async function getLogout() {
+    return await http.get("/logout");
+  }

@@ -1,18 +1,20 @@
 <template>
   <div class="login">
-    {{userInfo}}
-    <ElAvatar size="default" round :src="profile?.avatarUrl ?? ''"></ElAvatar>
+    <el-dropdown style="" v-if="isLogin">
+      <span class="el-dropdown-link" @click="userLogin">
+        <ElAvatar
+          size="default"
+          round
+          :src="profile?.avatarUrl ?? ''"
+        ></ElAvatar>
 
-    <el-dropdown v-if="isLogin">
-      <span class="el-dropdown-link">
-        <span class="user">{{ profile.nickname }}</span>
-        <!-- <el-icon class="el-icon--right">
-          <arrow-down />
-        </el-icon> -->
+        <span class="user" style="margin-left: 5px; font-size: 15px">{{
+          profile.nickname
+        }}</span>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item @click="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -89,11 +91,12 @@
 import { ref, reactive, onMounted } from "vue";
 import type { TabsPaneContext } from "element-plus";
 import { useUserStore } from "@/store/user";
-import { useLoginEmail, useLoginStatus } from "@/api/login";
+import { useLoginEmail, getLogout } from "@/api/login";
 import { storeToRefs } from "pinia";
+import {useRouter} from "vue-router";
+const router = useRouter()
 
 const activeName = ref("phone");
-// const dialogVisible = ref(false);
 const iSpassword = ref(true);
 
 const formLabelAlign = reactive({
@@ -111,14 +114,25 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 
 const { login } = useUserStore();
 const { isLogin, profile, showLogin } = storeToRefs(useUserStore());
-// profile =  localStorage.getItem("USER-PROFILE")
 const handleLogin = async () => {
   login(formEmail.email, formEmail.password);
 };
 
-onMounted(()=>{
-    const userInfo = localStorage.getItem("USER");
-})
+const logout = () => {
+  getLogout().then(res => {
+    console.log(res)
+  })
+  localStorage.clear();
+  router.go(0)
+}
+
+function getUser() {
+  profile.value = JSON.parse(localStorage.getItem("USER"));
+}
+
+onMounted(() => {
+  getUser();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -126,6 +140,11 @@ onMounted(()=>{
   font-size: 14px;
   display: flex;
   align-items: center;
+  .el-dropdown-link{
+    display: flex;
+    align-items: center;
+    outline:none;
+  }
   .user {
     margin-left: 10px;
   }

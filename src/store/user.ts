@@ -39,7 +39,7 @@ export const useUserStore = defineStore("user", {
         };
         localStorage.setItem("USER-TOKEN", this.token);
         localStorage.setItem("USER-COOKIE", this.cookie);
-        localStorage.setItem("USER", userInfo);
+        localStorage.setItem("USER", JSON.stringify(userInfo));
         // this.checkLogin()
 
         this.showLogin = false;
