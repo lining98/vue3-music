@@ -15,11 +15,11 @@
         class="icon-button"
       />
     </div>
-    <div class="main">
-      <div class="search">
+    <div class="search">
+      <div >
         <SearchPop />
       </div>
-      <div class="user">
+      <div>
         <UserInfo />
       </div>
     </div>
@@ -60,7 +60,7 @@ const { showSearchView, searchKeyword } = storeToRefs(useSearchStore());
     top: 50%;
     transform: translateY(-40%);
   }
-  .main {
+  .search {
     height: 100%;
     display: flex;
     justify-content: space-between;

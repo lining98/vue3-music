@@ -20,10 +20,7 @@ export const useUserStore = defineStore("user", {
   actions: {
     async login(email: string, password: string) {
       const res = await useLoginEmail(email, password);
-      console.log(res);
       if (res.code == 200) {
-        console.log(1);
-
         ElMessage.success("登录成功!");
         this.token = res.token;
         this.cookie = res.cookie;
@@ -44,8 +41,6 @@ export const useUserStore = defineStore("user", {
 
         this.showLogin = false;
       } else {
-        console.log(2);
-
         ElMessage.error(res.message);
       }
     },

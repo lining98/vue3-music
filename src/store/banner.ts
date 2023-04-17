@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { IBanner } from "@/models/banner";
-import { getBanner } from "@/utils/api";
+import { getBanner } from "@/api/api";
 
 export const useBannerStore = defineStore("banner", () => {
   const banners = ref<IBanner[]>([]);

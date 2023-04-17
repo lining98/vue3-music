@@ -50,7 +50,7 @@ import { Search } from "@icon-park/vue-next";
 import { storeToRefs } from "pinia";
 import type { ISearchHotDetail } from "@/models/search";
 import { useSearchStore } from "@/store/search";
-import { getSearchHotDetail } from "@/utils/api";
+import { getSearchHotDetail } from "@/api/api";
 import { debounce } from "lodash";
 const { showSearchView, searchKeyword, showHot } = toRefs(useSearchStore());
 const { suggest } = useSearchStore();

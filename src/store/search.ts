@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import {getSearchSuggest} from '@/utils/api'
+import {getSearchSuggest} from '@/api/api'
 import type {ISearchSuggest} from '@/models/search'
 
 export const useSearchStore = defineStore("search",{

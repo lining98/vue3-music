@@ -2,7 +2,7 @@ import { defineStore, storeToRefs } from "pinia";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { ISongUrl } from "@/models/songUrl";
 import { ISongDetail } from "@/models/song";
-import { getSongUrl, getSongDetail } from "@/utils/api";
+import { getSongUrl, getSongDetail } from "@/api/api";
 import { ElMessage } from "element-plus";
 
 const KEYS = {

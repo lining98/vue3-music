@@ -12,10 +12,8 @@ import { ref } from "vue";
     </div>
     <div class="module-main">
       <Header />
-      <ElScrollbar>
-        <div class="main">
-          <router-view />
-        </div>
+      <ElScrollbar class="main">
+        <router-view />
       </ElScrollbar>
       <Footer />
     </div>
@@ -69,13 +67,13 @@ import { ref } from "vue";
     display: flex;
     flex-direction: column;
     .main {
+      flex: 1;
+      // min-width: 1000px;
+      padding: 30px 50px 0;
       h1 {
         font-size: 30px;
         margin-bottom: 10px;
       }
-      // padding: 20px 50px 0;
-      // margin: 0 auto;
-      flex: 1;
     }
   }
 }

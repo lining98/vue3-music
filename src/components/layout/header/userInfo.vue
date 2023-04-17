@@ -28,9 +28,8 @@
       tab-position="left"
       v-model="activeName"
       class="demo-tabs"
-      @tab-click="handleClick"
     >
-      <el-tab-pane label="手机号" name="phone">
+      <!-- <el-tab-pane label="手机号" name="phone">
         <el-form
           :model="formLabelAlign"
           label-position="left"
@@ -49,7 +48,7 @@
             >
             </el-input>
           </el-form-item>
-          <!-- <el-form-item v-else label="验证码">
+          <el-form-item v-else label="验证码">
             <el-input
               v-model="formLabelAlign.captcha"
               placeholder="请输入验证码"
@@ -59,19 +58,26 @@
                 <span v-else>{{ time }}秒</span>
               </template>
             </el-input>
-          </el-form-item> -->
+          </el-form-item>
         </el-form>
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane label="邮箱" name="email">
         <el-form :model="formEmail" label-position="left" label-width="60px">
           <el-form-item label="邮箱">
             <el-input
               v-model="formEmail.email"
               placeholder="请输入邮箱"
-            ></el-input>
+            >
+              <template #append>@163.com</template>
+            </el-input>
           </el-form-item>
           <el-form-item label="密码">
-            <el-input v-model="formEmail.password" placeholder="请输入密码">
+            <el-input
+              v-model="formEmail.password"
+              type="password"
+              show-password
+              placeholder="请输入密码"
+            >
             </el-input>
           </el-form-item>
         </el-form>
@@ -93,10 +99,10 @@ import type { TabsPaneContext } from "element-plus";
 import { useUserStore } from "@/store/user";
 import { useLoginEmail, getLogout } from "@/api/login";
 import { storeToRefs } from "pinia";
-import {useRouter} from "vue-router";
-const router = useRouter()
+import { useRouter } from "vue-router";
+const router = useRouter();
 
-const activeName = ref("phone");
+const activeName = ref("email");
 const iSpassword = ref(true);
 
 const formLabelAlign = reactive({
@@ -104,8 +110,8 @@ const formLabelAlign = reactive({
   password: undefined,
 });
 const formEmail = reactive({
-  email: "ln980908@163.com",
-  password: "0123Lining",
+  email: "ln980908",
+  password: "",
 });
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
@@ -119,12 +125,12 @@ const handleLogin = async () => {
 };
 
 const logout = () => {
-  getLogout().then(res => {
-    console.log(res)
-  })
+  getLogout().then((res) => {
+    console.log(res);
+  });
   localStorage.clear();
-  router.go(0)
-}
+  router.go(0);
+};
 
 function getUser() {
   profile.value = JSON.parse(localStorage.getItem("USER"));
@@ -140,10 +146,10 @@ onMounted(() => {
   font-size: 14px;
   display: flex;
   align-items: center;
-  .el-dropdown-link{
+  .el-dropdown-link {
     display: flex;
     align-items: center;
-    outline:none;
+    outline: none;
   }
   .user {
     margin-left: 10px;
