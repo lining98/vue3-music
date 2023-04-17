@@ -1,15 +1,25 @@
 import {Camera,Music,VideoOne,Fm} from '@icon-park/vue-next' // 引入字体图表
 
+interface IMenus {
+    name:string;
+    menus:IMenu[]
+}
 interface IMenu {
     name:string;
     key:string;
     icon?:any; // 可选属性
 }
 
-interface IMenus {
-    name:string;
-    menus:IMenu[]
-}
+// interface IMyMenus{
+//     name:string,
+//     menus:IMyMenu[]
+// }
+// interface IMyMenu{
+//     name:string;
+//     key:string;
+//     pic:string;
+// }
+
 
 export function useMenu(){
     const menus:IMenus[] = [
@@ -38,12 +48,17 @@ export function useMenu(){
                 },
             ]
         },
-        {
-            name:'我的音乐',
-            menus:[]
-        }
     ]
+    // const myMenus:IMyMenus[] = [
+    //     {
+    //         name:'我的音乐',
+    //         menus:[
+    //             // {}
+    //         ]
+    //     }
+    // ]
     return {
-        menus
+        menus,
+        // myMenus
     }
 }

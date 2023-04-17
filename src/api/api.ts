@@ -3,6 +3,7 @@ import { IBanner } from "@/models/banner";
 import { ISongUrl } from "@/models/songUrl";
 import { ISongDetail } from "@/models/song";
 import { ISearchHotDetail, ISearchSuggest } from "@/models/search";
+import { IUserPlaylist } from "@/models/userPlaylist";
 
 // 轮播
 export async function getBanner() {
@@ -37,4 +38,12 @@ export async function getSearchSuggest(keywords:string) {
     keywords:keywords
   });
   return result;
+}
+
+// 获取用户歌单 /user/playlist?uid
+export async function getUserPlaylist(uid:number) {
+  const { playlist } = await axios.get<{ playlist: IUserPlaylist }>("/user/playlist",{
+    uid:uid
+  });
+  return playlist;
 }

@@ -7,9 +7,11 @@ import { ref } from "vue";
 
 <template>
   <div class="module">
-    <div class="module-left">
-      <Menu />
-    </div>
+    <ElScrollbar>
+      <div class="module-left">
+        <Menu />
+      </div>
+    </ElScrollbar>
     <div class="module-main">
       <Header />
       <ElScrollbar class="main">
@@ -25,10 +27,10 @@ import { ref } from "vue";
   display: flex;
   justify-content: space-between;
   height: 100%;
+  background: #f9fafb;
   .module-left {
     flex-shrink: 0;
     width: 220px;
-    background: #f9fafb;
     padding-top: 30px;
     .module-menu {
       padding: 0 20px;

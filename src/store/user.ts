@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import type { UserProfile } from "@/models/user";
 import { useLoginEmail, useLoginStatus } from "@/api/login";
-import { ElMessage } from "element-plus";
+ import { ElMessage } from "element-plus";
 
 export const useUserStore = defineStore("user", {
   state: () => {
@@ -9,7 +9,8 @@ export const useUserStore = defineStore("user", {
       token: "",
       cookie: "",
       showLogin: false,
-      profile: {} as UserProfile,
+      // profile: {} as UserProfile,
+      profile: {} ,
     };
   },
   getters: {
@@ -25,7 +26,7 @@ export const useUserStore = defineStore("user", {
         this.token = res.token;
         this.cookie = res.cookie;
         document.cookie = res.cookie;
-        console.log("res.profile", res.profile);
+        // console.log("res.profile", res.profile);
         this.profile = res.profile;
 
         const userInfo = {

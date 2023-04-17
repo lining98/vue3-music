@@ -25,8 +25,7 @@ export async function useLoginStatus() {
   return data;
 }
 
-
 // 退出登录 getLogout
 export async function getLogout() {
-    return await axios.get("/logout");
-  }
+  return await axios.get("/logout");
+}
