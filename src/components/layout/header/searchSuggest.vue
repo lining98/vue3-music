@@ -41,7 +41,7 @@ import { useSearchStore } from "@/store/search";
 import { usePlayerStore } from "@/store/player";
 import { useRouter } from "vue-router";
 
-const { suggestData, showSearchView } = storeToRefs(useSearchStore());
+const { suggestData } = storeToRefs(useSearchStore());
 
 const { play } = usePlayerStore();
 const router = useRouter();

@@ -1,7 +1,9 @@
 import { defineStore } from "pinia";
 import type { UserProfile } from "@/models/user";
+import { IUserPlaylist } from "@/models/userPlaylist";
 import { useLoginEmail, useLoginStatus } from "@/api/login";
- import { ElMessage } from "element-plus";
+import { getUserPlaylist } from "@/api/api";
+import { ElMessage } from "element-plus";
 
 export const useUserStore = defineStore("user", {
   state: () => {
@@ -10,7 +12,8 @@ export const useUserStore = defineStore("user", {
       cookie: "",
       showLogin: false,
       // profile: {} as UserProfile,
-      profile: {} ,
+      profile: {},
+      playlist: {} as IUserPlaylist,
     };
   },
   getters: {
@@ -38,8 +41,9 @@ export const useUserStore = defineStore("user", {
         localStorage.setItem("USER-TOKEN", this.token);
         localStorage.setItem("USER-COOKIE", this.cookie);
         localStorage.setItem("USER", JSON.stringify(userInfo));
-        // this.checkLogin()
+        this.getPlaylist(this.profile.userId);
 
+        // this.checkLogin()
         this.showLogin = false;
       } else {
         ElMessage.error(res.message);
@@ -52,5 +56,8 @@ export const useUserStore = defineStore("user", {
     //         this.showLogin = false
     //     }
     // }
+    async getPlaylist(userId: number) {
+      this.playlist = await getUserPlaylist(userId);
+    },
   },
 });

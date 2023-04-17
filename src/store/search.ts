@@ -1,23 +1,23 @@
-import {defineStore} from 'pinia'
-import {getSearchSuggest} from '@/api/api'
-import type {ISearchSuggest} from '@/models/search'
+import { defineStore } from "pinia";
+import { getSearchSuggest } from "@/api/api";
+import type { ISearchSuggest } from "@/models/search";
 
-export const useSearchStore = defineStore("search",{
-    state:()=>{
-        return{
-            showSearchView:false,
-            searchKeyword:'',
-            suggestData:{} as ISearchSuggest,
-        }
+export const useSearchStore = defineStore("search", {
+  state: () => {
+    return {
+      showSearchView: false,
+      searchKeyword: "",
+      suggestData: {} as ISearchSuggest,
+    };
+  },
+  getters: {
+    showHot: (state) => {
+      return state.searchKeyword == "";
     },
-    getters:{
-        showHot:state=>{
-            return state.searchKeyword == ''
-        }
+  },
+  actions: {
+    async suggest() {
+      this.suggestData = await getSearchSuggest(this.searchKeyword);
     },
-    actions:{
-        async suggest(){
-            this.suggestData = await getSearchSuggest(this.searchKeyword)
-        }
-    }
-})
+  },
+});
