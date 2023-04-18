@@ -1,9 +1,20 @@
 import axios, { type AxiosRequestConfig } from "axios";
+import { ElMessage } from "element-plus";
 
-axios.defaults.baseURL = `http://localhost:3000`;
+// axios.defaults.baseURL = "https://www.lghb.top";
+// axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = 'http://124.222.23.222:3000/';
+axios.defaults.timeout = 10 * 1000;
 
 // 请求拦截器
-axios.interceptors.request.use((config: AxiosRequestConfig | any) => config);
+axios.interceptors.request.use(
+  (config: AxiosRequestConfig | any) => {
+    return config;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 
 // 响应拦截器
 axios.interceptors.response.use(
@@ -11,6 +22,7 @@ axios.interceptors.response.use(
     return res;
   },
   (err) => {
+    ElMessage.error("network error");
     return Promise.reject(err);
   }
 );

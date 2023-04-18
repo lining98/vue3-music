@@ -100,6 +100,7 @@ import { useUserStore } from "@/store/user";
 import { useLoginEmail, getLogout } from "@/api/login";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { ElMessage } from 'element-plus';
 const router = useRouter();
 
 const activeName = ref("email");
@@ -124,12 +125,14 @@ const handleLogin = async () => {
   login(formEmail.email, formEmail.password);
 };
 
-const logout = () => {
-  getLogout().then((res) => {
-    console.log(res);
-  });
-  localStorage.clear();
-  router.go(0);
+async function logout  () {
+  const res = await getLogout()
+  if(res.code === 200){
+    ElMessage.success('已退出登录')
+    localStorage.clear();
+    router.go(0)
+    // router.push('/');
+  }
 };
 
 function getUser() {
