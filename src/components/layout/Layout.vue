@@ -30,7 +30,7 @@ import { ref } from "vue";
   background: #f9fafb;
   .module-left {
     flex-shrink: 0;
-    width: 220px;
+    width: 270px;
     padding-top: 30px;
     .module-menu {
       padding: 0 20px;

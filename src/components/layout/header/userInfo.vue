@@ -23,7 +23,7 @@
     >
   </div>
 
-  <el-dialog v-model="showLogin" title="登录" width="40%">
+  <el-dialog v-model="showLogin" title="登录" width="30%">
     <el-tabs
       tab-position="left"
       v-model="activeName"
@@ -82,7 +82,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="二维码" name="loginImg">loginImg</el-tab-pane>
+      <!-- <el-tab-pane label="二维码" name="loginImg">loginImg</el-tab-pane> -->
     </el-tabs>
     <template #footer>
       <span class="dialog-footer">

@@ -3,8 +3,8 @@
     :interval="4000"
     indicator-position="none"
     type="card"
-    height="230px"
   >
+    <!-- height="230px" -->
     <el-carousel-item
       class="carousel"
       v-for="item in banners"

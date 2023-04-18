@@ -29,21 +29,46 @@ export async function getSongDetail(id: number) {
 
 // 获取热门搜索 /search/hot/detail
 export async function getSearchHotDetail() {
-  const { data } = await axios.get<{ data: ISearchHotDetail[] }>("/search/hot/detail");
+  const { data } = await axios.get<{ data: ISearchHotDetail[] }>(
+    "/search/hot/detail"
+  );
   return data;
 }
 // 获取搜索建议 /search/suggest?keywords=xxx
-export async function getSearchSuggest(keywords:string) {
-  const { result } = await axios.get<{ result: ISearchSuggest }>("/search/suggest",{
-    keywords:keywords
-  });
+export async function getSearchSuggest(keywords: string) {
+  const { result } = await axios.get<{ result: ISearchSuggest }>(
+    "/search/suggest",
+    {
+      keywords: keywords,
+    }
+  );
   return result;
 }
 
 // 获取用户歌单 /user/playlist?uid
-export async function getUserPlaylist(uid:number) {
-  const { playlist } = await axios.get<{ playlist: IUserPlaylist }>("/user/playlist",{
-    uid:uid
-  });
+export async function getUserPlaylist(uid: number) {
+  const { playlist } = await axios.get<{ playlist: IUserPlaylist }>(
+    "/user/playlist",
+    {
+      uid: uid,
+    }
+  );
   return playlist;
 }
+
+// 获取歌单详情 /playlist/detail?id=
+export const getPlaylistDetail = (id: number) =>
+  axios.get(`/playlist/detail?id=${id}`);
+// export async function getPlaylistDetail(id:number) {
+//   const { playlist } = await axios.get("/user/playlist",{
+//     id:id
+//   });
+//   return playlist;
+// }
+
+// 获取歌单所有歌曲 /playlist/track/all?id=xxx&limit=10&offset=1
+export const getPlaylistTrackAll = (
+  id: number,
+  limit: number = 10,
+  offset: number = 1
+) => axios.get(`/playlist/track/all?id=${id}limit=${limit}offset=${offset}`);

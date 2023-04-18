@@ -11,11 +11,16 @@
   <div class="module-menu" v-if="isLogin">
     <div class="menus-title">我的音乐</div>
 
-    <el-collapse class="collapse"
-      ><!-- v-model="activeNames" -->
-      <el-collapse-item title="我的歌单" name="like">
+    <el-collapse class="collapse" v-model="activeNames"
+      >
+      <el-collapse-item title="我的歌单" name="myPlaylists">
         <ul class="list">
-          <li v-for="item in playlist" :key="item.id">
+          <li
+            v-for="item in playlist"
+            :key="item.id"
+            @click="toPlaylist(item.id)"
+            :class="item.id == playlistId?'actived':''"
+          >
             <img :src="item.coverImgUrl" alt="" />
             <div>
               <p class="name">{{ item.name }}</p>
@@ -55,12 +60,14 @@ import { IUserPlaylist } from "@/models/userPlaylist";
 
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
+import { usePlaylistDetail } from "@/store/playlistDetail";
+import router from "@/router";
 
-const activeNames = ref(["like"]);
+const activeNames = ref(["myPlaylists"]);
 const { menus } = useMenu();
 
-// const playlist = ref<IUserPlaylist[]>([]);
 
+const { playlistId } = toRefs(usePlaylistDetail());
 const { isLogin, playlist } = storeToRefs(useUserStore());
 
 const userId = JSON.parse(localStorage.getItem("USER"))?.userId || "";
@@ -68,6 +75,10 @@ const userId = JSON.parse(localStorage.getItem("USER"))?.userId || "";
 onMounted(async () => {
   playlist.value = await getUserPlaylist(userId);
 });
+
+const { toPlaylist } = usePlaylistDetail();
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -93,7 +104,7 @@ onMounted(async () => {
         display: flex;
         flex-direction: column;
         p.name {
-          width: 135px;
+          width: 185px;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
@@ -101,7 +112,10 @@ onMounted(async () => {
       }
     }
     li:hover {
-      background:#f4f2f2;
+      background: #f4f2f2;
+    }
+    .actived{
+      background-color: #e6e6e6;
     }
   }
 }

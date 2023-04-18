@@ -30,6 +30,11 @@ const routes = [
         name: "dj",
         component: () => import("@/views/dj/index.vue"),
       },
+      {
+        path: "playlist/:id",
+        name: "playlist",
+        component: () => import("@/views/playlist/index.vue"),
+      },
     ],
   },
 ];
