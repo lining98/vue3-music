@@ -26,6 +26,8 @@ declare module '@vue/runtime-core' {
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSlider: typeof import('element-plus/es')['ElSlider']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     Footer: typeof import('./src/components/layout/footer/Footer.vue')['default']

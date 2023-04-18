@@ -67,8 +67,5 @@ export const getPlaylistDetail = (id: number) =>
 // }
 
 // 获取歌单所有歌曲 /playlist/track/all?id=xxx&limit=10&offset=1
-export const getPlaylistTrackAll = (
-  id: number,
-  limit: number = 10,
-  offset: number = 1
-) => axios.get(`/playlist/track/all?id=${id}limit=${limit}offset=${offset}`);
+export const getPlaylistTrackAll = (data: any) =>
+  axios.get(`/playlist/track/all`, { ...data  });

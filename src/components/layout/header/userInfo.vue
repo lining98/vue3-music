@@ -24,11 +24,7 @@
   </div>
 
   <el-dialog v-model="showLogin" title="登录" width="30%">
-    <el-tabs
-      tab-position="left"
-      v-model="activeName"
-      class="demo-tabs"
-    >
+    <el-tabs tab-position="left" v-model="activeName" class="demo-tabs">
       <!-- <el-tab-pane label="手机号" name="phone">
         <el-form
           :model="formLabelAlign"
@@ -64,10 +60,7 @@
       <el-tab-pane label="邮箱" name="email">
         <el-form :model="formEmail" label-position="left" label-width="60px">
           <el-form-item label="邮箱">
-            <el-input
-              v-model="formEmail.email"
-              placeholder="请输入邮箱"
-            >
+            <el-input v-model="formEmail.email" placeholder="请输入邮箱">
               <template #append>@163.com</template>
             </el-input>
           </el-form-item>
@@ -100,7 +93,7 @@ import { useUserStore } from "@/store/user";
 import { useLoginEmail, getLogout } from "@/api/login";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
-import { ElMessage } from 'element-plus';
+import { ElMessage } from "element-plus";
 const router = useRouter();
 
 const activeName = ref("email");
@@ -125,15 +118,17 @@ const handleLogin = async () => {
   login(formEmail.email, formEmail.password);
 };
 
-async function logout  () {
-  const res = await getLogout()
-  if(res.code === 200){
-    ElMessage.success('已退出登录')
+async function logout() {
+  // router.push("/");
+  const res = await getLogout();
+  if (res.code === 200) {
+    ElMessage.success("已退出登录");
     localStorage.clear();
-    router.go(0)
     // router.push('/');
+    // location.reload()
+    router.go(0);
   }
-};
+}
 
 function getUser() {
   profile.value = JSON.parse(localStorage.getItem("USER"));
