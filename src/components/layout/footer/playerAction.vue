@@ -1,6 +1,6 @@
 <template>
     <div class="player-action">
-        {{useFormatDuring(currentTime)}}/{{useFormatDuring(duration)}}
+        {{useFormatDuring(currentTime*1000)}}/{{useFormatDuring(duration * 1000)}}
     </div>
 </template>
 

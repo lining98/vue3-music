@@ -30,10 +30,23 @@ const routes = [
         name: "dj",
         component: () => import("@/views/dj/index.vue"),
       },
+      // 歌单路由
       {
         path: "playlist/:id",
         name: "playlist",
-        component: () => import("@/views/playlist/index.vue"),
+        component: () => import("@/views/details/playlistDetails/index.vue"),
+      },
+      // 歌手路由
+      {
+        path: "artistDetail/:id",
+        name: "artistDetail",
+        component: () => import("@/views/details/artistDetails/index.vue"),
+      },
+      // 专辑路由
+      {
+        path: "albumDetail/:id",
+        name: "albumDetail",
+        component: () => import("@/views/details/albumDetails/index.vue"),
       },
     ],
   },

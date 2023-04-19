@@ -10,11 +10,13 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
+    ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
     ElCollapse: typeof import('element-plus/es')['ElCollapse']
     ElCollapseItem: typeof import('element-plus/es')['ElCollapseItem']
+    ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
@@ -30,6 +32,7 @@ declare module '@vue/runtime-core' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    ElTag: typeof import('element-plus/es')['ElTag']
     Footer: typeof import('./src/components/layout/footer/Footer.vue')['default']
     Header: typeof import('./src/components/layout/header/Header.vue')['default']
     IconPark: typeof import('./src/components/common/iconPark.vue')['default']
@@ -37,6 +40,7 @@ declare module '@vue/runtime-core' {
     Menu: typeof import('./src/components/layout/menu/Menu.vue')['default']
     MenuList: typeof import('./src/components/layout/menu/menuList.vue')['default']
     MoreText: typeof import('./src/components/common/moreText.vue')['default']
+    MusicList: typeof import('./src/components/common/musicList.vue')['default']
     PlayerAction: typeof import('./src/components/layout/footer/playerAction.vue')['default']
     PlayerController: typeof import('./src/components/layout/footer/playerController.vue')['default']
     PlayerSlier: typeof import('./src/components/layout/footer/playerSlier.vue')['default']
@@ -46,5 +50,8 @@ declare module '@vue/runtime-core' {
     SearchPop: typeof import('./src/components/layout/header/searchPop.vue')['default']
     SearchSuggest: typeof import('./src/components/layout/header/searchSuggest.vue')['default']
     UserInfo: typeof import('./src/components/layout/header/userInfo.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

@@ -19,7 +19,7 @@
             v-for="item in playlist"
             :key="item.id"
             @click="toPlaylist(item.id)"
-            :class="item.id == playlistId?'actived':''"
+            :class="item.id == playlistId && route.name =='playlist'?'actived':''"
           >
             <img :src="item.coverImgUrl" alt="" />
             <div>
@@ -61,7 +61,8 @@ import { IUserPlaylist } from "@/models/userPlaylist";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
 import { usePlaylistDetail } from "@/store/playlistDetail";
-import router from "@/router";
+import {useRoute} from 'vue-router'
+const route = useRoute()
 
 const activeNames = ref(["myPlaylists"]);
 const { menus } = useMenu();

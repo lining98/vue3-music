@@ -7,15 +7,19 @@ import { ref } from "vue";
 
 <template>
   <div class="module">
-    <ElScrollbar>
-      <div class="module-left">
+    <div class="module-left">
+      <ElScrollbar>
         <Menu />
-      </div>
-    </ElScrollbar>
+      </ElScrollbar>
+    </div>
     <div class="module-main">
       <Header />
       <ElScrollbar class="main">
         <router-view />
+        <el-backtop
+          target=".module .module-main .el-scrollbar__wrap"
+          :bottom="100"
+        />
       </ElScrollbar>
       <Footer />
     </div>
@@ -29,8 +33,8 @@ import { ref } from "vue";
   height: 100%;
   background: #f9fafb;
   .module-left {
-    flex-shrink: 0;
-    width: 270px;
+    // flex-shrink: 0;
+    min-width: 270px;
     padding-top: 30px;
     .module-menu {
       padding: 0 20px;
@@ -71,7 +75,7 @@ import { ref } from "vue";
     .main {
       flex: 1;
       // min-width: 1000px;
-      padding: 30px 50px 0;
+      padding: 30px 50px 20px;
       h1 {
         font-size: 30px;
         margin-bottom: 10px;

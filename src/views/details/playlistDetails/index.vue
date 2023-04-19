@@ -1,8 +1,12 @@
 <template>
   <div class="playlist">
-    <Info :playlist="playlists.value" />
+    <div v-loading="playlistsLoading">
+      <Info :playlist="playlists.value" />
+    </div>
     <hr />
-    <MusicList :musicArr="songs.value" />
+    <div v-loading="songsLoading">
+      <MusicList :musicArr="songs.value" />
+    </div>
   </div>
 </template>
 
@@ -10,12 +14,11 @@
 import router from "@/router";
 import { onBeforeMount, reactive, ref, toRefs, watch } from "vue";
 import { getPlaylistDetail, getPlaylistTrackAll } from "@/api/api";
-import { storeToRefs } from "pinia";
 import { usePlaylistDetail } from "@/store/playlistDetail";
-import { ElLoading, ElMessage } from "element-plus";
+import { ElMessage } from "element-plus";
 
 import Info from "./Info.vue";
-import MusicList from "./musicList.vue";
+import MusicList from "@/components/common/musicList.vue";
 
 const playlists = reactive([]);
 const musicLists = reactive([]);
@@ -29,24 +32,28 @@ watch(playlistId, () => {
 onBeforeMount(async () => {
   playList();
 });
+
+let playlistsLoading = ref(true);
+let songsLoading = ref(true);
 function playList() {
-  const loading = ElLoading.service({
-    lock: true,
-    text: "Loading",
-  });
+  playlistsLoading.value = true;
+  songsLoading.value = true;
   getPlaylistDetail(playlistId.value)
     .then((res) => {
       if (res.code == 200) {
         playlists.value = res.playlist;
         musicLists.value = res.playlist.tracks;
+        playlistsLoading.value = false;
       }
     })
     .catch((err) => {
       ElMessage.error(err);
-    })
-    .finally(() => loading.close());
+    });
   getPlaylistTrackAll({ id: playlistId.value }).then((res) => {
-    songs.value = res.songs;
+    if (res.code === 200) {
+      songs.value = res.songs;
+      songsLoading.value = false;
+    }
   });
 }
 </script>

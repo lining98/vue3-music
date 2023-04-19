@@ -15,7 +15,11 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="al.name" label="专辑" min-width="120" />
+      <el-table-column prop="al.name" label="专辑" min-width="120">
+        <template #default="scope">
+          <span class="clikable" @click="toAlbumDetails(scope.row.al.id)">{{scope.row.al.name}}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="dt" label="时间" min-width="60">
         <template #default="scope">
           <span>{{ useFormatDuring(scope.row.dt) }}</span>
@@ -28,9 +32,27 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useFormatDuring } from "@/utils/numbers";
+import router from "@/router";
 
 // const msg = ref("音乐列表")
 defineProps(["musicArr"]);
+
+function toSingerDetails (id:number){
+  router.push(`/artistDetail/${id}`)
+}
+function toAlbumDetails (id:number){
+  router.push(`/albumDetail/${id}`)
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.songlist{
+  .clikable{
+    cursor: pointer;
+  }
+  .clikable:hover{
+    color: #39c6ad;
+    text-decoration: underline;
+  }
+}
+</style>

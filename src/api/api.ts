@@ -45,6 +45,8 @@ export async function getSearchSuggest(keywords: string) {
   return result;
 }
 
+
+// 歌单
 // 获取用户歌单 /user/playlist?uid
 export async function getUserPlaylist(uid: number) {
   const { playlist } = await axios.get<{ playlist: IUserPlaylist }>(
@@ -68,4 +70,24 @@ export const getPlaylistDetail = (id: number) =>
 
 // 获取歌单所有歌曲 /playlist/track/all?id=xxx&limit=10&offset=1
 export const getPlaylistTrackAll = (data: any) =>
-  axios.get(`/playlist/track/all`, { ...data  });
+  axios.get(`/playlist/track/all`, { ...data });
+
+
+// 歌手
+// 获取歌手详情 /artist/detail?id=xx  id:歌手id
+export const getArtistDetail = (id: number) =>
+  axios.get(`/artist/detail?id=${id}`);
+
+// 获取歌手单曲 /artists?id=xxx  id:歌手id
+export const getArtists = (id: number) => axios.get(`/artist?id=${id}`);
+// 获取歌手专辑 /artist/album?id=xxx&limit=5  id:歌手id  可选参数 : limit: 取出数量 , 默认为 30
+export const getArtistAlnum = (id: number) => axios.get(`/artist/album?id=${id}`);
+// 获取歌手mv /artist/mv?id=xxx  id:歌手id
+export const getArtistMv = (id: number) => axios.get(`/artist/mv?id=${id}`);
+// 获取歌手描述 /artist/desc?id=xx  id:歌手id
+export const getArtistDesc = (id: number) => axios.get(`/artist/desc?id=${id}`);
+
+// 歌手热门 50 首歌曲  /artist/top/song?id=xxx
+export const getArtistTopSong = (id: number) => axios.get(`/artist/top/song?id=${id}`);
+// 歌手全部歌曲  /artist/songs?id=xxx
+export const getArtistSongs = (id: number) => axios.get(`/artist/songs?id=${id}`);

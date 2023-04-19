@@ -12,12 +12,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps<{ text: string; end: number }>();
 
 const show = ref(false);
 const isShow = ref(false);
+
+onMounted(()=>{
+  console.log(isShow.value);
+
+  isShow.value = false
+})
 
 
 if (props.text && props.text.length > props.end) {

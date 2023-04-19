@@ -1,13 +1,15 @@
 export function useFormatDuring(during: number) {
-  if (!during) return "00:00";
-  const s = Math.floor(during) % 60;
-  during = Math.floor(during / 60);
-  const m = during % 60;
-
-  const minutes = m < 10 ? `0${m}` : m;
-  const seconds = s < 10 ? `0${s}` : s;
-
-  return minutes + ":" + seconds;
+  if(!during) return '00:00'
+  let duration = Math.floor(during / 1000)
+  let minute: number | string = Math.floor(duration / 60)
+  let second: number | string = Math.floor(duration % 60)
+  if (minute < 10) {
+    minute = `0${minute}`
+  }
+  if (second < 10) {
+    second = `0${second}`
+  }
+  return `${minute}:${second}`
 }
 
 export function useNumberFormat(number: number): string | number {
