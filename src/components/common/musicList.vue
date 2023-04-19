@@ -1,6 +1,5 @@
 <template>
   <div class="songlist">
-    <!-- musicArr -->
     <el-table :data="musicArr" stripe style="width: 100%">
       <el-table-column type="index" width="50" />
       <el-table-column prop="name" label="标题" />

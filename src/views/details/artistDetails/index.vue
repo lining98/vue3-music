@@ -9,28 +9,38 @@
         </h1>
 
         <div class="subscription">
-          <el-button type="danger" plain><i class="iconfont icon-shoucang"></i>关注</el-button>
+          <el-button type="danger" plain
+            ><i class="iconfont icon-shoucang"></i>关注</el-button
+          >
         </div>
 
         <div class="count">
           <span class="songsCount">单曲数：{{ artistDetail.musicSize }}</span>
-          <span class="collectionsCount">专辑数：{{ artistDetail.albumSize }}</span>
+          <span class="collectionsCount"
+            >专辑数：{{ artistDetail.albumSize }}</span
+          >
           <span class="videoCount">MV数：{{ artistDetail.mvSize }}</span>
         </div>
       </div>
     </div>
     <el-tabs v-model="selectedTag" class="" v-loading="isLoading">
       <el-tab-pane label="热门歌曲" name="hotSongs">
-        hotSongs
+        <MusicList :musicArr="songlist" />
       </el-tab-pane>
-      <el-tab-pane label="专辑" name="album">
-        专辑
+      <!-- <el-tab-pane :label=:"全部歌曲`${artistDetail.musicSize}`" name="hotSongs">
+      <MusicListAll :musicArr="songlistall" />
+      </el-tab-pane> -->
+      <el-tab-pane
+        :label="`专辑 ${artistDetail?.albumSize || ''}`"
+        name="album"
+      >
+        <Album :id="id" />
       </el-tab-pane>
-      <el-tab-pane label="MV" name="mvist">
-        mv
+      <el-tab-pane :label="`MV ${artistDetail?.mvSize || ''}`" name="mvist">
+        {{mvlist}}
       </el-tab-pane>
       <el-tab-pane label="歌手描述" name="descrip">
-        {{artistDetail.briefDesc}}
+        {{ artistDetail.briefDesc }}
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -38,10 +48,10 @@
 
 <script setup lang="ts">
 import router from "@/router";
-import { onMounted, reactive, ref, toRefs } from "vue";
+import { onMounted, reactive, ref, toRefs, watch } from "vue";
 import {
+  // getArtists,
   getArtistDetail,
-  getArtistAlnum,
   getArtistMv,
   getArtistDesc,
   getArtistTopSong,
@@ -50,53 +60,46 @@ import { storeToRefs } from "pinia";
 import { ElLoading, ElMessage } from "element-plus";
 
 import MusicList from "@/components/common/musicList.vue";
+import MusicListAll from "@/components/common/musicListAll.vue";
+import Album from "./Album.vue";
 import { useRoute } from "vue-router";
 
 let isLoading = ref(true);
 const artistDetail = ref({});
+const songlist = ref([]);
+const mvlist = ref([]);
 
-let selectedTag = ref('hotSongs')
-
+let selectedTag = ref("hotSongs");
 
 const route = useRoute();
 const id: number = Number(route.params.id);
+
+watch(()=>id, () => {
+  // console.log(223);
+  getData();
+});
 async function getData() {
-  isLoading.value = true
+  isLoading.value = true;
   // 获取歌手详情
   const details = await getArtistDetail(id);
   artistDetail.value = details.data.artist;
 
-  isLoading.value = false
+  // 获取歌手最热50首歌曲
+  const hotSongsdetail = await getArtistTopSong(id);
+  songlist.value = hotSongsdetail.songs;
+
+  const mvDetails = await getArtistMv(id);
+  mvlist.value = mvDetails.mvs;
+
+  // const allSongs = await getArtists(id);
+  // songalllist.value = allSongs.songs;
+
+  isLoading.value = false;
 }
 
 onMounted(() => {
   getData();
 });
-
-// let playlistsLoading = ref(true);
-// let songsLoading = ref(true);
-// function playList() {
-//   playlistsLoading.value = true;
-//   songsLoading.value = true;
-//   getPlaylistDetail(playlistId.value)
-//     .then((res) => {
-//       if (res.code == 200) {
-//         playlists.value = res.playlist;
-//         musicLists.value = res.playlist.tracks;
-//         playlistsLoading.value = false;
-//       }
-//     })
-//     .catch((err) => {
-//       ElMessage.error(err);
-//     });
-//   // .finally(() => loading.close());
-//   getPlaylistTrackAll({ id: playlistId.value }).then((res) => {
-//     if (res.code === 200) {
-//       songs.value = res.songs;
-//       songsLoading.value = false;
-//     }
-//   });
-// }
 </script>
 
 <style lang="scss" scoped>
@@ -118,13 +121,13 @@ onMounted(() => {
         color: #334155;
         display: flex;
         align-items: center;
-        .name{
+        .name {
           margin-left: 10px;
         }
       }
-      .count{
+      .count {
         margin-top: 15px;
-        span{
+        span {
           margin-right: 5px;
           font-size: 14px;
           color: #666;
