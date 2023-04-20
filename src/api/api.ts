@@ -69,8 +69,8 @@ export const getPlaylistDetail = (id: number) =>
 // }
 
 // 获取歌单所有歌曲 /playlist/track/all?id=xxx&limit=10&offset=1
-export const getPlaylistTrackAll = (data: any) =>
-  axios.get(`/playlist/track/all`, { ...data });
+export const getPlaylistTrackAll = (id: number) =>
+  axios.get(`/playlist/track/all?id=${id}`);
 
 
 // 歌手

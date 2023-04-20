@@ -32,19 +32,19 @@ const routes = [
       },
       // 歌单路由
       {
-        path: "playlist/:id",
+        path: "playlist",
         name: "playlist",
         component: () => import("@/views/details/playlistDetails/index.vue"),
       },
       // 歌手路由
       {
-        path: "artistDetail/:id",
+        path: "artistDetail",
         name: "artistDetail",
         component: () => import("@/views/details/artistDetails/index.vue"),
       },
       // 专辑路由
       {
-        path: "albumDetail/:id",
+        path: "albumDetail",
         name: "albumDetail",
         component: () => import("@/views/details/albumDetails/index.vue"),
       },

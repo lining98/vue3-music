@@ -4,9 +4,13 @@
     <li
       v-for="item in albumList"
       :key="item.id"
-      @click="router.push({name:'albumDetail',params:item.id})"
+      @click="router.push({ name: 'albumDetail', query: item.id })"
     >
-      <img :src="item.blurPicUrl" alt="" />
+      <el-image :src="item.blurPicUrl">
+        <template #placeholder>
+            <div class="image-slot">加载中<span class="dot">...</span></div>
+          </template>
+      </el-image>
       <p>{{ item.name }}</p>
       <span></span>
     </li>
@@ -22,7 +26,15 @@ const router = useRouter();
 const albumList = ref([]);
 const props = defineProps<{ id: number }>();
 
+// function imgerror(event){
+//   var img = event.srcElement;
+//   img.src = '@/assets/img/OpticalDisk.png'
+//   img.onerror = null
+// }
+
 const getData = async () => {
+  console.log("props.id", props.id);
+
   const { hotAlbums } = await getArtistAlbum(props.id);
   albumList.value = hotAlbums;
 };
@@ -34,7 +46,7 @@ onMounted(getData);
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-//   justify-content: space-around;
+  //   justify-content: space-around;
   li {
     width: 200px;
     border-radius: 10px;

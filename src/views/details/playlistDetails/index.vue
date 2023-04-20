@@ -19,10 +19,15 @@ import { ElMessage } from "element-plus";
 
 import Info from "./Info.vue";
 import MusicList from "@/components/common/musicList.vue";
+import { useRoute } from "vue-router";
 
 const playlists = reactive([]);
 const musicLists = reactive([]);
 const songs = reactive([]);
+
+const route = useRoute();
+
+const id: number = Number(route.query.id);
 
 const { playlistId } = toRefs(usePlaylistDetail());
 
@@ -49,7 +54,7 @@ function playList() {
     .catch((err) => {
       ElMessage.error(err);
     });
-  getPlaylistTrackAll({ id: playlistId.value }).then((res) => {
+  getPlaylistTrackAll(playlistId.value).then((res) => {
     if (res.code === 200) {
       songs.value = res.songs;
       songsLoading.value = false;

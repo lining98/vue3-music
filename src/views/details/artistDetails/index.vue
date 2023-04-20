@@ -1,7 +1,7 @@
 <template>
   <div class="artist">
-    <div class="info" v-loading="!artistDetail">
-      <img :src="artistDetail.avatar" alt="" />
+    <div class="info" v-loading="isLoading">
+      <img :src="artistDetail.cover" alt="" />
       <div class="detail">
         <h1>
           <el-tag effect="plain">歌手</el-tag>
@@ -25,7 +25,7 @@
     </div>
     <el-tabs v-model="selectedTag" class="" v-loading="isLoading">
       <el-tab-pane label="热门歌曲" name="hotSongs">
-        <MusicList :musicArr="songlist" />
+        <MusicList :musicArr="songlist"  />
       </el-tab-pane>
       <!-- <el-tab-pane :label=:"全部歌曲`${artistDetail.musicSize}`" name="hotSongs">
       <MusicListAll :musicArr="songlistall" />
@@ -37,9 +37,9 @@
         <Album :id="id" />
       </el-tab-pane>
       <el-tab-pane :label="`MV ${artistDetail?.mvSize || ''}`" name="mvist">
-        {{mvlist}}
+        <Video :id="id" />
       </el-tab-pane>
-      <el-tab-pane label="歌手描述" name="descrip">
+      <el-tab-pane label="歌手描述" class="descrip" name="descrip">
         {{ artistDetail.briefDesc }}
       </el-tab-pane>
     </el-tabs>
@@ -52,7 +52,6 @@ import { onMounted, reactive, ref, toRefs, watch } from "vue";
 import {
   // getArtists,
   getArtistDetail,
-  getArtistMv,
   getArtistDesc,
   getArtistTopSong,
 } from "@/api/api";
@@ -62,34 +61,35 @@ import { ElLoading, ElMessage } from "element-plus";
 import MusicList from "@/components/common/musicList.vue";
 import MusicListAll from "@/components/common/musicListAll.vue";
 import Album from "./Album.vue";
-import { useRoute } from "vue-router";
+import Video from "./Video.vue";
+import {  useRoute } from "vue-router";
 
 let isLoading = ref(true);
 const artistDetail = ref({});
 const songlist = ref([]);
-const mvlist = ref([]);
 
 let selectedTag = ref("hotSongs");
 
 const route = useRoute();
-const id: number = Number(route.params.id);
+const id = Number(route.query.id);
 
-watch(()=>id, () => {
-  // console.log(223);
-  getData();
-});
-async function getData() {
+watch(()=>route.query.id, () => {
+  // console.log('route',route.query.id);
+  getData(Number(route.query.id));
+},{immediate:true});
+async function getData(artId:number) {
+  if(artId == 0){
+    return ElMessage.error('无相关艺人')
+  }
   isLoading.value = true;
   // 获取歌手详情
-  const details = await getArtistDetail(id);
+  const details = await getArtistDetail(artId);
   artistDetail.value = details.data.artist;
 
   // 获取歌手最热50首歌曲
-  const hotSongsdetail = await getArtistTopSong(id);
+  const hotSongsdetail = await getArtistTopSong(artId);
   songlist.value = hotSongsdetail.songs;
 
-  const mvDetails = await getArtistMv(id);
-  mvlist.value = mvDetails.mvs;
 
   // const allSongs = await getArtists(id);
   // songalllist.value = allSongs.songs;
@@ -98,8 +98,9 @@ async function getData() {
 }
 
 onMounted(() => {
-  getData();
+  getData(id);
 });
+
 </script>
 
 <style lang="scss" scoped>
@@ -134,6 +135,10 @@ onMounted(() => {
         }
       }
     }
+  }
+  .descrip{
+    text-indent: 2em;
+    font-size: 14px;
   }
 }
 </style>
