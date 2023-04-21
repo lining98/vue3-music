@@ -8,11 +8,11 @@
       @row-dblclick="playSong"
     >
       <el-table-column type="index" width="50" />
-      <el-table-column width="50">
+      <!-- <el-table-column width="50">
         <template #default="scope">
           <IconPark :icon="Like" size="16" class="like" />
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column prop="name" label="标题" />
       <el-table-column
         v-if="showArName"

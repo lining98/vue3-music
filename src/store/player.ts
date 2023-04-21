@@ -1,3 +1,4 @@
+import {sample,last} from 'lodash'
 import { defineStore, storeToRefs } from "pinia";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { ISongUrl } from "@/models/songUrl";
@@ -51,7 +52,7 @@ export const usePlayerStore = defineStore({
     prevSong(state): ISongDetail {
       const { thisIndex } = this;
       if (thisIndex === 0) {
-        return state.playList.last();
+        return last(state.playList);
       } else {
         const prevIndex: number = thisIndex - 1;
         return state.playList[prevIndex];
@@ -62,6 +63,39 @@ export const usePlayerStore = defineStore({
     init() {
       this.audio.volume = parseInt(this.volume) / 100;
     },
+
+    // 播放列表里面添加音乐
+    pushPlayList(replace:boolean,...list:ISongDetail[]){
+      if(replace){
+        this.playList = list;
+        return;
+      }
+      list.forEach(song=>{
+        if(this.playList.filter(s=>s.id === song.id).length <= 0){
+          this.playList.push(song)
+        }
+      })
+    },
+
+    clearPlayList() {
+      this.songUrl = {} as ISongUrl;
+      this.url = "";
+      this.id = 0;
+      this.song = {} as ISongDetail;
+      this.isPlaying = false;
+      this.isPause = false;
+      this.sliderInput = false;
+      this.ended = false;
+      this.muted = false;
+      this.currentTime = 0;
+      this.playList = [] as ISongDetail[];
+      this.showPlayList = false;
+      this.audio.load();
+      setTimeout(() => {
+        this.duration = 0;
+      }, 500);
+    },
+
     // 获取id播放音乐
     async play(id: number) {
       if (id == this.id) return;
@@ -69,13 +103,13 @@ export const usePlayerStore = defineStore({
 
       this.audio.src = data.url;
       if (!data.url) {
-        this.currentTime = 0
+        this.currentTime = 0;
         ElMessage.error("找不到歌曲地址！");
         this.song = {} as ISongDetail;
         this.author = "";
         return;
       }
-      console.log('play');
+      console.log("play");
 
       this.audio.play().then(() => {
         this.isPause = true;
@@ -88,6 +122,8 @@ export const usePlayerStore = defineStore({
     async songDetail() {
       this.song = await getSongDetail(this.id);
       this.author = this.song.ar[0].name;
+
+      this.pushPlayList(false,this.song)
     },
 
     // 播放结束
@@ -119,24 +155,23 @@ export const usePlayerStore = defineStore({
       }
     },
 
-    clearPlayList() {
-      this.songUrl = {} as ISongUrl;
-      this.url = "";
-      this.id = 0;
-      this.song = {} as ISongDetail;
-      this.isPlaying = false;
-      this.isPause = false;
-      this.sliderInput = false;
-      this.ended = false;
-      this.muted = false;
-      this.currentTime = 0;
-      this.playList = [] as ISongDetail[];
-      this.showPlayList = false;
-      this.audio.load();
-      setTimeout(() => {
-        this.duration = 0;
-      }, 500);
+    // 切换循环类型
+    toggleLoop() {
+      if (this.loopType == 2) {
+        this.loopType = 0;
+      } else {
+        this.loopType++;
+      }
     },
+
+    // 静音切换
+    toggleMuted() {
+      console.log(this.muted);
+
+      this.muted = !this.muted;
+      this.audio.muted = this.muted;
+    },
+
 
     //重新播放
     rePlay() {
@@ -151,7 +186,7 @@ export const usePlayerStore = defineStore({
       if (this.loopType === 2) {
         this.randomPlay();
       } else {
-        this.play(this.prevSong.id);
+        this.play(this.nextSong.id);
       }
     },
     // 上一曲
@@ -161,7 +196,10 @@ export const usePlayerStore = defineStore({
 
     // 随机播放
     randomPlay() {
-      this.play(this.playList.sample().id);
+      let song = sample(this.playList)
+      // console.log(song);
+      // console.log(song.id);
+      this.play(song.id);
     },
 
     //音量设置

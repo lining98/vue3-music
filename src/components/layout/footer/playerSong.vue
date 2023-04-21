@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import defaultImg from "@/assets/img/OpticalDisk.png";
-import { usePlayerStore } from "@/store/player";
-import { toRefs } from "vue";
-
-const { song, songUrl, author } = toRefs(usePlayerStore());
-</script>
-
 <template>
   <div class="player-song">
     <img alt="" :src="song.al?.picUrl || defaultImg" />
@@ -15,6 +7,14 @@ const { song, songUrl, author } = toRefs(usePlayerStore());
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import defaultImg from "@/assets/img/OpticalDisk.png";
+import { usePlayerStore } from "@/store/player";
+import { toRefs } from "vue";
+
+const { song, songUrl, author } = toRefs(usePlayerStore());
+</script>
 
 <style lang="scss" scoped>
 .player-song {

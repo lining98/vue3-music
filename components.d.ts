@@ -47,6 +47,7 @@ declare module '@vue/runtime-core' {
     PlayerController: typeof import('./src/components/layout/footer/playerController.vue')['default']
     PlayerSlier: typeof import('./src/components/layout/footer/playerSlier.vue')['default']
     PlayerSong: typeof import('./src/components/layout/footer/playerSong.vue')['default']
+    PlayerVolumeSlider: typeof import('./src/components/layout/footer/playerVolumeSlider.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchPop: typeof import('./src/components/layout/header/searchPop.vue')['default']
