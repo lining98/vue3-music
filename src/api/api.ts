@@ -91,3 +91,7 @@ export const getArtistDesc = (id: number) => axios.get(`/artist/desc?id=${id}`);
 export const getArtistTopSong = (id: number) => axios.get(`/artist/top/song?id=${id}`);
 // 歌手全部歌曲  /artist/songs?id=xxx
 export const getArtistSongs = (id: number) => axios.get(`/artist/songs?id=${id}`);
+
+
+// 获取喜欢音乐列表
+export const getLikelist = (id:number) => axios.get(`/likelist?uid=${id}`)

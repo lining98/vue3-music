@@ -33,8 +33,6 @@ const props = defineProps<{ id: number }>();
 // }
 
 const getData = async () => {
-  console.log("props.id", props.id);
-
   const { hotAlbums } = await getArtistAlbum(props.id);
   albumList.value = hotAlbums;
 };
@@ -65,6 +63,12 @@ onMounted(getData);
   li:hover {
     transform: translateY(-5px);
     box-shadow: 0 0 10px rgba($color: #c3c6c8, $alpha: 0.9);
+  }
+  .image-slot{
+    background-color: #c3c6c8;
+    font-size: 14px;
+    line-height: 200px;
+    text-align: center;
   }
 }
 </style>

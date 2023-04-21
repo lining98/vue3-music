@@ -5,62 +5,56 @@
     </div>
     <hr />
     <div v-loading="songsLoading">
-      <MusicList :musicArr="songs.value" />
+      <MusicList :musicArr="songs.value" :showArName="true" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import router from "@/router";
-import { onBeforeMount, reactive, ref, toRefs, watch } from "vue";
+import { onBeforeMount, onMounted, reactive, ref, toRefs, watch } from "vue";
 import { getPlaylistDetail, getPlaylistTrackAll } from "@/api/api";
-import { usePlaylistDetail } from "@/store/playlistDetail";
 import { ElMessage } from "element-plus";
 
 import Info from "./Info.vue";
 import MusicList from "@/components/common/musicList.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const playlists = reactive([]);
 const musicLists = reactive([]);
 const songs = reactive([]);
 
 const route = useRoute();
+const router = useRouter()
 
-const id: number = Number(route.query.id);
 
-const { playlistId } = toRefs(usePlaylistDetail());
-
-watch(playlistId, () => {
-  playList();
-});
-onBeforeMount(async () => {
-  playList();
+watch(()=>route.query.id, (newId) => {
+  // console.log(typeof newId,newId);
+  // console.log('route',route.name);
+  if(route.name == 'playlist'){
+    getData(Number(newId));
+  }
 });
 
 let playlistsLoading = ref(true);
 let songsLoading = ref(true);
-function playList() {
+
+const getData = async (id:number) => {
   playlistsLoading.value = true;
   songsLoading.value = true;
-  getPlaylistDetail(playlistId.value)
-    .then((res) => {
-      if (res.code == 200) {
-        playlists.value = res.playlist;
-        musicLists.value = res.playlist.tracks;
-        playlistsLoading.value = false;
-      }
-    })
-    .catch((err) => {
-      ElMessage.error(err);
-    });
-  getPlaylistTrackAll(playlistId.value).then((res) => {
-    if (res.code === 200) {
-      songs.value = res.songs;
-      songsLoading.value = false;
-    }
-  });
-}
+
+  const { playlist } = await getPlaylistDetail(id);
+  playlists.value = playlist;
+  musicLists.value = playlist.tracks;
+  playlistsLoading.value = false;
+
+  const songsAll = await getPlaylistTrackAll(id);
+  songs.value = songsAll.songs;
+  songsLoading.value = false;
+};
+
+onMounted(async () => {
+  getData(Number(route.query.id));
+});
 </script>
 
 <style lang="scss" scoped></style>

@@ -11,15 +11,16 @@
   <div class="module-menu" v-if="isLogin">
     <div class="menus-title">我的音乐</div>
 
-    <el-collapse class="collapse" v-model="activeNames"
-      >
+    <el-collapse class="collapse" v-model="activeNames">
       <el-collapse-item title="我的歌单" name="myPlaylists">
         <ul class="list">
           <li
             v-for="item in playlist"
             :key="item.id"
             @click="toPlaylist(item.id)"
-            :class="item.id == playlistId && route.name =='playlist'?'actived':''"
+            :class="
+              item.id == route.query.id && route.name == 'playlist' ? 'actived' : ''
+            "
           >
             <img :src="item.coverImgUrl" alt="" />
             <div>
@@ -29,46 +30,26 @@
           </li>
         </ul>
       </el-collapse-item>
-      <!-- <el-collapse-item title="创建的歌单" name="like">
-        <ul class="list">
-          <li v-for="item in playlist" :key="item.id">
-            <div v-if="item.subscribed">
-              <img :src="item.coverImgUrl" alt="" />
-              <div>
-              {{item.subscribed}}
-                <p class="name">{{ item.name }}</p>
-                <span>{{ item.trackCount }}首</span>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </el-collapse-item>
-      <el-collapse-item title="收藏的歌单" name="collect">
-        <ul class="list">
-        </ul>
-      </el-collapse-item> -->
     </el-collapse>
   </div>
 </template>
 
 <script setup lang="ts">
 import IconPark from "@/components/common/iconPark.vue"; //引入公共组件
-import { ref, toRefs, onMounted, reactive } from "vue";
+import { ref, toRefs, onMounted, reactive, watch } from "vue";
 import { useMenu } from "./useMenu";
 import { getUserPlaylist } from "@/api/api";
 import { IUserPlaylist } from "@/models/userPlaylist";
 
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
-import { usePlaylistDetail } from "@/store/playlistDetail";
-import {useRoute} from 'vue-router'
-const route = useRoute()
+import { useRoute, useRouter } from "vue-router";
+const route = useRoute();
+const router = useRouter();
 
 const activeNames = ref(["myPlaylists"]);
 const { menus } = useMenu();
 
-
-const { playlistId } = toRefs(usePlaylistDetail());
 const { isLogin, playlist } = storeToRefs(useUserStore());
 
 const userId = JSON.parse(localStorage.getItem("USER"))?.userId || "";
@@ -77,9 +58,22 @@ onMounted(async () => {
   playlist.value = await getUserPlaylist(userId);
 });
 
-const { toPlaylist } = usePlaylistDetail();
+const id = route.query.id
+// console.log(id);
 
 
+// watch(()=>route.query.id,()=>{
+//   console.log('id',route.query.id);
+//   toPlaylist(Number(route.query.id))
+// })
+
+// const { toPlaylist } = usePlaylistDetail();
+const toPlaylist = (id:number) => {
+  router.push({
+    name: "playlist",
+    query: { id: id },
+  });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -115,7 +109,7 @@ const { toPlaylist } = usePlaylistDetail();
     li:hover {
       background: #f4f2f2;
     }
-    .actived{
+    .actived {
       background-color: #e6e6e6;
     }
   }

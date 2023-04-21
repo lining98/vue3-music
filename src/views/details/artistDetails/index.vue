@@ -25,7 +25,7 @@
     </div>
     <el-tabs v-model="selectedTag" class="" v-loading="isLoading">
       <el-tab-pane label="热门歌曲" name="hotSongs">
-        <MusicList :musicArr="songlist"  />
+        <MusicList :musicArr="songlist" :showArName='false'  />
       </el-tab-pane>
       <!-- <el-tab-pane :label=:"全部歌曲`${artistDetail.musicSize}`" name="hotSongs">
       <MusicListAll :musicArr="songlistall" />
@@ -73,10 +73,6 @@ let selectedTag = ref("hotSongs");
 const route = useRoute();
 const id = Number(route.query.id);
 
-watch(()=>route.query.id, () => {
-  // console.log('route',route.query.id);
-  getData(Number(route.query.id));
-},{immediate:true});
 async function getData(artId:number) {
   if(artId == 0){
     return ElMessage.error('无相关艺人')

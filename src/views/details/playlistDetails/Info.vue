@@ -14,12 +14,17 @@
             <span v-for="item in playlist.tags" :key="item.id">{{ item }}</span>
           </div>
         </div>
-        <p class="description">
-          <MoreText
+        <p class="description" >
+          <el-collapse class="collapse" v-if="playlist.description">
+            <el-collapse-item title="查看歌单详情">
+              <p>{{ playlist.description }}</p>
+            </el-collapse-item>
+          </el-collapse>
+          <!-- <MoreText
             v-if="playlist.description"
             :text="playlist.description"
             :end="90"
-          />
+          /> -->
         </p>
         <div>
           <el-button type="success">
@@ -34,7 +39,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import MoreText from "@/components/common/moreText.vue";
+// import MoreText from "@/components/common/moreText.vue";
 import IconPark from "@/components/common/iconPark.vue";
 import { PlayOne } from "@icon-park/vue-next";
 
@@ -61,7 +66,7 @@ defineProps(["playlist"]);
         color: #334155;
         display: flex;
         align-items: center;
-        .name{
+        .name {
           margin-left: 10px;
         }
       }
