@@ -2,6 +2,7 @@
 import Menu from "@/components/layout/menu/Menu.vue";
 import Footer from "@/components/layout/footer/Footer.vue";
 import Header from "@/components/layout/header/Header.vue";
+import PlayList from "@/components/layout/playList/PlayList.vue";
 import { ref } from "vue";
 </script>
 
@@ -23,6 +24,7 @@ import { ref } from "vue";
       </ElScrollbar>
       <Footer />
     </div>
+    <PlayList />
   </div>
 </template>
 

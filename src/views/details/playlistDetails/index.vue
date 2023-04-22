@@ -1,11 +1,11 @@
 <template>
   <div class="playlist">
     <div v-loading="playlistsLoading">
-      <Info :playlist="playlists.value" />
+      <Info :playlist="playlists.value" :play-all='()=>playAll()' />
     </div>
     <hr />
     <div v-loading="songsLoading">
-      <MusicList :musicArr="songs.value" :showArName="true" />
+      <MusicList :musicArr="songs" :showArName="true" />
     </div>
   </div>
 </template>
@@ -18,13 +18,22 @@ import { ElMessage } from "element-plus";
 import Info from "./Info.vue";
 import MusicList from "@/components/common/musicList.vue";
 import { useRoute, useRouter } from "vue-router";
+import { usePlayerStore } from "@/store/player";
 
 const playlists = reactive([]);
 const musicLists = reactive([]);
-const songs = reactive([]);
+const songs = ref([]);
 
 const route = useRoute();
 const router = useRouter()
+
+const {pushPlayList,play} = usePlayerStore()
+const playAll = ()=>{
+  // console.log('playAll..');
+  pushPlayList(true,...songs.value)
+  play(songs.value[0].id)
+
+}
 
 
 watch(()=>route.query.id, (newId) => {

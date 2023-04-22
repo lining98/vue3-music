@@ -61,10 +61,11 @@ import { onMounted } from "vue";
 defineProps(["musicArr", "showArName"]);
 
 const router = useRouter();
-const { profile } = storeToRefs(useUserStore());
+const { profile, playlist } = storeToRefs(useUserStore());
 const { play } = usePlayerStore();
 const playSong = (row: any) => {
   play(row.id);
+  playlist.value = musicArr
 };
 
 function addIndex({ row, rowIndex }: { row: any; rowIndex: number }) {

@@ -27,7 +27,7 @@
           /> -->
         </p>
         <div>
-          <el-button type="success">
+          <el-button type="success" @click="playAll">
             <IconPark :icon="PlayOne" size="18" />
             <span>播放全部</span>
           </el-button>
@@ -42,9 +42,14 @@ import { ref } from "vue";
 // import MoreText from "@/components/common/moreText.vue";
 import IconPark from "@/components/common/iconPark.vue";
 import { PlayOne } from "@icon-park/vue-next";
+import { storeToRefs } from "pinia";
+import { usePlayerStore } from "@/store/player";
 
-const msg = ref("info");
-defineProps(["playlist"]);
+const {playList} = storeToRefs(usePlayerStore())
+defineProps<{
+  playlist,
+  playAll?:()=>void,
+}>();
 </script>
 
 <style lang="scss" scoped>
