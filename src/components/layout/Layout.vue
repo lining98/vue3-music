@@ -16,7 +16,9 @@ import { ref } from "vue";
     <div class="module-main">
       <Header />
       <ElScrollbar class="main">
-        <router-view />
+        <div class="container">
+          <router-view />
+        </div>
         <el-backtop
           target=".module .module-main .el-scrollbar__wrap"
           :bottom="100"
@@ -70,14 +72,20 @@ import { ref } from "vue";
   }
   .module-main {
     flex: 1;
-    width: 100%;
+    // width: 100%;
     background: #fff;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     .main {
       flex: 1;
       // min-width: 1000px;
+      box-sizing: border-box;
       padding: 30px 50px 20px;
+      .container{
+        margin-left: auto;
+        margin-right: auto;
+      }
       h1 {
         font-size: 30px;
         margin-bottom: 10px;

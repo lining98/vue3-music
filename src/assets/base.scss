@@ -18,7 +18,7 @@ select {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, "PingFang sC", "Hiragino Sans GB",
     "Microsoft YaHei" ， "微软雅黑" ，Arial, sans-serif;
-  font-size: 1.4rem;
+  font-size: 14px;
   line-height: 1.5;
   color: #333;
 }
@@ -40,7 +40,8 @@ a:hover {
   filter: alpha(opacity=90);
 }
 
-ul,li{
+ul,
+li {
   list-style: none;
 }
 
@@ -62,9 +63,10 @@ ul,li{
   height: 100vh;
 }
 
-
-:root{
+:root {
   --el-color-primary: #34d399 !important;
 }
 
-
+.el-drawer {
+  --el-drawer-padding-primary: 0 !important;
+}

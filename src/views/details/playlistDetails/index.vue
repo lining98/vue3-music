@@ -1,7 +1,7 @@
 <template>
   <div class="playlist">
     <div v-loading="playlistsLoading">
-      <Info :playlist="playlists.value" :play-all='()=>playAll()' />
+      <Info :playlist="playlists.value" :play-all="() => playAll()" />
     </div>
     <hr />
     <div v-loading="songsLoading">
@@ -25,29 +25,27 @@ const musicLists = reactive([]);
 const songs = ref([]);
 
 const route = useRoute();
-const router = useRouter()
+const router = useRouter();
 
-const {pushPlayList,play} = usePlayerStore()
-const playAll = ()=>{
-  // console.log('playAll..');
-  pushPlayList(true,...songs.value)
-  play(songs.value[0].id)
+const { play, pushPlayList } = usePlayerStore();
+const playAll = () => {
+  pushPlayList(true, ...songs.value);
+  play(songs.value[0].id);
+};
 
-}
-
-
-watch(()=>route.query.id, (newId) => {
-  // console.log(typeof newId,newId);
-  // console.log('route',route.name);
-  if(route.name == 'playlist'){
-    getData(Number(newId));
+watch(
+  () => route.query.id,
+  (newId) => {
+    if (route.name == "playlist") {
+      getData(Number(newId));
+    }
   }
-});
+);
 
 let playlistsLoading = ref(true);
 let songsLoading = ref(true);
 
-const getData = async (id:number) => {
+const getData = async (id: number) => {
   playlistsLoading.value = true;
   songsLoading.value = true;
 

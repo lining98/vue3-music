@@ -5,8 +5,8 @@
         useFormatDuring(duration * 1000)
       }}
     </div>
-    <div class="icon">
-      <IconPark :icon="MusicList" size="20" @click="showPlayList = true" />
+    <div class="music-list-icon" @click="showPlayList = true">
+      <IconPark :icon="MusicList" size="20" />
       <span class="count">{{ playListCount }}</span>
     </div>
   </div>
@@ -28,14 +28,15 @@ const { currentTime, duration, playListCount,showPlayList } = storeToRefs(usePla
   font-size: 16px;
   display: flex;
   align-items: center;
-  .icon {
+  .music-list-icon {
+    position: relative;
     .i-icon{
         margin: 0 3px 0 10px;
         position: relative;
         top: 3px;
     }
   }
-  .icon:hover {
+  .music-list-icon:hover {
     cursor: pointer;
     color: #39c6ad;
   }

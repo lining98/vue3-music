@@ -11,6 +11,7 @@
       size="small"
       :disabled="muted"
       class="volume-slider"
+      @input="setVolume"
     ></el-slider>
     <IconPark
       class="vicon"
@@ -28,8 +29,7 @@ import IconPark from "@/components/common/iconPark.vue";
 import { VolumeMute, VolumeSmall } from "@icon-park/vue-next";
 import { usePlayerStore } from "@/store/player";
 
-const {volume,muted,toggleMuted,setVolume}  = toRefs(usePlayerStore())
-
+const { volume, muted, toggleMuted, setVolume } = toRefs(usePlayerStore());
 </script>
 
 <style lang="scss" scoped>
@@ -42,7 +42,7 @@ const {volume,muted,toggleMuted,setVolume}  = toRefs(usePlayerStore())
     font-size: 14px;
   }
   .volume-slider {
-    margin: 5px 0;
+    margin: 8px 0 5px 0;
   }
   .vicon {
     cursor: pointer;

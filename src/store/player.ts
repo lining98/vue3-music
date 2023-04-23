@@ -1,4 +1,4 @@
-import {sample,last} from 'lodash'
+import { sample, last } from "lodash";
 import { defineStore, storeToRefs } from "pinia";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { ISongUrl } from "@/models/songUrl";
@@ -14,15 +14,17 @@ export const usePlayerStore = defineStore({
   id: "player",
   state: () => ({
     audio: new Audio(), // Audio实例化
-    loopType: 0, // 循环模式   0单曲循环  1列表循环  2随机播放
-    volume: localStorage.getItem(KEYS.volume) || 60, // 音量
-    playList: [] as ISongDetail[],
+    loopType: 1, // 循环模式   0单曲循环  1列表循环  2随机播放
+    volume: Number(localStorage.getItem(KEYS.volume)) || 60, // 音量
+    // playList: [] as ISongDetail[],
+    playList: JSON.parse(localStorage.getItem("playList")) || [],
     showPlayList: false,
 
     id: 0,
     url: "",
     songUrl: {} as ISongUrl,
-    song: {} as ISongDetail, // 音乐详情
+    // song: {} as ISongDetail, // 音乐详情
+    song: JSON.parse(localStorage.getItem("songDetail")) || ({} as ISongDetail),
     author: "", // 作者
 
     isPlaying: false, //是否播放中
@@ -61,20 +63,21 @@ export const usePlayerStore = defineStore({
   },
   actions: {
     init() {
-      this.audio.volume = parseInt(this.volume) / 100;
+      this.audio.volume = this.volume / 100;
     },
 
     // 播放列表里面添加音乐
-    pushPlayList(replace:boolean,...list:ISongDetail[]){
-      if(replace){
+    pushPlayList(replace: boolean, ...list: ISongDetail[]) {
+      if (replace) {
         this.playList = list;
+        localStorage.setItem("playList", JSON.stringify(list));
         return;
       }
-      list.forEach(song=>{
-        if(this.playList.filter(s=>s.id === song.id).length <= 0){
-          this.playList.push(song)
+      list.forEach((song) => {
+        if (this.playList.filter((s) => s.id === song.id).length <= 0) {
+          this.playList.push(song);
         }
-      })
+      });
     },
 
     clearPlayList() {
@@ -99,8 +102,8 @@ export const usePlayerStore = defineStore({
     // 获取id播放音乐
     async play(id: number) {
       if (id == this.id) return;
-      const data = await getSongUrl(id);
 
+      const data = await getSongUrl(id);
       this.audio.src = data.url;
       if (!data.url) {
         this.currentTime = 0;
@@ -109,7 +112,7 @@ export const usePlayerStore = defineStore({
         this.author = "";
         return;
       }
-      console.log("play");
+      // console.log("play");
 
       this.audio.play().then(() => {
         this.isPause = true;
@@ -123,7 +126,8 @@ export const usePlayerStore = defineStore({
       this.song = await getSongDetail(this.id);
       this.author = this.song.ar[0].name;
 
-      this.pushPlayList(false,this.song)
+      this.pushPlayList(false, this.song);
+      localStorage.setItem("songDetail", JSON.stringify(this.song));
     },
 
     // 播放结束
@@ -145,13 +149,15 @@ export const usePlayerStore = defineStore({
     // 播放、暂停
     togglePlay() {
       if (!this.song.id) return;
+
       this.isPause = !this.isPause;
       if (this.isPause) {
+        let id = JSON.parse(localStorage.getItem("songDetail")).id
+        this.play(id); // 播放
         this.audio.play(); // 播放
-        // this.isPause = true
       } else {
+        // this.audio.pause(); // 暂停
         this.audio.pause(); // 暂停
-        // this.isPause = false
       }
     },
 
@@ -172,7 +178,6 @@ export const usePlayerStore = defineStore({
       this.audio.muted = this.muted;
     },
 
-
     //重新播放
     rePlay() {
       setTimeout(() => {
@@ -181,24 +186,24 @@ export const usePlayerStore = defineStore({
       }, 1500);
     },
 
+    // 上一曲
+    prev() {
+      // console.log('上一曲');
+      this.play(this.prevSong.id);
+    },
     // 下一曲
     next() {
+      // console.log('下一曲');
       if (this.loopType === 2) {
         this.randomPlay();
       } else {
         this.play(this.nextSong.id);
       }
     },
-    // 上一曲
-    prev() {
-      this.play(this.prevSong.id);
-    },
 
     // 随机播放
     randomPlay() {
-      let song = sample(this.playList)
-      // console.log(song);
-      // console.log(song.id);
+      let song = sample(this.playList);
       this.play(song.id);
     },
 
