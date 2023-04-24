@@ -26,6 +26,8 @@ export async function getSongDetail(id: number) {
   });
   return songs[0];
 }
+// 获取音乐歌词
+export const getNewLyric = (id: number) => axios.get(`/lyric/new?id=${id}`);
 
 // 获取热门搜索 /search/hot/detail
 export async function getSearchHotDetail() {
@@ -44,7 +46,6 @@ export async function getSearchSuggest(keywords: string) {
   );
   return result;
 }
-
 
 // 歌单
 // 获取用户歌单 /user/playlist?uid
@@ -72,7 +73,6 @@ export const getPlaylistDetail = (id: number) =>
 export const getPlaylistTrackAll = (id: number) =>
   axios.get(`/playlist/track/all?id=${id}`);
 
-
 // 歌手
 // 获取歌手详情 /artist/detail?id=xx  id:歌手id
 export const getArtistDetail = (id: number) =>
@@ -81,21 +81,22 @@ export const getArtistDetail = (id: number) =>
 // 获取歌手单曲 /artists?id=xxx  id:歌手id
 export const getArtists = (id: number) => axios.get(`/artist?id=${id}`);
 // 获取歌手专辑 /artist/album?id=xxx&limit=5  id:歌手id  可选参数 : limit: 取出数量 , 默认为 30
-export const getArtistAlbum = (id: number) => axios.get(`/artist/album?id=${id}`);
+export const getArtistAlbum = (id: number) =>
+  axios.get(`/artist/album?id=${id}`);
 // 获取歌手mv /artist/mv?id=xxx  id:歌手id
 export const getArtistMv = (id: number) => axios.get(`/artist/mv?id=${id}`);
 // 获取歌手描述 /artist/desc?id=xx  id:歌手id
 export const getArtistDesc = (id: number) => axios.get(`/artist/desc?id=${id}`);
 
 // 歌手热门 50 首歌曲  /artist/top/song?id=xxx
-export const getArtistTopSong = (id: number) => axios.get(`/artist/top/song?id=${id}`);
+export const getArtistTopSong = (id: number) =>
+  axios.get(`/artist/top/song?id=${id}`);
 // 歌手全部歌曲  /artist/songs?id=xxx
-export const getArtistSongs = (id: number) => axios.get(`/artist/songs?id=${id}`);
-
+export const getArtistSongs = (id: number) =>
+  axios.get(`/artist/songs?id=${id}`);
 
 // 获取喜欢音乐列表
-export const getLikelist = (id:number) => axios.get(`/likelist?uid=${id}`)
-
+export const getLikelist = (id: number) => axios.get(`/likelist?uid=${id}`);
 
 // 获取专辑内容
-export const getAlbumDetail = (id:number) => axios.get(`/album?id=${id}`)
+export const getAlbumDetail = (id: number) => axios.get(`/album?id=${id}`);
