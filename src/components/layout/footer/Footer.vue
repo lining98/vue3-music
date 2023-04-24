@@ -20,6 +20,7 @@ import PlayerAction from "./playerAction.vue";
 .music-player {
   width: 100%;
   height: 70px;
+  background-color: #fff;
   position: relative;
   display: flex;
   justify-content: space-between;

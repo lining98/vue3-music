@@ -3,6 +3,7 @@ import Menu from "@/components/layout/menu/Menu.vue";
 import Footer from "@/components/layout/footer/Footer.vue";
 import Header from "@/components/layout/header/Header.vue";
 import PlayList from "@/components/layout/playList/PlayList.vue";
+import Popup from "@/components/layout/playList/Popup.vue";
 import { ref } from "vue";
 </script>
 
@@ -24,9 +25,10 @@ import { ref } from "vue";
           :bottom="100"
         />
       </ElScrollbar>
-      <Footer />
+    <Footer />
     </div>
     <PlayList />
+    <Popup />
   </div>
 </template>
 
@@ -37,9 +39,9 @@ import { ref } from "vue";
   height: 100%;
   background: #f9fafb;
   .module-left {
-    // flex-shrink: 0;
     min-width: 270px;
     padding-top: 30px;
+    padding-bottom: 20px;
     .module-menu {
       padding: 0 20px;
       .menus-title {
@@ -47,11 +49,9 @@ import { ref } from "vue";
         margin: 20px 0 10px 0;
       }
       .menus-item {
-        // padding: 6px 0;
         margin: 6px 0;
         & > a {
           padding: 6px 20px;
-          //   height: 20px;
           display: flex;
           font-size: 14px;
           align-items: center;
@@ -72,17 +72,15 @@ import { ref } from "vue";
   }
   .module-main {
     flex: 1;
-    // width: 100%;
     background: #fff;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     .main {
       flex: 1;
-      // min-width: 1000px;
       box-sizing: border-box;
       padding: 30px 50px 20px;
-      .container{
+      .container {
         margin-left: auto;
         margin-right: auto;
       }

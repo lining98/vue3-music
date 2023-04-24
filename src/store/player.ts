@@ -3,8 +3,9 @@ import { defineStore, storeToRefs } from "pinia";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { ISongUrl } from "@/models/songUrl";
 import { ISongDetail } from "@/models/song";
-import { getSongUrl, getSongDetail } from "@/api/api";
+import { getSongUrl, getSongDetail, getNewLyric } from "@/api/api";
 import { ElMessage } from "element-plus";
+import { formatLyric } from "@/utils/formatData";
 
 const KEYS = {
   volume: "PLAYER-VOLUME",
@@ -19,6 +20,7 @@ export const usePlayerStore = defineStore({
     // playList: [] as ISongDetail[],
     playList: JSON.parse(localStorage.getItem("playList")) || [],
     showPlayList: false,
+    showPopup: false,
 
     id: 0,
     url: "",
@@ -26,6 +28,9 @@ export const usePlayerStore = defineStore({
     // song: {} as ISongDetail, // 音乐详情
     song: JSON.parse(localStorage.getItem("songDetail")) || ({} as ISongDetail),
     author: "", // 作者
+    lyricDetail: {},
+    lrc: [],
+    yrc: [],
 
     isPlaying: false, //是否播放中
     isPause: false, //是否暂停
@@ -119,6 +124,7 @@ export const usePlayerStore = defineStore({
         this.songUrl = data;
         this.id = id;
         this.songDetail();
+        this.getLyric();
       });
     },
     // 根据id获取音乐详情
@@ -128,6 +134,12 @@ export const usePlayerStore = defineStore({
 
       this.pushPlayList(false, this.song);
       localStorage.setItem("songDetail", JSON.stringify(this.song));
+    },
+    // 获取歌词
+    async getLyric() {
+      const {lrc,yrc} = await getNewLyric(this.id);
+      this.lrc = formatLyric(lrc.lyric)
+      this.yrc = formatLyric(yrc.lyric)
     },
 
     // 播放结束

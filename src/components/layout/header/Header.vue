@@ -31,7 +31,7 @@ const { showSearchView, searchKeyword } = storeToRefs(useSearchStore());
 
 <style lang="scss" scoped>
 .header {
-  border-bottom: 1px solid #000;
+  // border-bottom: 1px solid #000;
   width: 100%;
   height: 56px;
   box-sizing: border-box;
