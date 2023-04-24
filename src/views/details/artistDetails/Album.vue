@@ -4,12 +4,12 @@
     <li
       v-for="item in albumList"
       :key="item.id"
-      @click="router.push({ name: 'albumDetail', query: item.id })"
+      @click="router.push({ name: 'albumDetail', query: { id: item.id } })"
     >
       <el-image :src="item.blurPicUrl">
         <template #placeholder>
-            <div class="image-slot">加载中<span class="dot">...</span></div>
-          </template>
+          <div class="image-slot">加载中<span class="dot">...</span></div>
+        </template>
       </el-image>
       <p>{{ item.name }}</p>
       <span></span>
@@ -64,7 +64,7 @@ onMounted(getData);
     transform: translateY(-5px);
     box-shadow: 0 0 10px rgba($color: #c3c6c8, $alpha: 0.9);
   }
-  .image-slot{
+  .image-slot {
     background-color: #c3c6c8;
     font-size: 14px;
     line-height: 200px;

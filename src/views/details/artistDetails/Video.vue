@@ -1,7 +1,7 @@
 <template>
   <ul class="mv">
     <li v-for="item in mvlist" :key="item.id">
-      <img :src="item.imgurl16v9" alt="" />
+      <el-image :src="item.imgurl16v9" alt=""></el-image>
       <p>{{ item.name }}</p>
       <!-- <span></span>
         {{item.name}} -->

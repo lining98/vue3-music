@@ -5,7 +5,7 @@
         <div class="title">播放列表</div>
         <div class="count">
           <span>共 {{ playListCount }} 首音乐</span>
-          <span class="icon"> <IconPark :icon="Delete" />清空 </span>
+          <span class="icon" @click="clearPlayList"> <IconPark :icon="Delete" />清空 </span>
         </div>
       </div>
 
@@ -19,7 +19,9 @@
               @dblclick="play(item.id)"
             >
               <div class="left">
-                <img :src="item.al?.picUrl" alt="" />
+                <div class="img">
+                  <el-image lazy :src="item.al?.picUrl"></el-image>
+                </div>
                 <div class="name">
                   <p>{{ item?.name }}</p>
                   <p>
@@ -101,8 +103,8 @@ const { play, clearPlayList } = usePlayerStore();
       .left {
         flex: 1;
         display: flex;
-        img {
-          flex-shrink: 0;
+        .img {
+          // flex-shrink: 0;
           width: 40px;
           height: 40px;
           margin-right: 10px;
