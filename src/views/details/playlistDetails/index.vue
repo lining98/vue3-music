@@ -3,9 +3,8 @@
     <div v-loading="playlistsLoading">
       <Info :playlist="playlists.value" :play-all="() => playAll()" />
     </div>
-    <hr />
     <div v-loading="songsLoading">
-      <MusicList :musicArr="songs" :showArName="true" />
+      <MusicList :musicArr="songList" :showArName="true" />
     </div>
   </div>
 </template>
@@ -19,18 +18,24 @@ import Info from "./Info.vue";
 import MusicList from "@/components/common/musicList.vue";
 import { useRoute, useRouter } from "vue-router";
 import { usePlayerStore } from "@/store/player";
+import { storeToRefs } from "pinia";
 
 const playlists = reactive([]);
 const musicLists = reactive([]);
-const songs = ref([]);
+const songList = ref([]);
 
 const route = useRoute();
 const router = useRouter();
 
-const { play, pushPlayList } = usePlayerStore();
+const { play, pushPlayList,randomPlay } = usePlayerStore();
+const { loopType } = storeToRefs(usePlayerStore());
 const playAll = () => {
-  pushPlayList(true, ...songs.value);
-  play(songs.value[0].id);
+  pushPlayList(true, ...songList.value);
+  if (loopType.value) {
+    play(songList.value[0].id);
+  } else {
+    randomPlay();
+  }
 };
 
 watch(
@@ -55,7 +60,8 @@ const getData = async (id: number) => {
   playlistsLoading.value = false;
 
   const songsAll = await getPlaylistTrackAll(id);
-  songs.value = songsAll.songs;
+  songList.value = songsAll.songs;
+  songList.value.forEach((item: any, index: number) => (item.index = index + 1));
   songsLoading.value = false;
 };
 

@@ -23,9 +23,14 @@
         </div>
       </div>
     </div>
-    <el-tabs v-model="selectedTag" class="" v-loading="isLoading">
+    <el-tabs v-model="selectedTag"  v-loading="isLoading">
       <el-tab-pane label="热门歌曲" name="hotSongs">
-        <MusicList :musicArr="songlist" :showArName='false'  />
+        <el-button size="default" round @click="playAll">
+          <IconPark :icon="PlayOne" class="mr-1" size="14" />
+          播放全部
+        </el-button>
+
+        <MusicList :musicArr="songList" :showArName="true" />
       </el-tab-pane>
       <!-- <el-tab-pane :label=:"全部歌曲`${artistDetail.musicSize}`" name="hotSongs">
       <MusicListAll :musicArr="songlistall" />
@@ -57,25 +62,40 @@ import {
 } from "@/api/api";
 import { storeToRefs } from "pinia";
 import { ElLoading, ElMessage } from "element-plus";
+import { PlayOne } from "@icon-park/vue-next";
+import IconPark from "@/components/common/IconPark.vue";
 
 import MusicList from "@/components/common/musicList.vue";
 import MusicListAll from "@/components/common/musicListAll.vue";
 import Album from "./Album.vue";
 import Video from "./Video.vue";
-import {  useRoute } from "vue-router";
+import { useRoute } from "vue-router";
+
+import { usePlayerStore } from "@/store/player";
+const { play, pushPlayList, randomPlay } = usePlayerStore();
+const { loopType } = storeToRefs(usePlayerStore());
 
 let isLoading = ref(true);
 const artistDetail = ref({});
-const songlist = ref([]);
+const songList = ref([]);
 
 let selectedTag = ref("hotSongs");
 
 const route = useRoute();
 const id = Number(route.query.id);
 
-async function getData(artId:number) {
-  if(artId == 0){
-    return ElMessage.error('无相关艺人')
+const playAll = () => {
+  pushPlayList(true, ...songList.value);
+  if (loopType.value) {
+    play(songList.value[0].id);
+  } else {
+    randomPlay();
+  }
+};
+
+async function getData(artId: number) {
+  if (artId == 0) {
+    return ElMessage.error("无相关艺人");
   }
   isLoading.value = true;
   // 获取歌手详情
@@ -84,8 +104,10 @@ async function getData(artId:number) {
 
   // 获取歌手最热50首歌曲
   const hotSongsdetail = await getArtistTopSong(artId);
-  songlist.value = hotSongsdetail.songs;
-
+  songList.value = hotSongsdetail.songs;
+  songList.value.forEach(
+    (item: any, index: number) => (item.index = index + 1)
+  );
 
   // const allSongs = await getArtists(id);
   // songalllist.value = allSongs.songs;
@@ -96,7 +118,6 @@ async function getData(artId:number) {
 onMounted(() => {
   getData(id);
 });
-
 </script>
 
 <style lang="scss" scoped>
@@ -132,7 +153,7 @@ onMounted(() => {
       }
     }
   }
-  .descrip{
+  .descrip {
     text-indent: 2em;
     font-size: 14px;
   }

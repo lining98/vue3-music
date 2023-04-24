@@ -10,7 +10,7 @@
       <el-table-column type="index" width="50" >
         <template #default="scope,index">
           <IconPark v-if="scope.row.id === id" :icon='VolumeSmall' theme='filled'  />
-          <span v-else>{{index}}</span>
+          <span v-else>{{scope.row.index}}</span>
         </template>
       </el-table-column>
       <!-- <el-table-column width="50">
@@ -18,12 +18,12 @@
           <IconPark :icon="Like" size="16" class="like" />
         </template>
       </el-table-column> -->
-      <el-table-column prop="name" label="标题" />
+      <el-table-column prop="name" label="音乐标题" min-width='300' />
       <el-table-column
         v-if="showArName"
         prop="ar[0].name"
         label="歌手"
-        width="160"
+        min-width="160"
       >
         <template #default="scope">
           <span v-for="(author, index) in scope.row.ar" :key="author.id">
@@ -35,14 +35,14 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="al.name" label="专辑" width="260">
+      <el-table-column prop="al.name" label="专辑" min-width="260">
         <template #default="scope">
           <span class="clickable" @click="toAlbumDetails(scope.row.al.id)">{{
             scope.row.al.name
           }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="dt" label="时间" width="100">
+      <el-table-column prop="dt" label="时间" min-width="80">
         <template #default="scope">
           <span>{{ useFormatDuring(scope.row.dt) }}</span>
         </template>
@@ -75,8 +75,6 @@ const playSong = (row: any) => {
 };
 
 function tableRowClassName({ row, rowIndex }: { row: any; rowIndex: number }) {
-  // 把每一行的索引放进row
-  // row.index = rowIndex;
   if (row.id == id.value) {
     return "active";
   }

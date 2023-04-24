@@ -14,7 +14,7 @@ export const usePlayerStore = defineStore({
   id: "player",
   state: () => ({
     audio: new Audio(), // Audio实例化
-    loopType: 1, // 循环模式   0单曲循环  1列表循环  2随机播放
+    loopType: 2, // 循环模式   0随机播放  1单曲循环  2列表循环
     volume: Number(localStorage.getItem(KEYS.volume)) || 60, // 音量
     // playList: [] as ISongDetail[],
     playList: JSON.parse(localStorage.getItem("playList")) || [],
@@ -135,13 +135,13 @@ export const usePlayerStore = defineStore({
       console.log("播放结束");
       switch (this.loopType) {
         case 0:
-          this.rePlay();
+          this.randomPlay();
           break;
         case 1:
-          this.next();
+          this.rePlay();
           break;
         case 2:
-          this.randomPlay();
+          this.next();
           break;
       }
     },
@@ -152,7 +152,7 @@ export const usePlayerStore = defineStore({
 
       this.isPause = !this.isPause;
       if (this.isPause) {
-        let id = JSON.parse(localStorage.getItem("songDetail")).id
+        let id = JSON.parse(localStorage.getItem("songDetail")).id;
         this.play(id); // 播放
         this.audio.play(); // 播放
       } else {
@@ -194,7 +194,7 @@ export const usePlayerStore = defineStore({
     // 下一曲
     next() {
       // console.log('下一曲');
-      if (this.loopType === 2) {
+      if (this.loopType === 0) {
         this.randomPlay();
       } else {
         this.play(this.nextSong.id);

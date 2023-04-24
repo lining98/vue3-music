@@ -2,7 +2,7 @@
   <div class="player-controller">
     <!-- 播放顺序 -->
     <IconPark
-      :icon="loopType === 0 ? PlayOnce : loopType === 1 ? LoopOnce : ShuffleOne"
+      :icon="loopType === 0 ? ShuffleOne : loopType === 1 ? PlayOnce : LoopOnce"
       size="18"
       @click="toggleLoop"
     />
