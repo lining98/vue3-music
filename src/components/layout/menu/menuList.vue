@@ -22,7 +22,7 @@
               item.id == route.query.id && route.name == 'playlist' ? 'actived' : ''
             "
           >
-            <img :src="item.coverImgUrl" alt="" />
+            <el-image lazy :src="item.coverImgUrl" alt="" class="img" ></el-image>
             <div>
               <p class="name">{{ item.name }}</p>
               <span>{{ item.trackCount }}首</span>
@@ -90,7 +90,7 @@ const toPlaylist = (id:number) => {
       align-items: center;
       padding-left: 8px;
       cursor: pointer;
-      img {
+      .img {
         width: 40px;
         margin-right: 3px;
       }

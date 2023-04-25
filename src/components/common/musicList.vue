@@ -9,7 +9,7 @@
     >
       <el-table-column type="index" width="50" >
         <template #default="scope,index">
-          <IconPark v-if="scope.row.id === id" :icon='VolumeSmall' theme='filled'  />
+          <IconPark v-if="scope.row.id === song.id" :icon='VolumeSmall' theme='filled'  />
           <span v-else>{{scope.row.index}}</span>
         </template>
       </el-table-column>
@@ -54,7 +54,7 @@
 <script setup lang="ts">
 import IconPark from "@/components/common/iconPark.vue";
 import { Like, VolumeSmall } from "@icon-park/vue-next";
-import { useFormatDuring } from "@/utils/numbers";
+import { useFormatDuring } from "@/utils/format";
 import { usePlayerStore } from "@/store/player";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
@@ -67,7 +67,7 @@ const props = defineProps(["musicArr", "showArName"]);
 const route = useRoute()
 const router = useRouter();
 const { profile, playlist } = storeToRefs(useUserStore());
-const { id } = storeToRefs(usePlayerStore());
+const { song } = storeToRefs(usePlayerStore());
 const { play, pushPlayList } = usePlayerStore();
 const playSong = (row: any) => {
   play(row.id);
@@ -75,7 +75,7 @@ const playSong = (row: any) => {
 };
 
 function tableRowClassName({ row, rowIndex }: { row: any; rowIndex: number }) {
-  if (row.id == id.value) {
+  if (row.id == song.value.id) {
     return "active";
   }
 }

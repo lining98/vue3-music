@@ -27,7 +27,7 @@ export async function getSongDetail(id: number) {
   return songs[0];
 }
 // 获取音乐歌词
-export const getNewLyric = (id: number) => axios.get(`/lyric/new?id=${id}`);
+export const getLyric = (id: number) => axios.get(`/lyric?id=${id}`);
 
 // 获取热门搜索 /search/hot/detail
 export async function getSearchHotDetail() {

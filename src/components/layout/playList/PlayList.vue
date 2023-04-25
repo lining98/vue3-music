@@ -46,7 +46,7 @@ import { storeToRefs } from "pinia";
 import { usePlayerStore } from "@/store/player";
 import IconPark from "@/components/common/iconPark.vue";
 import { Delete } from "@icon-park/vue-next";
-import { useFormatDuring } from "@/utils/numbers";
+import { useFormatDuring } from "@/utils/format";
 
 const { showPlayList, playListCount, playList, id } = storeToRefs(
   usePlayerStore()

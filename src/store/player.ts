@@ -3,9 +3,9 @@ import { defineStore, storeToRefs } from "pinia";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { ISongUrl } from "@/models/songUrl";
 import { ISongDetail } from "@/models/song";
-import { getSongUrl, getSongDetail, getNewLyric } from "@/api/api";
+import { getSongUrl, getSongDetail, getLyric } from "@/api/api";
 import { ElMessage } from "element-plus";
-import { formatLyric } from "@/utils/formatData";
+import { formatLyric } from "@/utils/format";
 
 const KEYS = {
   volume: "PLAYER-VOLUME",
@@ -27,9 +27,8 @@ export const usePlayerStore = defineStore({
     songUrl: {} as ISongUrl,
     // song: {} as ISongDetail, // 音乐详情
     song: JSON.parse(localStorage.getItem("songDetail")) || ({} as ISongDetail),
-    author: "", // 作者
     lyricDetail: {},
-    lrc: [],
+    lyricArr: [],
     yrc: [],
 
     isPlaying: false, //是否播放中
@@ -65,6 +64,9 @@ export const usePlayerStore = defineStore({
         return state.playList[prevIndex];
       }
     },
+    lyricTime(state){
+      return state.currentTime * 1000;
+    }
   },
   actions: {
     init() {
@@ -107,39 +109,45 @@ export const usePlayerStore = defineStore({
     // 获取id播放音乐
     async play(id: number) {
       if (id == this.id) return;
-
       const data = await getSongUrl(id);
       this.audio.src = data.url;
-      if (!data.url) {
-        this.currentTime = 0;
-        ElMessage.error("找不到歌曲地址！");
-        this.song = {} as ISongDetail;
-        this.author = "";
-        return;
-      }
-      // console.log("play");
+      // if (!data.url) {
+      //   this.currentTime = 0;
+      //   ElMessage.error("暂无音频已自动切换下一首！");
+      //   this.song = {} as ISongDetail;
+      //   return;
+      // }
+
+      // let that = this
+      // this.audio.addEventListener('error',function(){
+      //   let timer = null;
+      //   if(timer) clearTimeout(timer)
+      //   timer = setTimeout(() => {
+      //     ElMessage.error("暂无音频已自动切换下一首！");
+      //   }, 200);
+      //   // that.next()
+      // })
+
 
       this.audio.play().then(() => {
         this.isPause = true;
         this.songUrl = data;
         this.id = id;
         this.songDetail();
-        this.getLyric();
+        this.getLyricDetail();
       });
     },
     // 根据id获取音乐详情
     async songDetail() {
       this.song = await getSongDetail(this.id);
-      this.author = this.song.ar[0].name;
 
       this.pushPlayList(false, this.song);
       localStorage.setItem("songDetail", JSON.stringify(this.song));
     },
     // 获取歌词
-    async getLyric() {
-      const {lrc,yrc} = await getNewLyric(this.id);
-      this.lrc = formatLyric(lrc.lyric)
-      this.yrc = formatLyric(yrc.lyric)
+    async getLyricDetail() {
+      const {lrc} = await getLyric(this.id);
+      this.lyricArr = formatLyric(lrc.lyric)
     },
 
     // 播放结束
@@ -161,11 +169,9 @@ export const usePlayerStore = defineStore({
     // 播放、暂停
     togglePlay() {
       if (!this.song.id) return;
-
       this.isPause = !this.isPause;
       if (this.isPause) {
-        let id = JSON.parse(localStorage.getItem("songDetail")).id;
-        this.play(id); // 播放
+        this.play(this.song.id); // 播放
         this.audio.play(); // 播放
       } else {
         // this.audio.pause(); // 暂停

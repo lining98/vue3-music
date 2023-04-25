@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { useFormatDuring } from "@/utils/numbers";
+import { useFormatDuring } from "@/utils/format";
 import { usePlayerStore } from "@/store/player";
 import IconPark from "@/components/common/iconPark.vue";
 import { MusicList } from "@icon-park/vue-next";

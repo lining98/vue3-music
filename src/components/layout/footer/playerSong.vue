@@ -35,7 +35,7 @@ import { toRefs } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const { song, songUrl, author, showPopup } = storeToRefs(usePlayerStore());
+const { song,  showPopup } = storeToRefs(usePlayerStore());
 </script>
 
 <style lang="scss" scoped>
