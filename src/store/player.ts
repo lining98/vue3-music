@@ -119,13 +119,13 @@ export const usePlayerStore = defineStore({
       this.isPause = true;
       this.songUrl = data;
 
-      this.audio.play();
+      this.audio.play().catch((err) => console.log(err));
 
-      this.audio.onerror = ()=>{
+      this.audio.onerror = () => {
         this.isPlaying = false;
-          ElMessage.error("当前音乐不可播放，已自动播放下一曲");
-          this.next()
-      }
+        ElMessage.error("当前音乐不可播放，已自动播放下一曲");
+        this.next();
+      };
     },
     // 根据id获取音乐详情
     async songDetail() {
@@ -240,8 +240,8 @@ export const usePlayerStore = defineStore({
       if (this.isPlaying && !this.sliderInput) {
         // this.currentTime = parseInt(this.audio.currentTime.toString());
         // this.duration = parseInt(this.audio.duration.toString());
-        this.currentTime = this.audio.currentTime
-        this.duration = this.audio.duration
+        this.currentTime = this.audio.currentTime;
+        this.duration = this.audio.duration;
         this.ended = this.audio.ended;
       }
     },
