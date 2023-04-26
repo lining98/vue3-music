@@ -64,9 +64,9 @@ export const usePlayerStore = defineStore({
         return state.playList[prevIndex];
       }
     },
-    lyricTime(state){
+    lyricTime(state) {
       return state.currentTime * 1000;
-    }
+    },
   },
   actions: {
     init() {
@@ -109,33 +109,23 @@ export const usePlayerStore = defineStore({
     // 获取id播放音乐
     async play(id: number) {
       if (id == this.id) return;
+      this.isPlaying = true;
+
       const data = await getSongUrl(id);
       this.audio.src = data.url;
-      // if (!data.url) {
-      //   this.currentTime = 0;
-      //   ElMessage.error("暂无音频已自动切换下一首！");
-      //   this.song = {} as ISongDetail;
-      //   return;
-      // }
+      this.id = id;
+      this.songDetail();
+      this.getLyricDetail();
+      this.isPause = true;
+      this.songUrl = data;
 
-      // let that = this
-      // this.audio.addEventListener('error',function(){
-      //   let timer = null;
-      //   if(timer) clearTimeout(timer)
-      //   timer = setTimeout(() => {
-      //     ElMessage.error("暂无音频已自动切换下一首！");
-      //   }, 200);
-      //   // that.next()
-      // })
+      this.audio.play();
 
-
-      this.audio.play().then(() => {
-        this.isPause = true;
-        this.songUrl = data;
-        this.id = id;
-        this.songDetail();
-        this.getLyricDetail();
-      });
+      this.audio.onerror = ()=>{
+        this.isPlaying = false;
+          ElMessage.error("当前音乐不可播放，已自动播放下一曲");
+          this.next()
+      }
     },
     // 根据id获取音乐详情
     async songDetail() {
@@ -146,8 +136,8 @@ export const usePlayerStore = defineStore({
     },
     // 获取歌词
     async getLyricDetail() {
-      const {lrc} = await getLyric(this.id);
-      this.lyricArr = formatLyric(lrc.lyric)
+      const { lrc } = await getLyric(this.id);
+      this.lyricArr = formatLyric(lrc.lyric);
     },
 
     // 播放结束
@@ -169,13 +159,14 @@ export const usePlayerStore = defineStore({
     // 播放、暂停
     togglePlay() {
       if (!this.song.id) return;
-      this.isPause = !this.isPause;
-      if (this.isPause) {
-        this.play(this.song.id); // 播放
+      this.isPlaying = !this.isPlaying;
+      if (this.isPlaying) {
         this.audio.play(); // 播放
+        this.play(this.song.id); // 播放
+        this.isPause = true;
       } else {
-        // this.audio.pause(); // 暂停
         this.audio.pause(); // 暂停
+        this.isPause = false;
       }
     },
 
@@ -190,8 +181,6 @@ export const usePlayerStore = defineStore({
 
     // 静音切换
     toggleMuted() {
-      console.log(this.muted);
-
       this.muted = !this.muted;
       this.audio.muted = this.muted;
     },
@@ -248,10 +237,11 @@ export const usePlayerStore = defineStore({
 
     // 定时器
     interval() {
-      // if (this.isPlaying && !this.sliderInput) {
-      if (!this.sliderInput) {
-        this.currentTime = parseInt(this.audio.currentTime.toString());
-        this.duration = parseInt(this.audio.duration.toString());
+      if (this.isPlaying && !this.sliderInput) {
+        // this.currentTime = parseInt(this.audio.currentTime.toString());
+        // this.duration = parseInt(this.audio.duration.toString());
+        this.currentTime = this.audio.currentTime
+        this.duration = this.audio.duration
         this.ended = this.audio.ended;
       }
     },
@@ -274,7 +264,7 @@ export const userPlayerInit = () => {
   onMounted(() => {
     init();
     console.log("启动定时器");
-    timer = setInterval(interval, 1000);
+    timer = setInterval(interval, 100);
   });
 
   //   清除定时器

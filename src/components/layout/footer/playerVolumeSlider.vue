@@ -15,7 +15,7 @@
     ></el-slider>
     <IconPark
       class="vicon"
-      :icon="muted ? VolumeMute : VolumeSmall"
+      :icon="muted || volume==0 ? VolumeMute : VolumeSmall"
       theme="filled"
       size="16"
       @click="toggleMuted"
@@ -42,7 +42,7 @@ const { volume, muted, toggleMuted, setVolume } = toRefs(usePlayerStore());
     font-size: 14px;
   }
   .volume-slider {
-    margin: 8px 0 5px 0;
+    margin: 8px 0 8px 0;
   }
   .vicon {
     cursor: pointer;

@@ -14,6 +14,9 @@ import PlayerSong from "./playerSong.vue";
 import PlayerController from "./playerController.vue";
 import PlayerSlier from "./playerSlier.vue";
 import PlayerAction from "./playerAction.vue";
+import { userPlayerInit } from "@/store/player";
+
+userPlayerInit();
 </script>
 
 <style lang="scss">
