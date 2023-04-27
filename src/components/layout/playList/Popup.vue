@@ -9,9 +9,13 @@
   >
     <div class="popup">
       <div class="main">
+        <!-- 左侧图片 -->
+        <div class='pic'>
+          pic
+        </div>
         <!-- 歌词部分 -->
         <!-- <div class="lyric" ref="lyric" style="height: 300px"> -->
-        <div class="lyric-content"  style="height: 300px">
+        <div class="lyric-content" >
           <div class="name">
             <h2>{{ song.name }}</h2>
             <span v-for="(item, index) in song.ar">
@@ -60,7 +64,7 @@ onMounted(() => {
   timer = setInterval(() => {
     let p: any = document.querySelector("p.active");
     if (p && p.offsetTop > 300) {
-      lyric.value.scrollTop = p.offsetTop - 300;
+      lyric.value.scrollTop = p.offsetTop - 200;
     }
   }, 1000);
 });
@@ -83,6 +87,11 @@ onUnmounted(() => {
   background: linear-gradient(to bottom,   #8ae28c 10%,   rgba(255,255,255,0.6));
 
   .main {
+    display:flex;
+    justify-content: space-around;
+    // .pic{
+
+    // }
     .lyric-content {
       text-align: center;
 
@@ -90,6 +99,7 @@ onUnmounted(() => {
         color: red;
       }
       .lyric{
+        // margin: 0 auto;
         width: 400px;
         height: 400px;
         overflow-y: auto;
