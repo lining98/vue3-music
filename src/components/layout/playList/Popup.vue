@@ -8,14 +8,26 @@
     size="100%"
   >
     <div class="popup">
+    <div class="popup-bg"  :style="{ backgroundImage: picUrl }"></div>
       <div class="main">
-        <!-- 左侧图片 -->
-        <div class='pic'>
-          pic
+        <!-- 左侧唱盘部分 -->
+        <div class="pic">
+          <img
+            class="needle"
+            :class="{ crush: isPause }"
+            src="./img/needle.png"
+            alt=""
+          />
+          <img
+            class="picUrl"
+            :style="`animation-play-state:${isPause ? 'running' : 'paused'} `"
+            alt=""
+            :src="song.al?.picUrl || defaultImg"
+          />
         </div>
         <!-- 歌词部分 -->
         <!-- <div class="lyric" ref="lyric" style="height: 300px"> -->
-        <div class="lyric-content" >
+        <div class="lyric-content">
           <div class="name">
             <h2>{{ song.name }}</h2>
             <span v-for="(item, index) in song.ar">
@@ -30,17 +42,17 @@
             </span>
           </div>
           <!-- <ElScrollbar> -->
-            <div class="lyric" ref="lyric">
-              <p
-                v-for="(item, index) in lyricArr"
-                :key="index"
-                :class="{
-                  active: lyricTime >= item.time && lyricTime <= item.next,
-                }"
-              >
-                {{ item.lrc }}
-              </p>
-            </div>
+          <div class="lyric" ref="lyric">
+            <p
+              v-for="(item, index) in lyricArr"
+              :key="index"
+              :class="{
+                active: lyricTime >= item.time && lyricTime <= item.next,
+              }"
+            >
+              {{ item.lrc }}
+            </p>
+          </div>
           <!-- </ElScrollbar> -->
         </div>
       </div>
@@ -53,12 +65,21 @@
 import Footer from "@/components/layout/footer/Footer.vue";
 import { usePlayerStore } from "@/store/player";
 import { storeToRefs } from "pinia";
-import { onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 
-const { song, lyricTime, showPopup, lyricArr } = storeToRefs(usePlayerStore());
+import defaultImg from "@/assets/img/OpticalDisk.png";
+
+const { isPause, song, lyricTime, showPopup, lyricArr } = storeToRefs(
+  usePlayerStore()
+);
 
 let lyric = ref();
 let timer: NodeJS.Timer;
+const picUrl = computed(() => {
+  return song.value.al?.picUrl
+    ? `url(${song.value.al.picUrl})`
+    : `url(${defaultImg})`;
+});
 onMounted(() => {
   // 歌词1s滚动刷新一次
   timer = setInterval(() => {
@@ -82,33 +103,87 @@ onUnmounted(() => {
   justify-content: space-between;
   position: fixed;
   bottom: 0;
-
-  background: -webkit-linear-gradient(to bottom,  #8ae28c 10%,   rgba(255,255,255,0.6));
-  background: linear-gradient(to bottom,   #8ae28c 10%,   rgba(255,255,255,0.6));
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.4);
 
   .main {
-    display:flex;
+    display: flex;
     justify-content: space-around;
-    // .pic{
+    padding-top: 100px;
+    .pic {
+      display: flex;
+      flex-direction: column;
+      .needle {
+        width: 120px;
+        transform: rotate(0deg);
+        transform-origin: 0 0;
+        position: relative;
+        left: 150px;
+        top: 20px;
+        z-index: 10;
+        transition: all 0.5s;
+      }
+      .crush {
+        transform: rotate(20deg);
+      }
+      .picUrl {
+        position: relative;
+        width: 200px;
+        border-radius: 50%;
+        border: 50px solid #131315;
+        animation: rotate_360 10s linear infinite;
+        // background-image: url('asd');
+      }
 
-    // }
+      @keyframes rotate_360 {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
     .lyric-content {
       text-align: center;
+        color: #ffffff99;
 
       .active {
-        color: red;
+        color: #40ce8f;
       }
-      .lyric{
+      .lyric {
         // margin: 0 auto;
         width: 400px;
         height: 400px;
         overflow-y: auto;
+        p{
+          height: 35px;
+          line-height: 35px;
+        }
       }
     }
   }
 
-  .footer{
+  .footer {
     background: transparent;
   }
+}
+
+.popup-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.popup-bg {
+  z-index: -2;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  filter: blur(12px);
+  opacity: 0.6;
+  transition: all 0.8s;
+  transform: scale(1.1);
 }
 </style>
