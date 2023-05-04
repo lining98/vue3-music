@@ -10,9 +10,5 @@ import Banner from "./banner.vue";
 </template>
 
 <style lang="scss" scoped>
-.discover{
-  .banner{
-    margin: 0 40px;
-  }
-}
+
 </style>

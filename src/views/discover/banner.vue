@@ -1,34 +1,25 @@
 <template>
   <!-- 轮播图 -->
   <div class="banners" v-loading="isLoading">
-    <el-carousel
-      v-if="banners"
-      :interval="4000"
-      indicator-position="outside"
-      type="card"
-      height="224px"
-    >
-      <el-carousel-item
-        class="carousel"
-        v-for="item in banners"
-        :key="item.targetId"
-      >
-        <div class="img-card">
-          <img
-            :src="item.imageUrl"
-            class="banner-image"
-            @click="handleClick(item)"
-          />
-          <div class="type-title" :style="`background:${item.titleColor};`">
-            {{ item.typeTitle }}
-          </div>
+    <Swiper slides-per-group-auto slides-per-view="auto" :navigation="true" :grab-cursor="true">
+    <!-- <Swiper slides-per-view="auto" :grab-cursor="true"> -->
+      <SwiperSlide v-for="item in banners" :key="item.bannerId">
+        <img
+          :src="item.imageUrl"
+          class="banner-image"
+          @click="handleClick(item.targetId)"
+        />
+        <div class="type-title" :style="`background:${item.titleColor};`">
+          {{ item.typeTitle }}
         </div>
-      </el-carousel-item>
-    </el-carousel>
+      </SwiperSlide>
+    </Swiper>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
 import { storeToRefs } from "pinia";
 import { toRefs, onMounted, ref } from "vue";
 import { useBannerStore } from "@/store/banner"; //状态管理 pinia
@@ -55,10 +46,6 @@ function handleClick(item: any) {
     case 10:
       router.push("/music");
       break;
-    // case 1:
-    //   break;
-    // case 1:
-    //   break;
     default:
       open(item.url);
   }
@@ -67,26 +54,46 @@ function handleClick(item: any) {
 
 <style lang="scss" scoped>
 // 轮播
-.banners {
-  width: 100%;
-  .carousel {
-    .img-card {
-      position: relative;
-      .banner-image {
-        width: 100%;
-        height: 224px;
-        border-radius: 8px;
-        transition: all 0.3s;
-      }
-      .type-title {
-        font-size: 12px;
-        color: #fff;
-        position: absolute;
-        right: 0px;
-        bottom: 9px;
-        padding: 2px 8px;
-        border-radius: 8px 0 8px 0;
-      }
+.swiper {
+  .swiper-slide {
+    overflow: hidden;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding-left: 0.375rem;
+    padding-right: 0.375rem;
+    @media (min-width: 768px) {
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      width: 50%;
+    }
+    @media (min-width: 1280px) {
+      width: 33.33%;
+    }
+    @media (min-width: 1536px) {
+      width: 25%;
+      box-sizing: border-box;
+    }
+    .banner-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .banner-image:hover {
+      // transform: scale(1.05);
+      opacity: 0.8;
+    }
+
+    .type-title {
+      font-size: 12px;
+      color: #fff;
+      position: absolute;
+      right: 0.375rem;
+      bottom: 5px;
+      padding: 2px 8px;
+      border-radius: 8px 0 8px 0;
     }
   }
 }
