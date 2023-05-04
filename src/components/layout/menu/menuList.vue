@@ -91,8 +91,8 @@ const toPlaylist = (id:number) => {
       padding-left: 8px;
       cursor: pointer;
       .img {
-        width: 40px;
-        margin-right: 3px;
+        width: 45px;
+        margin-right: 5px;
       }
       div {
         width: 100%;
