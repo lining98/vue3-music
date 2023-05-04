@@ -4,7 +4,12 @@
     <div class="title">{{ getTitle(order) }}</div>
     <!-- 单曲 -->
     <ul class="list" v-if="order === 'songs'">
-      <li class="songs" v-for="item in suggestData.songs" :key="item.id">
+      <li
+        class="songs"
+        v-for="item in suggestData.songs"
+        :key="item.id"
+        @click="play(item.id)"
+      >
         <span class="name">{{ item.name }}</span>
         <span class="line">-</span>
         <span class="artist">{{ head(item.artists)?.name }}</span>
@@ -12,14 +17,22 @@
     </ul>
     <!-- 歌手 -->
     <ul class="list" v-if="order === 'artists'">
-      <li v-for="item in suggestData.artists" :key="item.id">
-        <el-avatar  :src="item.picUrl" />
+      <li
+        v-for="item in suggestData.artists"
+        :key="item.id"
+        @click="routerPush('artistDetail', item.id)"
+      >
+        <el-avatar :src="item.picUrl" />
         <span class="name">{{ item.name }}</span>
       </li>
     </ul>
     <!-- 专辑 -->
     <ul class="list" v-if="order === 'albums'">
-      <li v-for="item in suggestData.albums" :key="item.id">
+      <li
+        v-for="item in suggestData.albums"
+        :key="item.id"
+        @click="routerPush('albumDetail', item.id)"
+      >
         <span class="name">{{ item.name }}</span>
         <span class="line">-</span>
         <span class="artist">{{ item.artist.name }}</span>
@@ -27,7 +40,11 @@
     </ul>
     <!-- 歌单 -->
     <ul class="list" v-if="order === 'playlists'">
-      <li v-for="item in suggestData.playlists" :key="item.id">
+      <li
+        v-for="item in suggestData.playlists"
+        :key="item.id"
+        @click="routerPush('playlist', item.id)"
+      >
         <span class="name">{{ item.name }}</span>
       </li>
     </ul>
@@ -46,7 +63,9 @@ const { suggestData } = storeToRefs(useSearchStore());
 const { play } = usePlayerStore();
 const router = useRouter();
 
-const routerPush = () => {};
+const routerPush = (name: string, id: number) => {
+  router.push({ name: name, query: { id: id } });
+};
 
 const getTitle = (name: string) => {
   switch (name) {
@@ -77,8 +96,8 @@ const getTitle = (name: string) => {
       align-items: center;
       height: 30px;
       cursor: pointer;
-      .line{
-        margin: 0 5px ;
+      .line {
+        margin: 0 5px;
       }
       .name {
         margin-left: 10px;

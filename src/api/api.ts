@@ -46,6 +46,26 @@ export async function getSearchSuggest(keywords: string) {
   );
   return result;
 }
+// 根据关键字搜索关键词可以搜索该音乐、专辑、歌手、歌单、用户
+/*
+type: 搜索类型；默认为 1 即单曲 ,
+取值意义 :
+      1: 单曲,
+      10: 专辑,
+      100: 歌手,
+      1000: 歌单,
+      1002: 用户,
+      1004: MV,
+      1006: 歌词,
+      1009: 电台,
+      1014: 视频,
+      1018:综合,
+      2000:声音
+*/
+export async function getSearchResult(params: any) {
+  const { result } = await axios.get("/cloudsearch", params);
+  return result;
+}
 
 // 歌单
 // 获取用户歌单 /user/playlist?uid

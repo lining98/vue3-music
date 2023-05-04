@@ -1,5 +1,9 @@
 <template>
-  <el-popover placement="bottom-start" v-model:visible="showSearchView" width="320">
+  <el-popover
+    placement="bottom-start"
+    v-model:visible="showSearchView"
+    width="320"
+  >
     <template #reference>
       <div>
         <ElInput
@@ -12,7 +16,12 @@
           @focusout="showSearchView = false"
           style="width: 250px"
         />
-        <el-button type="primary" :icon="Search" style="font-size:20px;"  />
+        <el-button
+          type="primary"
+          :icon="Search"
+          style="font-size: 20px"
+          @click="search"
+        />
       </div>
     </template>
     <div style="height: 480px">
@@ -50,12 +59,15 @@ import { Search } from "@icon-park/vue-next";
 import { storeToRefs } from "pinia";
 import type { ISearchHotDetail } from "@/models/search";
 import { useSearchStore } from "@/store/search";
-import { getSearchHotDetail } from "@/api/api";
+import { getSearchHotDetail, getSearchResult } from "@/api/api";
 import { debounce } from "lodash";
-const { showSearchView, searchKeyword, showHot } = toRefs(useSearchStore());
+const { keywords,showSearchView, searchKeyword, showHot } = storeToRefs(useSearchStore());
 const { suggest } = useSearchStore();
 
 import SearchSuggest from "./searchSuggest.vue";
+import { useRoute, useRouter } from "vue-router";
+const route = useRoute();
+const router = useRouter();
 
 const searchInput = debounce((value: string | number) => suggest(), 500, {
   maxWait: 1000,
@@ -69,10 +81,18 @@ onMounted(async () => {
 const hotClick = (text: string) => {
   searchKeyword.value = text;
   suggest();
-  showSearchView.value = true;
+  showSearchView.value = false;
+  router.push("/search/song");
 };
 
-function search() {}
+function search() {
+  if (!searchKeyword.value) return;
+  keywords.value = searchKeyword.value
+  getSearchResult({ keywords: keywords.value, type: route.query.type });
+  if (route.path.indexOf("search") == -1) {
+    router.push("/search/song");
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -118,7 +138,7 @@ function search() {}
   li:nth-child(-n + 3) .index {
     color: red;
   }
-  li:hover{
+  li:hover {
     opacity: 1;
   }
 }

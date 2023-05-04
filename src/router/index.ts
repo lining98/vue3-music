@@ -48,6 +48,48 @@ const routes = [
         name: "albumDetail",
         component: () => import("@/views/details/albumDetails/index.vue"),
       },
+      // 搜索路由
+      {
+        path: "search",
+        name: "search",
+        component: () => import("@/views/search/index.vue"),
+        children:[
+          {
+            path: "/",
+            redirect: "/song",
+          },
+          {
+            path:'song',
+            name:'searchSong',
+            component: () => import("@/views/search/song.vue"),
+          },
+          {
+            path:'artist',
+            name:'searchArtist',
+            component: () => import("@/views/search/artist.vue"),
+          },
+          {
+            path:'album',
+            name:'searchAlbum',
+            component: () => import("@/views/search/album.vue"),
+          },
+          {
+            path:'playlist',
+            name:'searchPlaylist',
+            component: () => import("@/views/search/playlist.vue"),
+          },
+          {
+            path:'video',
+            name:'searchVideo',
+            component: () => import("@/views/search/video.vue"),
+          },
+          {
+            path:'lyric',
+            name:'searchLyric',
+            component: () => import("@/views/search/lyric.vue"),
+          },
+        ]
+      },
     ],
   },
 ];
