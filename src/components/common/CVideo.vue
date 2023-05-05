@@ -1,6 +1,6 @@
 <template>
   <ul class="mv">
-    <li v-for="item in mvlist" :key="item.id">
+    <li v-for="item in props.mvlist" :key="item.id">
       <el-image :src="item.imgurl16v9" alt=""></el-image>
       <p>{{ item.name }}</p>
       <!-- <span></span>
@@ -10,17 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
 import { getArtistMv } from "@/api/api";
 
-const mvlist = ref([]);
-const props = defineProps<{ id: number }>();
+const props = defineProps(['mvlist']);
 
-const getData = async () => {
-  const mvDetails = await getArtistMv(props.id);
-  mvlist.value = mvDetails.mvs;
-};
-onMounted(getData);
 </script>
 
 <style lang="scss" scoped>

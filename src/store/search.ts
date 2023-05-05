@@ -5,10 +5,20 @@ import type { ISearchSuggest } from "@/models/search";
 export const useSearchStore = defineStore("search", {
   state: () => {
     return {
-      keywords:'',
+      keywords:localStorage.getItem('keywords'),
       showSearchView: false,
       searchKeyword: "",
       suggestData: {} as ISearchSuggest,
+
+      result:{},
+
+      ssongsDetial:{},
+      sArtistsDetial:{},
+      sAlbumsDetial:{},
+      sPlaylistsDetial:{},
+      sVideosDetial:{},
+      sLyricDetial:{},
+
     };
   },
   getters: {

@@ -80,6 +80,8 @@ onMounted(async () => {
 
 const hotClick = (text: string) => {
   searchKeyword.value = text;
+  keywords.value = text;
+  localStorage.setItem('keywords',text)
   suggest();
   showSearchView.value = false;
   router.push("/search/song");
@@ -87,10 +89,19 @@ const hotClick = (text: string) => {
 
 function search() {
   if (!searchKeyword.value) return;
+  localStorage.setItem('keywords',searchKeyword.value)
   keywords.value = searchKeyword.value
   getSearchResult({ keywords: keywords.value, type: route.query.type });
   if (route.path.indexOf("search") == -1) {
     router.push("/search/song");
+  }else{
+    router.push({
+      name:route.name,
+      query:{
+        keywords:searchKeyword.value,
+        type:route.query.type
+      }
+    })
   }
 }
 </script>

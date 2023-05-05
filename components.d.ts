@@ -9,6 +9,9 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CPagination: typeof import('./src/components/common/CPagination.vue')['default']
+    CPlayList: typeof import('./src/components/common/CPlayList.vue')['default']
+    CVideo: typeof import('./src/components/common/CVideo.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -26,6 +29,7 @@ declare module '@vue/runtime-core' {
     ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
+    ElPagination: typeof import('element-plus/es')['ElPagination']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSlider: typeof import('element-plus/es')['ElSlider']

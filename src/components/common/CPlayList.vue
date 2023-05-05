@@ -1,8 +1,8 @@
 <template>
-  <!-- 专辑 -->
+  <!-- 封装歌单、专辑的组件 -->
   <ul class="album">
     <li
-      v-for="item in albumList"
+      v-for="item in props.playlist"
       :key="item.id"
       @click="router.push({ name: 'albumDetail', query: { id: item.id } })"
     >
@@ -18,25 +18,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { getArtistAlbum } from "@/api/api";
 import { useRouter } from "vue-router";
 const router = useRouter();
+const props = defineProps(['playlist']);
 
-const albumList = ref([]);
-const props = defineProps<{ id: number }>();
-
-// function imgerror(event){
-//   var img = event.srcElement;
-//   img.src = '@/assets/img/OpticalDisk.png'
-//   img.onerror = null
-// }
-
-const getData = async () => {
-  const { hotAlbums } = await getArtistAlbum(props.id);
-  albumList.value = hotAlbums;
-};
-onMounted(getData);
 </script>
 
 <style lang="scss" scoped>
@@ -44,9 +29,9 @@ onMounted(getData);
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  //   justify-content: space-around;
+    justify-content: space-around;
   li {
-    width: 200px;
+    width: 12.5rem;
     border-radius: 10px;
     margin: 10px;
     padding: 10px;

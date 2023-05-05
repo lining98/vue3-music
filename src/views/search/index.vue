@@ -1,27 +1,66 @@
 <template>
-  <div class="result"><span class="res">{{keywords}}</span>搜索结果</div>
+  <div class="result">
+    <span class="res">{{ keywords }}</span
+    >的搜索结果
+  </div>
   <ul class="nav">
     <li v-for="item in taps" key="item.name">
       <router-link :to="item.path">{{ item.label }}</router-link>
     </li>
   </ul>
-  <hr />
+  <!-- <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+    <el-tab-pane v-for="item in taps" :key="item.path" :label="item.label" :name="item.path"></el-tab-pane>
+  </el-tabs> -->
   <router-view></router-view>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import type { TabsPaneContext } from "element-plus";
 import { useSearchStore } from "@/store/search";
 import { storeToRefs } from "pinia";
+import { useRoute, useRouter } from "vue-router";
+const route = useRoute();
+const router = useRouter();
 
+const activeName = ref("/search/song");
 const { keywords } = storeToRefs(useSearchStore());
 const taps = [
-  { label: "单曲", path: "/search/song", name: "searchSong" },
-  { label: "歌手", path: "/search/artist", name: "searchArtist" },
-  { label: "专辑", path: "/search/album", name: "searchAlbum" },
-  { label: "歌单", path: "/search/playlist", name: "searchPlaylist" },
-  { label: "视频", path: "/search/video", name: "searchVideo" },
-  { label: "歌词", path: "/search/lyric", name: "searchLyric" },
+  {
+    label: "单曲",
+    path: `/search/song?keywords=${keywords.value}&type=1`,
+    name: "searchSong",
+  },
+  {
+    label: "歌手",
+    path: `/search/artist?keywords=${keywords.value}&type=100`,
+    name: "searchArtist",
+  },
+  {
+    label: "专辑",
+    path: `/search/album?keywords=${keywords.value}&type=10`,
+    name: "searchAlbum",
+  },
+  {
+    label: "歌单",
+    path: `/search/playlist?keywords=${keywords.value}&type=1000`,
+    name: "searchPlaylist",
+  },
+  {
+    label: "视频",
+    path: `/search/video?keywords=${keywords.value}&type=1014`,
+    name: "searchVideo",
+  },
+  {
+    label: "歌词",
+    path: `/search/lyric?keywords=${keywords.value}&type=1006`,
+    name: "searchLyric",
+  },
 ];
+
+// const handleClick = (tab: TabsPaneContext) => {
+//   router.push(`${tab.paneName}`)
+// }
 </script>
 
 <style lang="scss" scoped>

@@ -56,37 +56,37 @@ const routes = [
         children:[
           {
             path: "/",
-            redirect: "/song",
+            redirect: "song",
           },
           {
             path:'song',
             name:'searchSong',
-            component: () => import("@/views/search/song.vue"),
+            component: () => import("@/views/search/sSong.vue"),
           },
           {
             path:'artist',
             name:'searchArtist',
-            component: () => import("@/views/search/artist.vue"),
+            component: () => import("@/views/search/sArtist.vue"),
           },
           {
             path:'album',
             name:'searchAlbum',
-            component: () => import("@/views/search/album.vue"),
+            component: () => import("@/views/search/sAlbum.vue"),
           },
           {
             path:'playlist',
             name:'searchPlaylist',
-            component: () => import("@/views/search/playlist.vue"),
+            component: () => import("@/views/search/sPlaylist.vue"),
           },
           {
             path:'video',
             name:'searchVideo',
-            component: () => import("@/views/search/video.vue"),
+            component: () => import("@/views/search/sVideo.vue"),
           },
           {
             path:'lyric',
             name:'searchLyric',
-            component: () => import("@/views/search/lyric.vue"),
+            component: () => import("@/views/search/sLyric.vue"),
           },
         ]
       },

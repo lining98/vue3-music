@@ -30,7 +30,7 @@
           播放全部
         </el-button>
 
-        <MusicList :musicArr="songList" :showArName="true" />
+        <MusicList :musicArr="songList" :showArName="false" />
       </el-tab-pane>
       <!-- <el-tab-pane :label=:"全部歌曲`${artistDetail.musicSize}`" name="hotSongs">
       <MusicListAll :musicArr="songlistall" />
@@ -39,10 +39,10 @@
         :label="`专辑 ${artistDetail?.albumSize || ''}`"
         name="album"
       >
-        <Album :id="id" />
+        <CPlayList :playlist='albumList' />
       </el-tab-pane>
       <el-tab-pane :label="`MV ${artistDetail?.mvSize || ''}`" name="mvist">
-        <Video :id="id" />
+        <CVideo :mvlist="mvlist" />
       </el-tab-pane>
       <el-tab-pane label="歌手描述" class="descrip" name="descrip">
         {{ artistDetail.briefDesc }}
@@ -56,6 +56,8 @@ import router from "@/router";
 import { onMounted, reactive, ref, toRefs, watch } from "vue";
 import {
   // getArtists,
+  getArtistAlbum,
+  getArtistMv,
   getArtistDetail,
   getArtistDesc,
   getArtistTopSong,
@@ -66,9 +68,9 @@ import { PlayOne } from "@icon-park/vue-next";
 import IconPark from "@/components/common/IconPark.vue";
 
 import MusicList from "@/components/common/musicList.vue";
-import MusicListAll from "@/components/common/musicListAll.vue";
-import Album from "./Album.vue";
-import Video from "./Video.vue";
+import CPlayList from '@/components/common/CPlayList.vue'
+import CVideo from '@/components/common/CVideo.vue'
+// import MusicListAll from "@/components/common/musicListAll.vue";
 import { useRoute } from "vue-router";
 
 import { usePlayerStore } from "@/store/player";
@@ -78,6 +80,8 @@ const { loopType } = storeToRefs(usePlayerStore());
 let isLoading = ref(true);
 const artistDetail = ref({});
 const songList = ref([]);
+const albumList = ref([]);
+const mvlist = ref([]);
 
 let selectedTag = ref("hotSongs");
 
@@ -109,11 +113,26 @@ async function getData(artId: number) {
     (item: any, index: number) => (item.index = index + 1)
   );
 
+  // 获取歌手专辑
+  const { hotAlbums } = await getArtistAlbum(artId);
+  albumList.value = hotAlbums;
+
+  // 获取歌手MV
+  const mvDetails = await getArtistMv(artId);
+  mvlist.value = mvDetails.mvs;
+
+  // 获取全部歌曲
   // const allSongs = await getArtists(id);
   // songalllist.value = allSongs.songs;
 
   isLoading.value = false;
 }
+
+watch(()=>route.query.id,()=>{
+  if(route.path === 'artistDetail'){
+    getData(Number(route.query.id))
+  }
+})
 
 onMounted(() => {
   getData(id);
