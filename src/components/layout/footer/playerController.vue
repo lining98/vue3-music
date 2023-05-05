@@ -20,12 +20,12 @@
     <!-- 下一首 -->
     <IconPark :icon="GoEnd" @click="next" size="24" />
     <!-- 音量 -->
-    <div class="popover">
-      <IconPark class="vicon" :icon="VolumeSmall" size="18" />
-      <div class="volume">
-        <PlayerVolumeSlider />
-      </div>
-    </div>
+    <el-popover placement="top" :width="50" trigger="click">
+      <template #reference>
+        <IconPark class="vicon" :icon="VolumeSmall" size="18"  />
+      </template>
+      <PlayerVolumeSlider class="volume" />
+    </el-popover>
   </div>
 </template>
 
@@ -44,7 +44,7 @@ import {
   VolumeSmall,
 } from "@icon-park/vue-next";
 import { ref, toRefs } from "vue";
-
+const showVolume = ref(false)
 const { isPause, loopType, togglePlay, toggleLoop, next, prev } = toRefs(
   usePlayerStore()
 );
@@ -62,25 +62,10 @@ const { isPause, loopType, togglePlay, toggleLoop, next, prev } = toRefs(
     color: #39c6ad;
   }
   // 音量
-  .popover {
-    position: relative;
-    .volume {
-      background-color: #fff;
-      padding: 5px 0;
-      box-sizing: border-box;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba($color: #999, $alpha: 0.8);
-      position: absolute;
-      left: -8px;
-      top: -175px;
-      z-index: 999;
-      transition: opacity 0.3s;
-      opacity: 0;
-    }
-  }
-  .popover:hover {
-    .volume {
-      opacity: 1;
+  :deep(.el-popover.el-popper){
+    min-width: 0 !important;
+    .player-volume{
+      width: 40px;
     }
   }
 }
