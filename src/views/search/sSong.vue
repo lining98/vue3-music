@@ -3,7 +3,11 @@
   <div v-loading="loading">
     <MusicList :musicArr="songList" :showArName="true" />
   </div>
-  <CPagination :count="count" @pageChange="handleChangePage" />
+  <CPagination
+    :count="count"
+    @sizeChange="handleChangePage"
+    @currentChange="handleChangeCurrent"
+  />
 </template>
 
 <script setup lang="ts">
@@ -40,8 +44,11 @@ const getData = async (offset: number, limit: number) => {
   loading.value = false;
 };
 const handleChangePage = (val: any) => {
-  offset.value = val;
   limit.value = val;
+  getData(offset.value, limit.value);
+};
+const handleChangeCurrent = (val: any) => {
+  offset.value = limit.value * (val-1);
   getData(offset.value, limit.value);
 };
 watch(

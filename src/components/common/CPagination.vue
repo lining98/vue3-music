@@ -18,22 +18,22 @@
 import { reactive } from "vue";
 
 const { count } = defineProps<{ count: number }>();
-const emits = defineEmits(["pageChange"]);
+const emits = defineEmits(["sizeChange","currentChange"]);
 
 const pageParams = reactive({
-  offset: 1,
+  offset: 0,
   limit: 30,
 });
 
-// 页数改变的时候触发的事件
-const handleSizeChange = (val: number) => {
-  pageParams.limit = val;
-  emits("pageChange", val);
-};
 // 当前页改变的时候触发的事件
 const handleCurrentChange = (val: number) => {
   pageParams.offset = val;
-  emits("pageChange", val);
+  emits("currentChange", val);
+};
+// 页数改变的时候触发的事件
+const handleSizeChange = (val: number) => {
+  pageParams.limit = val;
+  emits("sizeChange", val);
 };
 </script>
 
