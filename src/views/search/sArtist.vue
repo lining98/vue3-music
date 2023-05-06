@@ -1,44 +1,54 @@
 <template>
-  <div class="count">共搜到<span>{{ count }}</span>个歌手</div>
+  <div class="count">
+    共搜到<span>{{ dataList.artistCount }}</span
+    >个歌手
+  </div>
   <ul class="list" v-loading="loading">
-    <li v-for="item in artistList" :key="item.id">
+    <li v-for="item in dataList.artists" :key="item.id">
       <div class="img">
         <el-image :src="item.img1v1Url"></el-image>
       </div>
       <p>{{ item.name }}</p>
     </li>
   </ul>
+  <CPagination
+    v-if="dataList.artistCount > 30"
+    :count="dataList.artistCount"
+    @sizeChange="handleChangePage"
+    @currentChange="handleChangeCurrent"
+  />
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch } from "vue";
-import { getSearchResult } from "@/api/api";
-import { storeToRefs } from "pinia";
-import { useSearchStore } from "@/store/search";
+import { onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
-const route = useRoute();
-const { keywords } = storeToRefs(useSearchStore());
+import CPagination from "@/components/common/CPagination.vue";
 
-const count = ref(0);
-const artistList = ref([]);
-const loading = ref(true);
-const getData = async () => {
-  loading.value = true;
-  const { artists, artistCount } = await getSearchResult({
-    keywords: keywords.value,
-    type: 100,
-  });
-  artistList.value = artists;
-  count.value = artistCount;
-  loading.value = false;
+const route = useRoute();
+import useSearchPage from "./searchPage";
+const { info,loading, dataList, getData } =
+  useSearchPage();
+
+const handleChangePage = (val: any, type: number) => {
+  info.limit = val;
+  getData(info.offset, info.limit, type);
 };
+const handleChangeCurrent = (val: any, type: number) => {
+  info.offset = info.limit * (val - 1);
+  getData(info.offset, info.limit, type);
+};
+
 watch(
   () => route.fullPath,
   () => {
-    getData();
+    if(Number(route.query.type) == 100){
+      getData(0, 30, 100);
+    }
   }
 );
-onMounted(getData);
+onMounted(() => {
+  getData(0, 30, 100);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -62,7 +72,7 @@ onMounted(getData);
     .img {
       height: 130px;
       border: 1px solid #e0e0e0;
-      :deep(.el-image__inner){
+      :deep(.el-image__inner) {
         height: 130px;
       }
     }

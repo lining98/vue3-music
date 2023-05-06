@@ -1,16 +1,24 @@
 <template>
-  <div>{{ msg }}</div>
+  <div>{{ dataList.videoCount }}</div>
+  <ul>
+    <li v-for="item in dataList.videos">{{item.title}}</li>
+  </ul>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { getSearchResult } from "@/api/api";
-import { storeToRefs } from "pinia";
-import { useSearchStore } from "@/store/search";
-const { keywords } = storeToRefs(useSearchStore());
+import { onMounted, watch } from 'vue'
+import { useRoute } from "vue-router";
 
-const msg = ref("视频");
-getSearchResult({ keywords: keywords.value,type:1014 });
+const route = useRoute()
+import useSearchPage from './searchPage'
+const {loading,dataList,getData} = useSearchPage()
+
+watch(()=>route.fullPath,()=>{
+  getData(0,30,1014)
+})
+onMounted(()=>{
+  getData(0,30,1014)
+})
 </script>
 
 <style lang="scss" scoped></style>

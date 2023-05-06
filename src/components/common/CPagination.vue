@@ -16,12 +16,14 @@
 
 <script setup lang="ts">
 import { reactive } from "vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const { count } = defineProps<{ count: number }>();
-const emits = defineEmits(["sizeChange","currentChange"]);
+const emits = defineEmits(["sizeChange", "currentChange"]);
 
 const pageParams = reactive({
-  offset: 0,
+  offset: 1,
   limit: 30,
 });
 
