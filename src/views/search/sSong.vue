@@ -1,6 +1,6 @@
 <template>
-  <div>共搜到{{ dataList.songCount }}首音乐</div>
   <div v-loading="loading">
+    <div class="count">共搜到<span>{{ dataList.songCount }}</span>首音乐</div>
     <MusicList :musicArr="dataList.songs" :showArName="true" />
     <CPagination
       v-if="dataList.songCount > 30"
@@ -17,14 +17,15 @@ import { useRoute } from "vue-router";
 import CPagination from "@/components/common/CPagination.vue";
 
 const route = useRoute();
+let type = route.query.type;
 import useSearchPage from "./searchPage";
 const { info, loading, dataList, getData } = useSearchPage();
 
-const handleChangePage = (val: any, type: number) => {
+const handleChangePage = (val: any) => {
   info.limit = val;
   getData(info.offset, info.limit, type);
 };
-const handleChangeCurrent = (val: any, type: number) => {
+const handleChangeCurrent = (val: any) => {
   info.offset = info.limit * (val - 1);
   getData(info.offset, info.limit, type);
 };
@@ -32,12 +33,12 @@ const handleChangeCurrent = (val: any, type: number) => {
 watch(
   () => route.fullPath,
   () => {
-    if(Number(route.query.type) == 1){
+    if (Number(route.query.type) == 1) {
       getData(0, 30, 1);
     }
   }
 );
-onMounted(async() => {
+onMounted(async () => {
   getData(0, 30, 1);
 });
 </script>

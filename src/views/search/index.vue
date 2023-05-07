@@ -63,7 +63,7 @@ const taps = [
 // }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .result {
   width: 300px;
   border: 1px solid #34d399;
@@ -110,5 +110,13 @@ const taps = [
   background: linear-gradient(#e3e3e3, #fff 80%);
   border-top: 2px solid #34d399 !important;
   border-bottom: 1px solid #fff !important;
+}
+
+.count {
+  font-size: 12px;
+  span {
+    color: #c20c0c;
+    margin: 0 3px;
+  }
 }
 </style>

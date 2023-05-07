@@ -1,41 +1,46 @@
 <template>
-  <!-- <ul>
-    <li v-for="item in albumsDetail" :key="item.id">
-      <el-image
-        style="width: 100px; height: 100px"
-        :src="item.picUrl"
-      ></el-image>
-      <p>{{ item.name }}</p>
-    </li>
-  </ul> -->
-  <CPlayList :playlist='albumsDetail' />
-
+  <div v-loading="loading">
+    <div class="count">共搜到<span>{{ dataList.albumCount }}</span>张专辑</div>
+    <CPlayList :playlist="dataList.albums" />
+    <CPagination
+      v-if="dataList.albumCount > 30"
+      :count="dataList.albumCount"
+      @sizeChange="handleChangePage"
+      @currentChange="handleChangeCurrent"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
-import { getSearchResult } from "@/api/api";
-import { storeToRefs } from "pinia";
-import { useSearchStore } from "@/store/search";
+import { onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
-const { keywords } = storeToRefs(useSearchStore());
+import CPagination from "@/components/common/CPagination.vue";
 
-import CPlayList from '@/components/common/CPlayList.vue'
+const route = useRoute();
+const type = route.query.type;
+import useSearchPage from "./searchPage";
+const { info, loading, dataList, getData } = useSearchPage();
 
-const route = useRoute()
-const msg = ref("专辑");
-const albumsDetail = ref([]);
-const getData = async () => {
-  const { albums } = await getSearchResult({
-    keywords: keywords.value,
-    type: 10,
-  });
-  albumsDetail.value = albums;
+const handleChangePage = (val: any) => {
+  info.limit = val;
+  getData(info.offset, info.limit, type);
 };
-watch(()=>route.fullPath,()=>{
-  getData()
-})
-onMounted(getData);
+const handleChangeCurrent = (val: any) => {
+  info.offset = info.limit * (val - 1);
+  getData(info.offset, info.limit, type);
+};
+
+watch(
+  () => route.fullPath,
+  () => {
+    if (Number(route.query.type) == 10) {
+      getData(0, 30, 10);
+    }
+  }
+);
+onMounted(() => {
+  getData(0, 30, 10);
+});
 </script>
 
 <style lang="scss" scoped></style>

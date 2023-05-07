@@ -2,9 +2,6 @@ import { ref, watch, reactive, onMounted } from "vue";
 import { getSearchResult } from "@/api/api";
 import { storeToRefs } from "pinia";
 import { useSearchStore } from "@/store/search";
-import { useRoute } from "vue-router";
-
-const route = useRoute()
 
 function useSearchPage() {
   const dataList = ref({});
@@ -15,14 +12,14 @@ function useSearchPage() {
   });
 
   const { keywords } = storeToRefs(useSearchStore());
-  const getData = async (offset: number, limit: number, type: any = route.query.type) => {
+  const getData = async (offset: number, limit: number, type: any) => {
     loading.value = true;
     dataList.value = await getSearchResult({
       keywords: keywords.value,
       type: type,
       offset: offset,
       limit: limit,
-    });
+    })
     loading.value = false;
   };
 
