@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading">
-    <div class="count">
+    <div class="scount">
       共搜到<span>{{ dataList.artistCount }}</span
       >个歌手
     </div>

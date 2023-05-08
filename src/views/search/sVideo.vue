@@ -1,9 +1,10 @@
 <template>
   <div v-loading="loading">
-    <div class="count">共搜到<span>{{ dataList.videoCount }}</span>个视频</div>
-    <ul>
+    <div class="scount">共搜到<span>{{ dataList.videoCount }}</span>个视频</div>
+    <CVideo :mvlist="dataList.videos" />
+    <!-- <ul>
       <li v-for="item in dataList.videos">{{ item.title }}</li>
-    </ul>
+    </ul> -->
     <CPagination
       v-if="dataList.videoCount > 30"
       :count="dataList.videoCount"
@@ -17,6 +18,7 @@
 import { onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import CPagination from "@/components/common/CPagination.vue";
+import CVideo from '@/components/common/CVideo.vue'
 
 const route = useRoute();
 const type = route.query.type;

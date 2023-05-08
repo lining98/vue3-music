@@ -93,7 +93,13 @@ function search() {
   keywords.value = searchKeyword.value
   getSearchResult({ keywords: keywords.value, type: route.query.type });
   if (route.path.indexOf("search") == -1) {
-    router.push("/search/song");
+    router.push({
+      name:'searchSong',
+      query:{
+        keywords:searchKeyword.value,
+        type:1
+      }
+    })
   }else{
     router.push({
       name:route.name,

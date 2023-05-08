@@ -10,7 +10,7 @@
           @click="handleClick(item.targetId)"
         />
         <div class="type-title" :style="`background:${item.titleColor};`">
-          {{ item.typeTitle }}
+          {{ item.typeTitle }}=={{item.targetType}}
         </div>
       </SwiperSlide>
     </Swiper>
@@ -44,6 +44,9 @@ function handleClick(item: any) {
       play(item.targetId);
       break;
     case 10:
+      router.push("/music");
+      break;
+    case 3000:
       router.push("/music");
       break;
     default:

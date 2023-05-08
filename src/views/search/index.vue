@@ -63,7 +63,7 @@ const taps = [
 // }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .result {
   width: 300px;
   border: 1px solid #34d399;
@@ -112,7 +112,10 @@ const taps = [
   border-bottom: 1px solid #fff !important;
 }
 
-.count {
+</style>
+
+<style lang='scss'>
+.scount {
   font-size: 12px;
   span {
     color: #c20c0c;

@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading">
-    <div class="count">共搜到<span>{{ dataList.songCount }}</span>首音乐</div>
+    <div class="scount">共搜到<span>{{ dataList.songCount }}</span>首音乐</div>
     <MusicList :musicArr="dataList.songs" :showArName="true" />
     <CPagination
       v-if="dataList.songCount > 30"

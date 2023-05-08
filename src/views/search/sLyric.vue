@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading">
-    <div class="count">共搜到<span>{{ dataList.songCount }}</span>个歌词
+    <div class="scount">共搜到<span>{{ dataList.songCount }}</span>个歌词
     </div>
     <ul>
       <li v-for="item in dataList.songs">{{ item.name }}</li>

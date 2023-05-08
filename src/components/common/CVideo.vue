@@ -1,10 +1,14 @@
 <template>
   <ul class="mv">
     <li v-for="item in props.mvlist" :key="item.id">
-      <el-image :src="item.imgurl16v9" alt=""></el-image>
-      <p>{{ item.name }}</p>
-      <!-- <span></span>
-        {{item.name}} -->
+      <slot name='artVideos'>
+        <el-image :src="item.imgurl16v9" alt=""></el-image>
+        <p>{{ item.name }}</p>
+      </slot>
+      <slot name='searchVideos'>
+        <el-image :src="item.coverUrl" alt=""></el-image>
+        <p>{{ item.title }}</p>
+      </slot>
     </li>
   </ul>
 </template>
@@ -12,8 +16,7 @@
 <script setup lang="ts">
 import { getArtistMv } from "@/api/api";
 
-const props = defineProps(['mvlist']);
-
+const props = defineProps(["mvlist"]);
 </script>
 
 <style lang="scss" scoped>
