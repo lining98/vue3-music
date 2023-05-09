@@ -123,8 +123,10 @@ export const usePlayerStore = defineStore({
 
       this.audio.onerror = () => {
         this.isPlaying = false;
-        ElMessage.error("当前音乐不可播放，已自动播放下一曲");
-        this.next();
+        setTimeout(() => {
+          ElMessage.error("当前音乐不可播放，已自动播放下一曲");
+          this.next();
+        }, 1500);
       };
     },
     // 根据id获取音乐详情
