@@ -126,7 +126,7 @@ export const usePlayerStore = defineStore({
         setTimeout(() => {
           ElMessage.error("当前音乐不可播放，已自动播放下一曲");
           this.next();
-        }, 1500);
+        }, 2000);
       };
     },
     // 根据id获取音乐详情
