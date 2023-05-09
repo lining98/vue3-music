@@ -5,7 +5,11 @@
       >个歌手
     </div>
     <ul class="list">
-      <li v-for="item in dataList.artists" :key="item.id">
+      <li
+        v-for="item in dataList.artists"
+        :key="item.id"
+        @click="router.push({ name: 'artistDetail', query: { id: item.id } })"
+      >
         <div class="img">
           <el-image :src="item.img1v1Url"></el-image>
         </div>
@@ -23,10 +27,11 @@
 
 <script setup lang="ts">
 import { onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import CPagination from "@/components/common/CPagination.vue";
 
 const route = useRoute();
+const router = useRouter()
 const type = route.query.type;
 import useSearchPage from "./searchPage";
 const { info, loading, dataList, getData } = useSearchPage();

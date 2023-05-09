@@ -1,16 +1,24 @@
 <template>
   <div class="songlist">
     <!-- stripes -->
+    <div class="title">
+      <h2>歌曲列表</h2>
+      <span>{{ musicArr?.length || 0 }}首歌</span>
+    </div>
     <el-table
       :data="musicArr"
       style="width: 100%"
       :row-class-name="tableRowClassName"
       @row-dblclick="playSong"
     >
-      <el-table-column type="index" width="50" >
-        <template #default="scope,index">
-          <IconPark v-if="scope.row.id === song.id" :icon='VolumeSmall' theme='filled'  />
-          <span v-else>{{scope.row.index}}</span>
+      <el-table-column type="index" width="50">
+        <template #default="scope, index">
+          <IconPark
+            v-if="scope.row.id === song.id"
+            :icon="VolumeSmall"
+            theme="filled"
+          />
+          <span v-else>{{ scope.row.index }}</span>
         </template>
       </el-table-column>
       <!-- <el-table-column width="50">
@@ -18,7 +26,7 @@
           <IconPark :icon="Like" size="16" class="like" />
         </template>
       </el-table-column> -->
-      <el-table-column prop="name" label="音乐标题" min-width='300' />
+      <el-table-column prop="name" label="音乐标题" min-width="300" />
       <el-table-column
         v-if="showArName"
         prop="ar[0].name"
@@ -64,7 +72,7 @@ import { onMounted } from "vue";
 
 const props = defineProps(["musicArr", "showArName"]);
 
-const route = useRoute()
+const route = useRoute();
 const router = useRouter();
 const { profile, playlist } = storeToRefs(useUserStore());
 const { song } = storeToRefs(usePlayerStore());
@@ -101,12 +109,13 @@ function toAlbumDetails(id: number) {
 
 <style lang="scss" scoped>
 .songlist {
-  .clickable {
-    cursor: pointer;
-  }
-  .clickable:hover {
-    color: #39c6ad;
-    text-decoration: underline;
+  .title {
+    display: flex;
+    align-items: flex-end;
+    border-bottom: 3px solid #34d399;
+    h2 {
+      margin-right: 10px;
+    }
   }
   // .like:hover {
   //   cursor: pointer;
@@ -114,6 +123,11 @@ function toAlbumDetails(id: number) {
   // }
   :deep(.el-table .active) {
     --el-table-tr-bg-color: #d8fceb;
+  }
+  :deep(.cell) {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 </style>

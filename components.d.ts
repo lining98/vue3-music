@@ -9,8 +9,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CAlbum: typeof import('./src/components/common/CAlbum.vue')['default']
     CPagination: typeof import('./src/components/common/CPagination.vue')['default']
-    CPlayList: typeof import('./src/components/common/CPlayList.vue')['default']
     CVideo: typeof import('./src/components/common/CVideo.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']

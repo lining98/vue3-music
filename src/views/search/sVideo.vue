@@ -1,7 +1,9 @@
 <template>
   <div v-loading="loading">
     <div class="scount">共搜到<span>{{ dataList.videoCount }}</span>个视频</div>
-    <CVideo :mvlist="dataList.videos" />
+    <CVideo :mvlist="dataList.videos">
+      <template #artVideos></template>
+    </CVideo>
     <!-- <ul>
       <li v-for="item in dataList.videos">{{ item.title }}</li>
     </ul> -->

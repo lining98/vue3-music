@@ -39,7 +39,7 @@
         :label="`专辑 ${artistDetail?.albumSize || ''}`"
         name="album"
       >
-        <CPlayList :playlist='albumList' />
+        <CAlbum :playlist='albumList' />
       </el-tab-pane>
       <el-tab-pane :label="`MV ${artistDetail?.mvSize || ''}`" name="mvist">
         <CVideo :mvlist="mvlist" />
@@ -68,7 +68,7 @@ import { PlayOne } from "@icon-park/vue-next";
 import IconPark from "@/components/common/IconPark.vue";
 
 import MusicList from "@/components/common/musicList.vue";
-import CPlayList from '@/components/common/CPlayList.vue'
+import CAlbum from '@/components/common/CAlbum.vue'
 import CVideo from '@/components/common/CVideo.vue'
 // import MusicListAll from "@/components/common/musicListAll.vue";
 import { useRoute } from "vue-router";
@@ -129,7 +129,7 @@ async function getData(artId: number) {
 }
 
 watch(()=>route.query.id,()=>{
-  if(route.path === 'artistDetail'){
+  if(route.name === 'artistDetail'){
     getData(Number(route.query.id))
   }
 })

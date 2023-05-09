@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading">
     <div class="scount">共搜到<span>{{ dataList.albumCount }}</span>张专辑</div>
-    <CPlayList :playlist="dataList.albums" />
+    <CAlbum :playlist="dataList.albums" />
     <CPagination
       v-if="dataList.albumCount > 30"
       :count="dataList.albumCount"

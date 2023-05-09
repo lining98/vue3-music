@@ -40,6 +40,24 @@ a:hover {
   filter: alpha(opacity=90);
 }
 
+.ellipsis{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.i-icon{
+  cursor: pointer;
+}
+
+
+.clickable {
+  cursor: pointer;
+}
+.clickable:hover {
+  color: #39c6ad;
+  text-decoration: underline;
+}
+
 ul,
 li {
   list-style: none;

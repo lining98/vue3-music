@@ -1,9 +1,50 @@
 <template>
   <div v-loading="loading">
-    <div class="scount">共搜到<span>{{ dataList.songCount }}</span>个歌词
+    <div class="scount">
+      共搜到<span>{{ dataList.songCount }}</span
+      >个歌词
     </div>
-    <ul>
-      <li v-for="item in dataList.songs">{{ item.name }}</li>
+    <ul class="list">
+      <li v-for="item in dataList.songs">
+        <div class="content">
+          <div class="icon">
+            <IconPark :icon="Play" size="16" @click="play(item.id)" />
+          </div>
+          <div class="name">{{ item.name }}</div>
+          <div class="artist ellipsis">
+            <span v-for="(author, index) in item.ar" :key="author.id">
+              <span
+                class="clickable"
+                @click="
+                  router.push({
+                    name: 'artistDetail',
+                    query: { id: author.id },
+                  })
+                "
+              >
+                {{ author.name }}
+              </span>
+              <!-- 最后一个歌手后面不加分隔符 -->
+              <span v-if="index != item.ar.length - 1">/</span>
+            </span>
+          </div>
+          <div class="album ellipsis">
+            <span
+              class="clickable"
+              @click="
+                router.push({ name: 'albumDetail', query: { id: author.id } })
+              "
+              >{{ item.al.name }}</span
+            >
+          </div>
+          <div class="dt">
+            <span>{{ useFormatDuring(item.dt) }}</span>
+          </div>
+        </div>
+        <div class="lyric">
+          123
+        </div>
+      </li>
     </ul>
     <CPagination
       v-if="dataList.songCount > 30"
@@ -16,13 +57,20 @@
 
 <script setup lang="ts">
 import { onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import CPagination from "@/components/common/CPagination.vue";
+import IconPark from "@/components/common/iconPark.vue";
+import { Play } from "@icon-park/vue-next";
+import { useFormatDuring } from "@/utils/format";
 
 const route = useRoute();
 const type = route.query.type;
 import useSearchPage from "./searchPage";
+import { usePlayerStore } from "@/store/player";
 const { info, loading, dataList, getData } = useSearchPage();
+const { play } = usePlayerStore();
+
+const router = useRouter()
 
 const handleChangePage = (val: any) => {
   info.limit = val;
@@ -46,4 +94,32 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.list {
+  li {
+    .content {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      .icon{
+        width: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .name{
+        flex: 1;
+        min-width: 350px;
+        padding-left: 10px;
+      }
+      .artist,.album{
+        width: 200px;
+        padding: 0 10px;
+      }
+    }
+  }
+  li:nth-child(2n)  .content {
+    background-color: #f7f7f7;
+  }
+}
+</style>

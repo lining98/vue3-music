@@ -8,7 +8,7 @@
       </div>
     </div>
     <div>
-      <span class="title">{{ song.name || "云音乐" }}</span>
+      <p class="title ellipsis">{{ song.name || "云音乐" }}</p>
       <span class="author">
         <span v-for="(item, index) in song.ar">
           <span
@@ -72,6 +72,9 @@ const { song,  showPopup } = storeToRefs(usePlayerStore());
     &:hover .popup {
       opacity: 1;
     }
+  }
+  .title{
+    width: 280px;
   }
 
   .author {
