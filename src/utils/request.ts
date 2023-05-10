@@ -1,9 +1,8 @@
 import axios, { type AxiosRequestConfig } from "axios";
 import { ElMessage } from "element-plus";
 
-// axios.defaults.baseURL = "https://www.lghb.top";
-axios.defaults.baseURL = "http://localhost:3000";
-// axios.defaults.baseURL = 'http://124.222.23.222:3000/';
+// axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = 'https://service-8drbxr29-1315315277.sh.apigw.tencentcs.com/release/';
 axios.defaults.timeout = 20 * 1000;
 
 // 请求拦截器

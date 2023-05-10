@@ -104,7 +104,7 @@ const formLabelAlign = reactive({
   password: undefined,
 });
 const formEmail = reactive({
-  email: "ln980908",
+  email: "",
   password: "",
 });
 
