@@ -23,13 +23,7 @@
     >
   </div>
 
-  <el-dialog v-model="showLogin" width="500">
-    <template #header="{ titleId, titleClass }">
-      <div class="my-header">
-        <h3 :id="titleId" :class="titleClass">登录</h3>
-        <span>建议使用二维码安全登录</span>
-      </div>
-    </template>
+  <el-dialog v-model="showLogin" title='登录' width="500">
     <el-tabs
       tab-position="left"
       v-model="activeName"
@@ -84,7 +78,8 @@ const { login } = useUserStore();
 const { isLogin, profile, showLogin } = storeToRefs(useUserStore());
 const { getPlaylist } = useUserStore();
 const handleLogin = async () => {
-  login(formEmail.email, formEmail.password);
+  ElMessage.error("现在要求验证,请使用二维码登录");
+  // login(formEmail.email, formEmail.password);
 };
 
 const activeName = ref("email");
