@@ -7,10 +7,10 @@
         <img
           :src="item.imageUrl"
           class="banner-image"
-          @click="handleClick(item.targetId)"
+          @click="handleClick(item)"
         />
         <div class="type-title" :style="`background:${item.titleColor};`">
-          {{ item.typeTitle }}=={{item.targetType}}
+          {{ item.typeTitle }}
         </div>
       </SwiperSlide>
     </Swiper>
@@ -44,11 +44,16 @@ function handleClick(item: any) {
       play(item.targetId);
       break;
     case 10:
-      router.push("/music");
+      router.push({
+        name:'albumDetail',
+        query:{
+          id:item.targetId
+        }
+      });
       break;
-    case 3000:
-      router.push("/music");
-      break;
+    // case 3000:
+    //   router.push("/music");
+    //   break;
     default:
       open(item.url);
   }
