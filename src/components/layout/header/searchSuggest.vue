@@ -10,9 +10,11 @@
         :key="item.id"
         @click="play(item.id)"
       >
-        <span class="name">{{ item.name }}</span>
-        <span class="line">-</span>
-        <span class="artist">{{ head(item.artists)?.name }}</span>
+        <p class="ellipsis">
+          <span class="name">{{ item.name }}</span>
+          <span class="line">-</span>
+          <span class="artist">{{ head(item.artists)?.name }}</span>
+        </p>
       </li>
     </ul>
     <!-- 歌手 -->
