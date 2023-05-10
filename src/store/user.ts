@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import type { UserProfile } from "@/models/user";
 import { IUserPlaylist } from "@/models/userPlaylist";
-import { useLoginEmail, useLoginStatus } from "@/api/login";
+import { useLoginEmail, loginStatus } from "@/api/login";
 import { getUserPlaylist } from "@/api/api";
 import { ElMessage } from "element-plus";
 
@@ -32,15 +32,15 @@ export const useUserStore = defineStore("user", {
         // console.log("res.profile", res.profile);
         this.profile = res.profile;
 
-        const userInfo = {
-          avatarUrl: this.profile.avatarUrl,
-          nickname: this.profile.nickname,
-          userId: this.profile.userId,
-          userType: this.profile.userType,
-        };
+        // const userInfo = {
+        //   avatarUrl: this.profile.avatarUrl,
+        //   nickname: this.profile.nickname,
+        //   userId: this.profile.userId,
+        //   userType: this.profile.userType,
+        // };
         localStorage.setItem("USER-TOKEN", this.token);
         localStorage.setItem("USER-COOKIE", this.cookie);
-        localStorage.setItem("USER", JSON.stringify(userInfo));
+        localStorage.setItem("USER", JSON.stringify(this.profile));
         this.getPlaylist(this.profile.userId);
 
         // this.checkLogin()
@@ -50,7 +50,7 @@ export const useUserStore = defineStore("user", {
       }
     },
     // async checkLogin(){
-    //     const {data} = await useLoginStatus()
+    //     const {data} = await loginStatus()
     //     if(data.code === 200){
     //         this.profile = data.profile
     //         this.showLogin = false

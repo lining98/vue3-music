@@ -23,40 +23,19 @@
     >
   </div>
 
-  <el-dialog v-model="showLogin" title="登录" width="30%">
-    <el-tabs tab-position="left" v-model="activeName" class="demo-tabs">
-      <!-- <el-tab-pane label="手机号" name="phone">
-        <el-form
-          :model="formLabelAlign"
-          label-position="left"
-          label-width="60px"
-        >
-          <el-form-item label="手机号">
-            <el-input
-              v-model="formLabelAlign.phone"
-              placeholder="请输入手机号"
-            ></el-input>
-          </el-form-item>
-          <el-form-item v-if="iSpassword" label="密码">
-            <el-input
-              v-model="formLabelAlign.password"
-              placeholder="请输入密码"
-            >
-            </el-input>
-          </el-form-item>
-          <el-form-item v-else label="验证码">
-            <el-input
-              v-model="formLabelAlign.captcha"
-              placeholder="请输入验证码"
-            >
-              <template #append>
-                <span v-if="isShow" @click="sendCode">发送</span>
-                <span v-else>{{ time }}秒</span>
-              </template>
-            </el-input>
-          </el-form-item>
-        </el-form>
-      </el-tab-pane> -->
+  <el-dialog v-model="showLogin" width="500">
+    <template #header="{ titleId, titleClass }">
+      <div class="my-header">
+        <h3 :id="titleId" :class="titleClass">登录</h3>
+        <span>建议使用二维码安全登录</span>
+      </div>
+    </template>
+    <el-tabs
+      tab-position="left"
+      v-model="activeName"
+      class="demo-tabs"
+      @tab-click="handleClick"
+    >
       <el-tab-pane label="邮箱" name="email">
         <el-form :model="formEmail" label-position="left" label-width="60px">
           <el-form-item label="邮箱">
@@ -75,9 +54,11 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <!-- <el-tab-pane label="二维码" name="loginImg">loginImg</el-tab-pane> -->
+      <el-tab-pane label="二维码" name="loginImg" class="loginImg">
+        <img :src="qrimg" alt="" />
+      </el-tab-pane>
     </el-tabs>
-    <template #footer>
+    <template v-if="activeName == 'email'" #footer>
       <span class="dialog-footer">
         <el-button @click="showLogin = false">取消</el-button>
         <el-button type="primary" @click="handleLogin"> 登录 </el-button>
@@ -88,44 +69,79 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
+import axios from "axios";
 import type { TabsPaneContext } from "element-plus";
 import { useUserStore } from "@/store/user";
 import { useLoginEmail, getLogout } from "@/api/login";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
+import { getKey, qrCreate, qrCheck, loginStatus } from "@/api/login";
+import { log } from "console";
 const router = useRouter();
-
-const activeName = ref("email");
-const iSpassword = ref(true);
-
-const formLabelAlign = reactive({
-  email: undefined,
-  password: undefined,
-});
-const formEmail = reactive({
-  email: "",
-  password: "",
-});
-
-const handleClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event);
-};
 
 const { login } = useUserStore();
 const { isLogin, profile, showLogin } = storeToRefs(useUserStore());
+const { getPlaylist } = useUserStore();
 const handleLogin = async () => {
   login(formEmail.email, formEmail.password);
 };
 
+const activeName = ref("email");
+const iSpassword = ref(true);
+
+const qrimg = ref("");
+
+const formEmail = reactive({
+  email: "",
+  password: "",
+});
+let timer;
+
+const checkStatus = async (key) => {
+  return await qrCheck(key);
+};
+const getLoginStatus = async (cookie = "") => {
+  const { data } = await loginStatus({ cookie: cookie });
+  localStorage.setItem("USER", JSON.stringify(data.profile));
+  profile.value = data.profile;
+  getPlaylist(data.profile.userId);
+};
+
+const handleClick = async (tab: TabsPaneContext) => {
+  if (tab.paneName === "loginImg") {
+    const cookie = localStorage.getItem("cookie");
+    const { code, unikey } = await getKey();
+    const res = await qrCreate(unikey);
+    qrimg.value = res.qrimg;
+
+    timer = setInterval(async () => {
+      const statusRes = await checkStatus(unikey);
+      // console.log(statusRes);
+      if (statusRes.code === 800) {
+        ElMessage.error("二维码已过期,请重新获取");
+        clearInterval(timer);
+      }
+      if (statusRes.code === 803) {
+        // 这一步会返回cookie
+        clearInterval(timer);
+        await getLoginStatus(statusRes.cookie);
+        localStorage.setItem("USER-COOKIE", statusRes.cookie);
+        ElMessage.success("授权登录成功");
+        clearInterval(timer);
+        showLogin.value = false;
+      }
+    }, 3000);
+  } else {
+    clearInterval(timer);
+  }
+};
+
 async function logout() {
-  // router.push("/");
   const res = await getLogout();
   if (res.code === 200) {
     ElMessage.success("已退出登录");
     localStorage.clear();
-    // router.push('/');
-    // location.reload()
     router.go(0);
   }
 }
@@ -152,5 +168,9 @@ onMounted(() => {
   .user {
     margin-left: 10px;
   }
+}
+.loginImg {
+  height: 200px;
+  text-align: center;
 }
 </style>

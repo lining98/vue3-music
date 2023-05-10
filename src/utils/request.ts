@@ -8,6 +8,10 @@ axios.defaults.timeout = 20 * 1000;
 // 请求拦截器
 axios.interceptors.request.use(
   (config: AxiosRequestConfig | any) => {
+    config.params = {
+      ...config.params,
+      t: Date.now()
+    }
     return config;
   },
   (err) => {
