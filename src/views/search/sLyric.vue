@@ -42,7 +42,10 @@
           </div>
         </div>
         <div class="lyric">
-          123
+          <div class="lyrics" :style="`height:${item.pst?'100%':'150px'}`">
+            <p v-for="lyric in item.lyrics" v-html="lyric"></p>
+          </div>
+          <span class="clickable" @click="item.pst?item.pst=0:item.pst=1">{{ item.pst ? "收起":"展开" }}</span>
         </div>
       </li>
     </ul>
@@ -56,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CPagination from "@/components/common/CPagination.vue";
 import IconPark from "@/components/common/iconPark.vue";
@@ -70,7 +73,8 @@ import { usePlayerStore } from "@/store/player";
 const { info, loading, dataList, getData } = useSearchPage();
 const { play } = usePlayerStore();
 
-const router = useRouter()
+const router = useRouter();
+const isShow = ref(true);
 
 const handleChangePage = (val: any) => {
   info.limit = val;
@@ -101,24 +105,37 @@ onMounted(() => {
       height: 40px;
       display: flex;
       align-items: center;
-      .icon{
+      .icon {
         width: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
       }
-      .name{
+      .name {
         flex: 1;
         min-width: 350px;
         padding-left: 10px;
       }
-      .artist,.album{
+      .artist,
+      .album {
         width: 200px;
         padding: 0 10px;
       }
+      .dt{
+        padding-right:15px;
+      }
+    }
+
+    .lyric {
+      padding: 10px 0 20px 50px;
+      .lyrics{
+        // height: 150px;
+        overflow: hidden;
+
+      }
     }
   }
-  li:nth-child(2n)  .content {
+  li:nth-child(2n) .content {
     background-color: #f7f7f7;
   }
 }

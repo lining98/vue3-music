@@ -8,7 +8,7 @@
     >
       <div class="img">
         <div class="coverall"></div>
-        <el-image :src="item.blurPicUrl" style="width: 180px">
+        <el-image class="elimg" :src="item.blurPicUrl" style="width: 180px">
           <template #placeholder>
             <div class="image-slot">加载中<span class="dot">...</span></div>
           </template>
@@ -39,14 +39,17 @@ const props = defineProps(["playlist"]);
   li {
     width: 220px;
     transition: all 0.3s;
-    padding-right: 25px;
+    margin-right: 25px;
     margin-bottom: 25px;
-    cursor: pointer;
     .img {
       width: 220px;
       height: 180px;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
+      &:hover .play{
+        display: block;
+      }
       .coverall {
         position: absolute;
         top: 50%;
@@ -62,7 +65,7 @@ const props = defineProps(["playlist"]);
         right: 45px;
         bottom: 5px;
         display: none;
-        &:hover{
+        &:hover {
           color: #bbb;
         }
       }
@@ -71,9 +74,9 @@ const props = defineProps(["playlist"]);
       font-size: 14px;
     }
   }
-  li:hover .play {
-    display: block;
-  }
+  // li:hover .play {
+  //   display: block;
+  // }
   .image-slot {
     background-color: #c3c6c8;
     font-size: 14px;
