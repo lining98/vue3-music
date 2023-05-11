@@ -106,6 +106,7 @@ const getLoginStatus = async (cookie = "") => {
 const handleClick = async (tab: TabsPaneContext) => {
   if (tab.paneName === "loginImg") {
     const cookie = localStorage.getItem("cookie");
+    getLoginStatus(cookie)
     const { code, unikey } = await getKey();
     const res = await qrCreate(unikey);
     qrimg.value = res.qrimg;
@@ -121,7 +122,7 @@ const handleClick = async (tab: TabsPaneContext) => {
         // 这一步会返回cookie
         clearInterval(timer);
         await getLoginStatus(statusRes.cookie);
-        localStorage.setItem("USER-COOKIE", statusRes.cookie);
+        localStorage.setItem("cookie", statusRes.cookie);
         ElMessage.success("授权登录成功");
         clearInterval(timer);
         showLogin.value = false;

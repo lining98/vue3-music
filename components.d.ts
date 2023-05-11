@@ -44,6 +44,7 @@ declare module '@vue/runtime-core' {
     MenuList: typeof import('./src/components/layout/menu/menuList.vue')['default']
     MoreText: typeof import('./src/components/common/moreText.vue')['default']
     MusicList: typeof import('./src/components/common/musicList.vue')['default']
+    MyList: typeof import('./src/components/layout/menu/myList.vue')['default']
     PlayerAction: typeof import('./src/components/layout/footer/playerAction.vue')['default']
     PlayerController: typeof import('./src/components/layout/footer/playerController.vue')['default']
     PlayerSlier: typeof import('./src/components/layout/footer/playerSlier.vue')['default']

@@ -39,7 +39,7 @@ export const useUserStore = defineStore("user", {
         //   userType: this.profile.userType,
         // };
         localStorage.setItem("USER-TOKEN", this.token);
-        localStorage.setItem("USER-COOKIE", this.cookie);
+        localStorage.setItem("cookie", this.cookie);
         localStorage.setItem("USER", JSON.stringify(this.profile));
         this.getPlaylist(this.profile.userId);
 

@@ -1,22 +1,25 @@
 import axios, { type AxiosRequestConfig } from "axios";
 import { ElMessage } from "element-plus";
 
+
+// const cookie = localStorage.getItem("cookie");
+
 // axios.defaults.baseURL = "http://localhost:3000";
-axios.defaults.baseURL = 'https://service-8drbxr29-1315315277.sh.apigw.tencentcs.com/release/';
+axios.defaults.baseURL = "https://service-8drbxr29-1315315277.sh.apigw.tencentcs.com/release/";
 axios.defaults.timeout = 20 * 1000;
+// axios.defaults.withCredentials = true;
+// axios.defaults.headers.common['Cookie'] = cookie
 
 // 请求拦截器
 axios.interceptors.request.use(
   (config: AxiosRequestConfig | any) => {
     config.params = {
       ...config.params,
-      t: Date.now()
-    }
+      t: Date.now(),
+    };
     return config;
   },
-  (err) => {
-    return Promise.reject(err);
-  }
+  (err) => Promise.reject(err)
 );
 
 // 响应拦截器
@@ -25,7 +28,7 @@ axios.interceptors.response.use(
     return res;
   },
   (err) => {
-    ElMessage.error("network error");
+    ElMessage.error("network error", err.message);
     return Promise.reject(err);
   }
 );

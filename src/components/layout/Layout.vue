@@ -25,7 +25,7 @@ import { ref } from "vue";
           :bottom="100"
         />
       </ElScrollbar>
-    <Footer />
+      <Footer />
     </div>
     <PlayList />
     <Popup />
@@ -55,6 +55,10 @@ import { ref } from "vue";
           display: flex;
           font-size: 14px;
           align-items: center;
+
+          &:hover:not(.active) {
+            background-color: #f4f2f2;
+          }
           > span {
             display: flex;
             align-items: center;

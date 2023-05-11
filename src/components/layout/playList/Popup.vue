@@ -85,7 +85,7 @@ onMounted(() => {
   timer = setInterval(() => {
     let p: any = document.querySelector("p.active");
     if (p && p.offsetTop > 300) {
-      lyric.value.scrollTop = p.offsetTop - 200;
+      lyric.value.scrollTop = p.offsetTop - 260;
     }
   }, 1000);
 });
