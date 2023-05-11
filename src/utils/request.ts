@@ -28,7 +28,7 @@ axios.interceptors.response.use(
     return res;
   },
   (err) => {
-    ElMessage.error("network error", err.message);
+    ElMessage.error("network error");
     return Promise.reject(err);
   }
 );

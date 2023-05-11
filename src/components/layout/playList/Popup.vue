@@ -165,7 +165,8 @@ onUnmounted(() => {
   }
 
   .footer {
-    background: transparent;
+    background-color: transparent;
+    background-image:linear-gradient(rgba(255, 255, 255, 0),#fff 50%)
   }
 }
 
