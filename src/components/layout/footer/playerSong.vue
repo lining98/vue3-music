@@ -78,7 +78,7 @@ const { song,  showPopup } = storeToRefs(usePlayerStore());
   }
 
   .author {
-    color: #8d939d;
+    color: #888;
     width: 185px;
     overflow: hidden;
     white-space: nowrap;

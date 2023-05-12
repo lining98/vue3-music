@@ -258,11 +258,10 @@ export const userPlayerInit = () => {
 
   //监听播放结束
   watch(ended, (ended) => {
-    console.log('ended',ended)
     if (!ended) return;
     setTimeout(() => {
       playEnd();
-    }, 2000);
+    }, 1500);
   });
 
   //   启动定时器

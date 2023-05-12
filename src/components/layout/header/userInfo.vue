@@ -71,15 +71,14 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { getKey, qrCreate, qrCheck, loginStatus } from "@/api/login";
-import { log } from "console";
 const router = useRouter();
 
 const { login } = useUserStore();
 const { isLogin, profile, showLogin } = storeToRefs(useUserStore());
 const { getPlaylist } = useUserStore();
 const handleLogin = async () => {
-  ElMessage.error("现在要求验证,请使用二维码登录");
-  // login(formEmail.email, formEmail.password);
+  // ElMessage.error("现在要求验证,请使用二维码登录");
+  login(formEmail.email, formEmail.password);
 };
 
 const activeName = ref("email");

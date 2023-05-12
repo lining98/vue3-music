@@ -1,6 +1,5 @@
-import axios from "@/utils/request";
+import axios from "@/http/request";
 import { IUserProfile } from "@/models/user";
-import { postAction } from "@/utils/request";
 
 /* 登录 */
 // 手机号密码登录
@@ -24,7 +23,6 @@ export async function useLoginEmail(email: string, password: string) {
 export async function loginStatus(data) {
   return await axios.post("/login/status",data);
 }
-// postAction('/login/status',{...params})
 
 // 退出登录 getLogout
 export async function getLogout() {

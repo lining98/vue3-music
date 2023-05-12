@@ -8,7 +8,7 @@
     size="100%"
   >
     <div class="popup">
-    <div class="popup-bg"  :style="{ backgroundImage: picUrl }"></div>
+      <div class="popup-bg" :style="{ backgroundImage: picUrl }"></div>
       <div class="main">
         <!-- 左侧唱盘部分 -->
         <div class="pic">
@@ -146,17 +146,17 @@ onUnmounted(() => {
     }
     .lyric-content {
       text-align: center;
-        color: #ffffff99;
+      color: rgba(255, 255, 255, 0.966);
 
       .active {
-        color: #40ce8f;
+        color: #11ffa8;
       }
       .lyric {
         // margin: 0 auto;
         width: 400px;
         height: 400px;
         overflow-y: auto;
-        p{
+        p {
           height: 35px;
           line-height: 35px;
         }
@@ -166,7 +166,10 @@ onUnmounted(() => {
 
   .footer {
     background-color: transparent;
-    background-image:linear-gradient(rgba(255, 255, 255, 0),#fff 50%)
+    background-image: linear-gradient(
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.7) 50%
+    );
   }
 }
 

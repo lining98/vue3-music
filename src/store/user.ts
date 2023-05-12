@@ -11,7 +11,6 @@ export const useUserStore = defineStore("user", {
       token: "",
       cookie: "",
       showLogin: false,
-      // profile: {} as UserProfile,
       profile: {},
       playlist: {} as IUserPlaylist,
     };
@@ -29,16 +28,9 @@ export const useUserStore = defineStore("user", {
         this.token = res.token;
         this.cookie = res.cookie;
         document.cookie = res.cookie;
-        // console.log("res.profile", res.profile);
         this.profile = res.profile;
 
-        // const userInfo = {
-        //   avatarUrl: this.profile.avatarUrl,
-        //   nickname: this.profile.nickname,
-        //   userId: this.profile.userId,
-        //   userType: this.profile.userType,
-        // };
-        localStorage.setItem("USER-TOKEN", this.token);
+        localStorage.setItem("token", this.token);
         localStorage.setItem("cookie", this.cookie);
         localStorage.setItem("USER", JSON.stringify(this.profile));
         this.getPlaylist(this.profile.userId);

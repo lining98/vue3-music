@@ -1,21 +1,23 @@
 import axios, { type AxiosRequestConfig } from "axios";
 import { ElMessage } from "element-plus";
 
-
-// const cookie = localStorage.getItem("cookie");
-
 // axios.defaults.baseURL = "http://localhost:3000";
-axios.defaults.baseURL = "https://service-8drbxr29-1315315277.sh.apigw.tencentcs.com/release/";
-axios.defaults.timeout = 20 * 1000;
-// axios.defaults.withCredentials = true;
-// axios.defaults.headers.common['Cookie'] = cookie
+
+const service = axios.create({
+  // baseURL: "http://localhost:3000",
+  // baseURL: "http://124.222.23.222:3000",
+  // baseURL: "http://150.158.159.153:3000",
+  baseURL: "https://service-8drbxr29-1315315277.sh.apigw.tencentcs.com/release",
+  timeout: 20000,
+  withCredentials: true,
+});
 
 // 请求拦截器
-axios.interceptors.request.use(
+service.interceptors.request.use(
   (config: AxiosRequestConfig | any) => {
     config.params = {
       ...config.params,
-      t: Date.now(),
+      timestamp: Date.now(),
     };
     return config;
   },
@@ -23,7 +25,7 @@ axios.interceptors.request.use(
 );
 
 // 响应拦截器
-axios.interceptors.response.use(
+service.interceptors.response.use(
   (res) => {
     return res;
   },
@@ -41,8 +43,10 @@ interface IHttp {
 const http: IHttp = {
   get(url, params) {
     return new Promise((resolve, reject) => {
-      axios
-        .get(url, { params })
+      service
+        .get(url, {
+          params,
+        })
         .then((res) => {
           resolve(res.data);
         })
@@ -53,7 +57,7 @@ const http: IHttp = {
   },
   post(url, params) {
     return new Promise((resolve, reject) => {
-      axios
+      service
         .post(url, params)
         .then((res) => {
           resolve(res.data);

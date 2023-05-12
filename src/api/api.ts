@@ -1,4 +1,4 @@
-import axios from "@/utils/request";
+import axios from "@/http/request";
 import { IBanner } from "@/models/banner";
 import { ISongUrl } from "@/models/songUrl";
 import { ISongDetail } from "@/models/song";
