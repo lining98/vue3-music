@@ -23,7 +23,12 @@
     >
   </div>
 
-  <el-dialog v-model="showLogin" title='登录' width="500">
+  <el-dialog
+    v-model="showLogin"
+    title="登录"
+    width="500"
+    :before-close="handleClose"
+  >
     <el-tabs
       tab-position="left"
       v-model="activeName"
@@ -49,7 +54,14 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="二维码" name="loginImg" class="loginImg">
-        <img :src="qrimg" alt="" />
+        <h3>{{ account.message }}</h3>
+        <div v-if="!account.avatarUrl">
+          <img :src="qrimg" alt="" />
+        </div>
+        <div v-else>
+          <img :src="account.avatarUrl" alt="" />
+          <p>{{ account.nickname }}</p>
+        </div>
       </el-tab-pane>
     </el-tabs>
     <template v-if="activeName == 'email'" #footer>
@@ -99,13 +111,18 @@ const getLoginStatus = async (cookie = "") => {
   const { data } = await loginStatus({ cookie: cookie });
   localStorage.setItem("USER", JSON.stringify(data.profile));
   profile.value = data.profile;
-  getPlaylist(data.profile.userId);
 };
+
+const account = reactive({
+  message: "",
+  nickname: "",
+  avatarUrl: "",
+});
 
 const handleClick = async (tab: TabsPaneContext) => {
   if (tab.paneName === "loginImg") {
     const cookie = localStorage.getItem("cookie");
-    getLoginStatus(cookie)
+    getLoginStatus(cookie);
     const { code, unikey } = await getKey();
     const res = await qrCreate(unikey);
     qrimg.value = res.qrimg;
@@ -113,13 +130,17 @@ const handleClick = async (tab: TabsPaneContext) => {
     timer = setInterval(async () => {
       const statusRes = await checkStatus(unikey);
       // console.log(statusRes);
+      account.message = statusRes.message;
       if (statusRes.code === 800) {
         ElMessage.error("二维码已过期,请重新获取");
         clearInterval(timer);
       }
+      if (statusRes.code === 802) {
+        account.nickname = statusRes.nickname;
+        account.avatarUrl = statusRes.avatarUrl;
+      }
       if (statusRes.code === 803) {
         // 这一步会返回cookie
-        clearInterval(timer);
         await getLoginStatus(statusRes.cookie);
         localStorage.setItem("cookie", statusRes.cookie);
         ElMessage.success("授权登录成功");
@@ -130,6 +151,10 @@ const handleClick = async (tab: TabsPaneContext) => {
   } else {
     clearInterval(timer);
   }
+};
+
+const handleClose = (done: () => void) => {
+  clearInterval(timer);
 };
 
 async function logout() {
@@ -143,6 +168,7 @@ async function logout() {
 
 function getUser() {
   profile.value = JSON.parse(localStorage.getItem("USER"));
+  getPlaylist(profile.value.userId)
 }
 
 onMounted(() => {
@@ -162,10 +188,17 @@ onMounted(() => {
   }
   .user {
     margin-left: 10px;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 .loginImg {
-  height: 200px;
+  height: 250px;
   text-align: center;
+  img {
+    width: 200px;
+  }
 }
 </style>

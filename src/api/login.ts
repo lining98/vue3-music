@@ -21,7 +21,7 @@ export async function useLoginEmail(email: string, password: string) {
 
 // 登录状态
 export async function loginStatus(data) {
-  return await axios.post("/login/status",data);
+  return await axios.get("/login/status",data);
 }
 
 // 退出登录 getLogout

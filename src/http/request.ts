@@ -4,10 +4,10 @@ import { ElMessage } from "element-plus";
 // axios.defaults.baseURL = "http://localhost:3000";
 
 const service = axios.create({
-  // baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:3000",
   // baseURL: "http://124.222.23.222:3000",
   // baseURL: "http://150.158.159.153:3000",
-  baseURL: "https://service-8drbxr29-1315315277.sh.apigw.tencentcs.com/release",
+  // baseURL: "https://service-8drbxr29-1315315277.sh.apigw.tencentcs.com/release",
   timeout: 20000,
   withCredentials: true,
 });
