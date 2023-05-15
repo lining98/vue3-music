@@ -1,64 +1,44 @@
-import {Camera,Music,VideoOne,Fm} from '@icon-park/vue-next' // 引入字体图表
+import { Camera, Music, VideoOne, ThumbsUp } from "@icon-park/vue-next"; // 引入字体图表
 
 interface IMenus {
-    name:string;
-    menus:IMenu[]
+  name: string;
+  menus: IMenu[];
 }
 interface IMenu {
-    name:string;
-    key:string;
-    icon?:any; // 可选属性
+  name: string;
+  key: string;
+  icon?: any; // 可选属性
 }
 
-// interface IMyMenus{
-//     name:string,
-//     menus:IMyMenu[]
-// }
-// interface IMyMenu{
-//     name:string;
-//     key:string;
-//     pic:string;
-// }
-
-
-export function useMenu(){
-    const menus:IMenus[] = [
+export function useMenu() {
+  const menus: IMenus[] = [
+    {
+      name: "在线音乐",
+      menus: [
         {
-            name:'在线音乐',
-            menus:[
-                {
-                    name:'推荐',
-                    key:'discover',
-                    icon:Camera
-                },
-                {
-                    name:'音乐馆',
-                    key:'music',
-                    icon:Music
-                },
-                {
-                    name:'视频',
-                    key:'video',
-                    icon:VideoOne
-                },
-                {
-                    name:'电台',
-                    key:'dj',
-                    icon:Fm
-                },
-            ]
+          name: "发现音乐",
+          key: "findMusic",
+          icon: Camera,
         },
-    ]
-    // const myMenus:IMyMenus[] = [
-    //     {
-    //         name:'我的音乐',
-    //         menus:[
-    //             // {}
-    //         ]
-    //     }
-    // ]
-    return {
-        menus,
-        // myMenus
-    }
+        {
+          name: "动态",
+          key: "dynamic",
+          icon: Music,
+        },
+        {
+          name: "视频",
+          key: "video",
+          icon: VideoOne,
+        },
+        {
+          name: "每日推荐",
+          key: "discover",
+          icon: ThumbsUp,
+        },
+      ],
+    },
+  ];
+  return {
+    menus,
+  };
 }

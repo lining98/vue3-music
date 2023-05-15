@@ -8,17 +8,17 @@ const routes = [
     children: [
       {
         path: "/",
-        redirect: "/discover",
+        redirect: "/findMusic",
       },
       {
-        path: "discover",
-        name: "discover",
-        component: () => import("@/views/discover/index.vue"),
+        path: "findMusic",
+        name: "findMusic",
+        component: () => import("@/views/findMusic/index.vue"),
       },
       {
-        path: "music",
-        name: "music",
-        component: () => import("@/views/music/index.vue"),
+        path: "dynamic",
+        name: "dynamic",
+        component: () => import("@/views/dynamic/index.vue"),
       },
       {
         path: "video",
@@ -26,9 +26,9 @@ const routes = [
         component: () => import("@/views/video/index.vue"),
       },
       {
-        path: "dj",
-        name: "dj",
-        component: () => import("@/views/dj/index.vue"),
+        path: "discover",
+        name: "discover",
+        component: () => import("@/views/discover/index.vue"),
       },
       // 歌单路由
       {

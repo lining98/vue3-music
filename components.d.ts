@@ -40,6 +40,7 @@ declare module '@vue/runtime-core' {
     Header: typeof import('./src/components/layout/header/Header.vue')['default']
     IconPark: typeof import('./src/components/common/iconPark.vue')['default']
     Layout: typeof import('./src/components/layout/Layout.vue')['default']
+    List: typeof import('./src/components/layout/menu/List.vue')['default']
     Menu: typeof import('./src/components/layout/menu/Menu.vue')['default']
     MenuList: typeof import('./src/components/layout/menu/menuList.vue')['default']
     MoreText: typeof import('./src/components/common/moreText.vue')['default']

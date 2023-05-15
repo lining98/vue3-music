@@ -19,5 +19,3 @@ const router = useRouter();
 
 const { menus } = useMenu();
 </script>
-
-<style lang="scss" scoped></style>

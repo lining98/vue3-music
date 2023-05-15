@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import {ref} from 'vue'
 
-const msg = ref('音乐')
+const msg = ref('动态')
 </script>
 
 

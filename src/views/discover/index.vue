@@ -1,26 +1,15 @@
-<template>
-  <div class="discover">
-    <h1>推荐</h1>
-    <Banner class="banner" />
-    {{datas}}
-  </div>
-</template>
+<script setup lang='ts'>
+import {ref} from 'vue'
 
-<script setup lang="ts">
-import Banner from "./banner.vue";
-import {recommendSongs} from '@/api/discover'
-import { onMounted, ref } from "vue";
-
-const datas = ref()
-const getData = async()=>{
-  const res = await recommendSongs()
-  console.log(res);
-  datas.value = res
-
-}
-onMounted(getData)
+const msg = ref('每日推荐')
 </script>
 
-<style lang="scss" scoped>
+
+<template>
+    <h1>{{msg}}</h1>
+</template>
+
+
+<style lang='sass' scoped>
 
 </style>

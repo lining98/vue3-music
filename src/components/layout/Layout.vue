@@ -62,7 +62,7 @@ import { ref } from "vue";
           > span {
             display: flex;
             align-items: center;
-            margin-right: 3px;
+            margin-right: 5px;
           }
         }
       }
