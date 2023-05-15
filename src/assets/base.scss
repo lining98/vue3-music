@@ -63,6 +63,10 @@ li {
   list-style: none;
 }
 
+h2{
+  margin: 10px 0;
+}
+
 /* 文本对齐 */
 .tc {
   text-align: center;
@@ -87,6 +91,14 @@ li {
 
 .el-drawer {
   --el-drawer-padding-primary: 0 !important;
+}
+.el-tabs__item.is-top{
+  font-size: 16px;
+}
+.el-tabs__item.is-top.is-active{
+  font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 10px;
 }
 
 

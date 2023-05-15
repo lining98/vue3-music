@@ -17,11 +17,11 @@ export function useMenu() {
       menus: [
         {
           name: "发现音乐",
-          key: "findMusic",
+          key: "discover",
           icon: Camera,
         },
         {
-          name: "动态",
+          name: "关注",
           key: "dynamic",
           icon: Music,
         },
@@ -32,7 +32,7 @@ export function useMenu() {
         },
         {
           name: "每日推荐",
-          key: "discover",
+          key: "recommend",
           icon: ThumbsUp,
         },
       ],

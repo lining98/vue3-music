@@ -111,6 +111,7 @@ const getLoginStatus = async (cookie = "") => {
   const { data } = await loginStatus({ cookie: cookie });
   localStorage.setItem("USER", JSON.stringify(data.profile));
   profile.value = data.profile;
+  getPlaylist(data.profile?.userId)
 };
 
 const account = reactive({
@@ -155,6 +156,7 @@ const handleClick = async (tab: TabsPaneContext) => {
 
 const handleClose = (done: () => void) => {
   clearInterval(timer);
+  showLogin.value = false
 };
 
 async function logout() {
@@ -167,8 +169,9 @@ async function logout() {
 }
 
 function getUser() {
-  profile.value = JSON.parse(localStorage.getItem("USER"));
-  getPlaylist(profile.value.userId)
+  const details = JSON.parse(localStorage.getItem("USER"));
+  profile.value = details
+  getPlaylist(details?.userId)
 }
 
 onMounted(() => {

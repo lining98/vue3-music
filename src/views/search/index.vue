@@ -8,9 +8,6 @@
       <router-link :to="item.path">{{ item.label }}</router-link>
     </li>
   </ul>
-  <!-- <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-    <el-tab-pane v-for="item in taps" :key="item.path" :label="item.label" :name="item.path"></el-tab-pane>
-  </el-tabs> -->
   <router-view></router-view>
 </template>
 
