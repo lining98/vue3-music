@@ -66,6 +66,7 @@ defineProps<{
       margin-right: 20px;
     }
     .detail {
+      width: 100%;
       h1 {
         font-size: 24px;
         color: #334155;

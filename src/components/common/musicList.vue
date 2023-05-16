@@ -2,7 +2,7 @@
   <div class="songlist">
     <!-- stripes -->
     <div class="title">
-      <h2>歌曲列表</h2>
+      <h3>歌曲列表</h3>
       <span>{{ musicArr?.length || 0 }}首歌</span>
     </div>
     <el-table
@@ -113,7 +113,8 @@ function toAlbumDetails(id: number) {
     display: flex;
     align-items: flex-end;
     border-bottom: 3px solid #34d399;
-    h2 {
+    h3 {
+      font-size: 22px;
       margin-right: 10px;
     }
   }

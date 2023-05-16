@@ -8,16 +8,16 @@ const routes = [
     children: [
       {
         path: "/",
-        redirect: "/discover",
+        redirect: "/discover/recommendation",
       },
       {
         path: "discover",
-        name: "discover",
         component: () => import("@/views/discover/index.vue"),
         children: [
           {
-            path: "/",
-            redirect: "recommendation",
+            path: "",
+            // redirect: {name:"recommendation"},
+            redirect: "/discover/recommendation",
           },
           {
             path: "recommendation",

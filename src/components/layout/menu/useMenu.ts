@@ -17,7 +17,7 @@ export function useMenu() {
       menus: [
         {
           name: "发现音乐",
-          key: "discover",
+          key: "recommendation",
           icon: Camera,
         },
         {
