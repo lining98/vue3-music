@@ -15,7 +15,7 @@
           </span>
         </div>
         <div class="time">
-          发布时间：{{timestampToDate(album.publishTime)}}
+          发布时间：{{formatDate(album.publishTime,false)}}
         </div>
         <div>
           <el-button type="success" @click="playAll">
@@ -35,7 +35,7 @@ import IconPark from "@/components/common/iconPark.vue";
 import { PlayOne } from "@icon-park/vue-next";
 import { storeToRefs } from "pinia";
 import { usePlayerStore } from "@/store/player";
-import {timestampToDate} from '@/utils/time'
+import {formatDate} from '@/utils/format'
 
 const { playList } = storeToRefs(usePlayerStore());
 defineProps<{

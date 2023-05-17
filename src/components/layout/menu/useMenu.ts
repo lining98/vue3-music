@@ -21,7 +21,7 @@ export function useMenu() {
           icon: Camera,
         },
         {
-          name: "关注",
+          name: "动态",
           key: "dynamic",
           icon: Music,
         },

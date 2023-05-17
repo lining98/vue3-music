@@ -1,3 +1,33 @@
+// 将时间戳转换为具体的日期（参数：时间戳）
+export const formatDate = (datestamp: number | string, time = true) => {
+  let date = new Date(datestamp);
+
+  // 获取年份
+  let year: number | string = date.getFullYear();
+
+  // 获取月份
+  let month: number | string = date.getMonth() + 1;
+  // 对月份进行处理
+  month = month < 10 ? `0${month}` : month;
+
+  // 获取日期
+  let day: number | string = date.getDate();
+  // 对日期进行处理
+  day = day < 10 ? `0${day}` : day;
+
+  let hour: number | string = date.getHours();
+  hour = hour < 10 ? `0${hour}` : hour;
+  let minute: number | string = date.getMinutes();
+  minute = minute < 10 ? `0${minute}` : minute;
+  let second: number | string = date.getSeconds();
+  second = second < 10 ? `0${second}` : second;
+
+  return time
+    ? `${year}-${month}-${day}  ${hour}:${minute}:${second}`
+    : `${year}-${month}-${day}`;
+};
+
+
 // 转换为时间
 export function useFormatDuring(during: number) {
   if(!during) return '00:00'
