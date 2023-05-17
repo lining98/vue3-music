@@ -67,7 +67,6 @@ import { usePlayerStore } from "@/store/player";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
-import { getLikelist } from "@/api/api";
 import { onMounted } from "vue";
 
 const props = defineProps(["musicArr", "showArName"]);
@@ -101,10 +100,6 @@ function toAlbumDetails(id: number) {
   });
 }
 
-// const getData =  async()=>{
-//   const likes = await getLikelist(profile.value.userId)
-// }
-// onMounted(getData)
 </script>
 
 <style lang="scss" scoped>

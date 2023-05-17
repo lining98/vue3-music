@@ -40,30 +40,12 @@ a:hover {
   filter: alpha(opacity=90);
 }
 
-.ellipsis{
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.i-icon{
-  cursor: pointer;
-}
-
-
-.clickable {
-  cursor: pointer;
-}
-.clickable:hover {
-  color: #39c6ad;
-  text-decoration: underline;
-}
-
 ul,
 li {
   list-style: none;
 }
 
-h2{
+h2 {
   margin: 10px 0;
 }
 
@@ -85,6 +67,30 @@ h2{
   height: 100vh;
 }
 
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.i-icon {
+  cursor: pointer;
+}
+
+.clickable {
+  cursor: pointer;
+}
+.clickable:hover {
+  color: #39c6ad;
+  text-decoration: underline;
+}
+
+.image-slot {
+  background-color: #d5dbdf;
+  font-size: 14px;
+  line-height: 200px;
+  text-align: center;
+}
+
 :root {
   --el-color-primary: #34d399 !important;
 }
@@ -92,15 +98,14 @@ h2{
 .el-drawer {
   --el-drawer-padding-primary: 0 !important;
 }
-.el-tabs__item.is-top{
+.el-tabs__item.is-top {
   font-size: 16px;
 }
-.el-tabs__item.is-top.is-active{
+.el-tabs__item.is-top.is-active {
   font-size: 24px;
   font-weight: bold;
   padding-bottom: 10px;
 }
-
 
 // 美化滚动条
 ::-webkit-scrollbar {
@@ -110,23 +115,23 @@ h2{
 
 ::-webkit-scrollbar-track {
   width: 4px;
-  background: rgba(#101F1C, 0.1);
+  background: rgba(#101f1c, 0.1);
   -webkit-border-radius: 2em;
   -moz-border-radius: 2em;
   border-radius: 2em;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(144, 147, 153, .5);
+  background-color: rgba(144, 147, 153, 0.5);
   background-clip: padding-box;
   min-height: 28px;
   -webkit-border-radius: 2em;
   -moz-border-radius: 2em;
   border-radius: 2em;
-  transition: background-color .3s;
+  transition: background-color 0.3s;
   cursor: pointer;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(144, 147, 153, .3);
+  background-color: rgba(144, 147, 153, 0.3);
 }

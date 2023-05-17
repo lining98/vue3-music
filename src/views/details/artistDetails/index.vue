@@ -26,7 +26,7 @@
     <el-tabs v-model="selectedTag"  v-loading="isLoading">
       <el-tab-pane label="热门歌曲" name="hotSongs">
         <el-button size="default" round @click="playAll">
-          <IconPark :icon="PlayOne" class="mr-1" size="14" />
+          <IconPark :icon="PlayOne" class="mr-1" size="16" />
           播放全部
         </el-button>
 
@@ -112,6 +112,7 @@ async function getData(artId: number) {
   songList.value.forEach(
     (item: any, index: number) => (item.index = index + 1)
   );
+  isLoading.value = false;
 
   // 获取歌手专辑
   const { hotAlbums } = await getArtistAlbum(artId);
@@ -125,7 +126,6 @@ async function getData(artId: number) {
   // const allSongs = await getArtists(id);
   // songalllist.value = allSongs.songs;
 
-  isLoading.value = false;
 }
 
 watch(()=>route.query.id,()=>{

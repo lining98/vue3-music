@@ -78,19 +78,27 @@ import { ref, reactive, onMounted } from "vue";
 import axios from "axios";
 import type { TabsPaneContext } from "element-plus";
 import { useUserStore } from "@/store/user";
-import { useLoginEmail, getLogout } from "@/api/login";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
-import { getKey, qrCreate, qrCheck, loginStatus } from "@/api/login";
+import {
+  useLoginEmail,
+  getLogout,
+  getKey,
+  qrCreate,
+  qrCheck,
+  loginStatus,
+} from "@/api/login";
+
+import { getLikelist } from "@/api/api";
 const router = useRouter();
 
 const { login } = useUserStore();
 const { isLogin, profile, showLogin } = storeToRefs(useUserStore());
 const { getPlaylist } = useUserStore();
 const handleLogin = async () => {
-  // ElMessage.error("现在要求验证,请使用二维码登录");
-  login(formEmail.email, formEmail.password);
+  ElMessage.error("现在要求验证,请使用二维码登录");
+  // login(formEmail.email, formEmail.password);
 };
 
 const activeName = ref("email");
@@ -109,9 +117,11 @@ const checkStatus = async (key) => {
 };
 const getLoginStatus = async (cookie = "") => {
   const { data } = await loginStatus({ cookie: cookie });
+  const { ids } = await getLikelist(data.profile?.userId);
   localStorage.setItem("USER", JSON.stringify(data.profile));
+  localStorage.setItem("likes", ids);
   profile.value = data.profile;
-  getPlaylist(data.profile?.userId)
+  getPlaylist(data.profile?.userId);
 };
 
 const account = reactive({
@@ -156,7 +166,7 @@ const handleClick = async (tab: TabsPaneContext) => {
 
 const handleClose = (done: () => void) => {
   clearInterval(timer);
-  showLogin.value = false
+  showLogin.value = false;
 };
 
 async function logout() {
@@ -168,10 +178,10 @@ async function logout() {
   }
 }
 
-function getUser() {
+async function getUser() {
   const details = JSON.parse(localStorage.getItem("USER"));
-  profile.value = details
-  getPlaylist(details?.userId)
+  profile.value = details;
+  getPlaylist(details?.userId);
 }
 
 onMounted(() => {

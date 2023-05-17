@@ -74,14 +74,5 @@ const props = defineProps(["playlist"]);
       font-size: 14px;
     }
   }
-  // li:hover .play {
-  //   display: block;
-  // }
-  .image-slot {
-    background-color: #c3c6c8;
-    font-size: 14px;
-    line-height: 200px;
-    text-align: center;
-  }
 }
 </style>

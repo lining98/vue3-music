@@ -36,6 +36,7 @@ import { storeToRefs } from "pinia";
 import { useDiscoverStore } from '@/store/discover'
 
 const { cat } = storeToRefs(useDiscoverStore())
+const {handleClickSub} = useDiscoverStore()
 
 const categories = [
   { icon: Sphere, label: "语种" },
@@ -47,9 +48,7 @@ const categories = [
 
 const catlist = ref([[], [], [], [], []]);
 
-const handleClickSub = (item:any)=>{
-    cat.value = item.name
-}
+
 function handleClickAll (){
     cat.value = '全部歌单'
 }

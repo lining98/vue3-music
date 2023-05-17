@@ -4,7 +4,8 @@
       共搜到<span>{{ dataList.artistCount }}</span
       >个歌手
     </div>
-    <ul class="list">
+    <CArtist :artists="dataList.artists" />
+    <!-- <ul class="list">
       <li
         v-for="item in dataList.artists"
         :key="item.id"
@@ -15,7 +16,7 @@
         </div>
         <p>{{ item.name }}</p>
       </li>
-    </ul>
+    </ul> -->
     <CPagination
       v-if="dataList.artistCount > 30"
       :count="dataList.artistCount"
@@ -27,11 +28,11 @@
 
 <script setup lang="ts">
 import { onMounted, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
+import CArtist from "@/components/common/CArtist.vue";
 import CPagination from "@/components/common/CPagination.vue";
 
 const route = useRoute();
-const router = useRouter()
 const type = route.query.type;
 import useSearchPage from "./searchPage";
 const { info, loading, dataList, getData } = useSearchPage();
@@ -58,24 +59,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.list {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  li {
-    width: 130px;
-    font-size: 12px;
-    margin-right: 15px;
-    margin-bottom: 20px;
-    cursor: pointer;
-    .img {
-      height: 130px;
-      border: 1px solid #e0e0e0;
-      :deep(.el-image__inner) {
-        height: 130px;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

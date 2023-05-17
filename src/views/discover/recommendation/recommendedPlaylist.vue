@@ -33,17 +33,18 @@ onMounted(getData);
 
 <style lang="scss" scoped>
 .list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  // flex-wrap: wrap;
   li {
-    width: 220px;
-    margin: 0 15px 20px;
+    width: 13rem;
+    margin: 0 0.5rem 1rem;
     border-radius: 10px;
     cursor: pointer;
     .img {
       overflow: hidden;
       border-radius: 10px;
-      height: 220px;
+      height: 13rem;
       img {
         transition: all 0.3s;
         width: 100%;
