@@ -26,7 +26,6 @@
           />
         </div>
         <!-- 歌词部分 -->
-        <!-- <div class="lyric" ref="lyric" style="height: 300px"> -->
         <div class="lyric-content">
           <div class="name">
             <h2>{{ song.name }}</h2>

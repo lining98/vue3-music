@@ -1,7 +1,7 @@
 <template>
   <ul class="nav">
     <li v-for="item in navList" :key="item.name">
-      <router-link :to="{ name: item.name }">{{ item.label }}</router-link>
+      <router-link :to="{ name: item.name }"  exact :exact-active-class="'actived'">{{ item.label }}</router-link>
     </li>
   </ul>
   <router-view></router-view>
@@ -32,7 +32,7 @@ const navList = [
       padding: 0 20px;
     }
 
-    .active {
+    .actived {
       color: #34d399;
       font-size: 26px;
       font-weight: bold;

@@ -82,7 +82,7 @@ const getData = async () => {
 };
 
 const optionChange = (key: number | string, option: string) => {
-  console.log(key, option);
+  // console.log(key, option);
   if (option == "area") params.area = key as number;
   if (option == "type") params.type = key as number;
   if (option == "initial") params.initial = key as string;

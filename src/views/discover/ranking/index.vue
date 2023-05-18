@@ -1,6 +1,6 @@
 <template>
   <div class="ranking">
-    <el-skeleton  :loading="loading" animated>
+    <el-skeleton :loading="loading" animated>
       <template #template>
         <div class="official">
           <h2>云音乐特色榜</h2>
@@ -53,7 +53,9 @@
               :key="item.id"
               @click="toPlaylist(item.id)"
             >
-              <img class="img" :src="item.coverImgUrl" alt="" />
+              <div class="img">
+                <el-image lazy :src="item.coverImgUrl"></el-image>
+              </div>
               <p class="ellipsis">{{ item.name }}</p>
             </div>
           </div>
@@ -89,7 +91,7 @@ const getData = async () => {
       globalList.value.push(item);
     }
   });
-    loading.value = false;
+  loading.value = false;
 };
 
 onMounted(getData);
@@ -143,8 +145,9 @@ onMounted(getData);
         width: 200px;
         margin: 0 10px 20px;
         cursor: pointer;
-        img {
+        .img {
           width: 100%;
+          height: 200px;
         }
         p {
           text-align: center;

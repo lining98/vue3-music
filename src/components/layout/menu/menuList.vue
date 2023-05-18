@@ -2,7 +2,7 @@
   <div class="module-menu" v-for="(item, i) in menus" :key="i">
     <div class="menus-title">{{ item.name }}</div>
     <div class="menus-item" v-for="menu in item.menus" :key="menu.key">
-      <router-link :to="{ name: menu.key }">
+      <router-link :to="{ name: menu.key }"  exact :exact-active-class="'active'">
         <IconPark :icon="menu.icon" size="18" />
         <span>{{ menu.name }}</span>
       </router-link>
