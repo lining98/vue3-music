@@ -49,6 +49,13 @@ h2 {
   margin: 10px 0;
 }
 
+
+h2.description {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #34d399;
+}
+
 /* 文本对齐 */
 .tc {
   text-align: center;

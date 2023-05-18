@@ -1,15 +1,27 @@
-<script setup lang='ts'>
-import {ref} from 'vue'
-
-const msg = ref('视频')
-</script>
-
-
 <template>
-    <h1>{{msg}}</h1>
+  <h2 class="description">视频</h2>
+  <div class="video">
+    <CCategoryList :category='category' :group='group' />
+  </div>
 </template>
 
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import {videoGroupList, videoCategoryList} from '@/api/video'
+import CCategoryList from '@/components/common/CCategoryList.vue'
 
-<style lang='sass' scoped>
+const category = ref([])
+const group = ref([])
 
-</style>
+const getData = async()=>{
+    const categoryData = await videoGroupList()
+    category.value = categoryData.data
+    const groupData = await videoCategoryList()
+    group.value = groupData.data
+}
+
+onMounted(getData)
+
+</script>
+
+<style lang="scss" scoped></style>

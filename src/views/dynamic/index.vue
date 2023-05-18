@@ -1,6 +1,6 @@
 <template>
   <div class="dynamic" v-infinite-scroll="load">
-    <h2>{{ msg }}</h2>
+    <h2 class="description">{{ msg }}</h2>
     <el-skeleton :loading="firstLoading" animated
       ><template #template>
         <div class="item" v-for="item in 5" :key="item">
@@ -139,11 +139,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .dynamic {
-  h2 {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #34d399;
-  }
   .item {
     .item-content {
       display: flex;
