@@ -13,35 +13,9 @@ import { ref } from "vue";
 const activeName = ref("personality");
 
 const navList = [
-  { label: "个性推荐", name: "recommendation" },
+  { label: "个性推荐", name: "recommend" },
   { label: "排行榜", name: "ranking" },
   { label: "歌单", name: "rplaylist" },
   { label: "歌手", name: "artist" },
 ];
 </script>
-
-<style lang="scss" scoped>
-.nav {
-  display: flex;
-  margin-bottom: 20px;
-  align-items: flex-end;
-  border-bottom: 2px solid #e4e7ed;
-  li {
-    transition: all 0.3s;
-    a {
-      padding: 0 20px;
-    }
-
-    .actived {
-      color: #34d399;
-      font-size: 26px;
-      font-weight: bold;
-      padding-bottom: 5px;
-      border-bottom: 2px solid #34d399;
-      position: relative;
-      top: -3px;
-      z-index: 9;
-    }
-  }
-}
-</style>

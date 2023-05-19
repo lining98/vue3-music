@@ -1,11 +1,12 @@
 import { Camera, Music, VideoOne, ThumbsUp } from "@icon-park/vue-next"; // 引入字体图表
 
 interface IMenus {
-  name: string;
+  title: string;
   menus: IMenu[];
 }
 interface IMenu {
-  name: string;
+  title: string;
+  name:string;
   key: string;
   icon?: any; // 可选属性
 }
@@ -13,26 +14,30 @@ interface IMenu {
 export function useMenu() {
   const menus: IMenus[] = [
     {
-      name: "在线音乐",
+      title: "在线音乐",
       menus: [
         {
-          name: "发现音乐",
-          key: "recommendation",
+          title: "发现音乐",
+          name: "recommend",
+          key:'discover',
           icon: Camera,
         },
         {
-          name: "动态",
-          key: "dynamic",
+          title: "动态",
+          name: "dynamic",
+          key:'dynamic',
           icon: Music,
         },
         {
-          name: "视频",
-          key: "video",
+          title: "视频",
+          name: "videoList",
+          key:'video',
           icon: VideoOne,
         },
         {
-          name: "每日推荐",
-          key: "recommend",
+          title: "每日推荐",
+          name: "recommendation",
+          key:'recommendation',
           icon: ThumbsUp,
         },
       ],

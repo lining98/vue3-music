@@ -8,22 +8,22 @@ const routes = [
     children: [
       {
         path: "/",
-        redirect: "/discover/recommendation",
+        redirect: "/discover/recommend",
       },
       {
         path: "discover",
         component: () => import("@/views/discover/index.vue"),
         children: [
           {
-            path: "",
-            // redirect: {name:"recommendation"},
-            redirect: "/discover/recommendation",
+            path: "/discover",
+            // redirect: {name:"recommend"},
+            redirect: "/discover/recommend",
           },
           {
-            path: "recommendation",
-            name: "recommendation",
+            path: "recommend",
+            name: "recommend",
             component: () =>
-              import("@/views/discover/recommendation/index.vue"),
+              import("@/views/discover/recommend/index.vue"),
           },
           {
             path: "ranking",
@@ -51,11 +51,27 @@ const routes = [
         path: "video",
         name: "video",
         component: () => import("@/views/video/index.vue"),
+        children: [
+          {
+            path: "/video",
+            redirect: "/video/videoList",
+          },
+          {
+            path: "videoList",
+            name: "videoList",
+            component: () => import("@/views/video/videoList/index.vue"),
+          },
+          {
+            path: "mvList",
+            name: "mvList",
+            component: () => import("@/views/video/mvList/index.vue"),
+          },
+        ],
       },
       {
-        path: "recommend",
-        name: "recommend",
-        component: () => import("@/views/recommend/index.vue"),
+        path: "recommendation",
+        name: "recommendation",
+        component: () => import("@/views/recommendation/index.vue"),
       },
       // 歌单路由
       {
@@ -74,6 +90,12 @@ const routes = [
         path: "albumDetail",
         name: "albumDetail",
         component: () => import("@/views/details/albumDetails/index.vue"),
+      },
+      // 视频路由
+      {
+        path: "videosDetails",
+        name: "videosDetails",
+        component: () => import("@/views/details/videosDetails/index.vue"),
       },
       // 我的收藏路由
       {
@@ -135,7 +157,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  // linkActiveClass: "active",
+  linkActiveClass: "active",
   routes,
 });
 

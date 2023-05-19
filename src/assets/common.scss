@@ -1,0 +1,49 @@
+// 公共样式
+
+ul.nav {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: flex-end;
+  border-bottom: 2px solid #e4e7ed;
+  li {
+    transition: all 0.3s;
+    a {
+      font-size: 16px;
+      padding: 0 20px;
+    }
+
+    .actived {
+      color: #34d399;
+      font-size: 26px;
+      font-weight: bold;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #34d399;
+      position: relative;
+      top: -3px;
+      z-index: 9;
+    }
+  }
+}
+
+
+ul.select {
+  display: flex;
+  margin: 10px 0;
+  li:first-child {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  li:not(li:first-child) {
+    padding: 0 6px;
+    margin: 0 3px;
+    cursor: pointer;
+  }
+  li:hover:not(.active, li:first-child) {
+    color: #34d399;
+  }
+  .active {
+    border-radius: 3px;
+    background-color: #34d399;
+    color: #fff;
+  }
+}

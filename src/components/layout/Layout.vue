@@ -50,24 +50,25 @@ import { ref } from "vue";
       }
       .menus-item {
         margin: 6px 0;
+        cursor: pointer;
         & > a {
           padding: 6px 20px;
           display: flex;
           font-size: 14px;
           align-items: center;
 
-          &:hover:not(.active) {
-            background-color: #f4f2f2;
-          }
           > span {
             display: flex;
             align-items: center;
             margin-right: 5px;
           }
         }
+        &:hover:not(.active) {
+          background-color: #f4f2f2;
+        }
       }
 
-      .active {
+      .active>a {
         background: #39c6ad;
         color: #fff;
         border-radius: 5px;

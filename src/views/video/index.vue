@@ -1,27 +1,19 @@
 <template>
-  <h2 class="description">视频</h2>
-  <div class="video">
-    <CCategoryList :category='category' :group='group' />
-  </div>
+  <ul class="nav">
+    <li v-for="item in navList" :key="item.name">
+      <router-link :to="{ name: item.name }"  exact :exact-active-class="'actived'">{{ item.label }}</router-link>
+    </li>
+  </ul>
+  <router-view></router-view>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import {videoGroupList, videoCategoryList} from '@/api/video'
-import CCategoryList from '@/components/common/CCategoryList.vue'
+import { ref } from "vue";
 
-const category = ref([])
-const group = ref([])
+const activeName = ref("personality");
 
-const getData = async()=>{
-    const categoryData = await videoGroupList()
-    category.value = categoryData.data
-    const groupData = await videoCategoryList()
-    group.value = groupData.data
-}
-
-onMounted(getData)
-
+const navList = [
+  { label: "视频", name: "videoList" },
+  { label: "MV", name: "mvList" },
+];
 </script>
-
-<style lang="scss" scoped></style>

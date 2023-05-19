@@ -4,7 +4,7 @@ import { getHotPlaylist, getArtistList } from "@/api/discover";
 export const useDiscoverStore = defineStore("discover", {
   state: () => {
     return {
-      cat: "全部歌单", // 歌单分类信息
+      cat: "全部歌单", // 歌单分类标签
       catlistDetail: {}, //歌单分类
       catlisthot: [], //热门歌单分类
       loading: false,
@@ -12,6 +12,7 @@ export const useDiscoverStore = defineStore("discover", {
     };
   },
   actions: {
+    // 获取歌单列表
     async hotPlaylist(data?: any) {
       this.loading = true;
       this.catlistDetail = await getHotPlaylist(data);

@@ -1,36 +1,14 @@
 <template>
   <div class="artist">
-    <ul class="area">
-      <li>语种：</li>
+    <ul class="select" v-for="item in category" :key="item.key">
+      <li>{{ item.name }}</li>
       <li
-        v-for="item in category.area"
-        :key="item.key"
-        :class="params.area == item.key ? 'active' : ''"
-        @click="optionChange(item.key, 'area')"
+        v-for="cat in item.child"
+        :key="cat.key"
+        :class="params[item.key] == cat.key ? 'active' : ''"
+        @click="optionChange(cat.key,item.key )"
       >
-        {{ item.name }}
-      </li>
-    </ul>
-    <ul class="type">
-      <li>分类：</li>
-      <li
-        v-for="item in category.type"
-        :key="item.key"
-        :class="params.type == item.key ? 'active' : ''"
-        @click="optionChange(item.key, 'type')"
-      >
-        {{ item.name }}
-      </li>
-    </ul>
-    <ul class="initial">
-      <li>筛选：</li>
-      <li
-        v-for="item in category.initial"
-        :key="item.key"
-        :class="params.initial == item.key ? 'active' : ''"
-        @click="optionChange(item.key, 'initial')"
-      >
-        {{ item.name }}
+        {{ cat.name }}
       </li>
     </ul>
   </div>
@@ -102,28 +80,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.artist {
-  ul {
-    display: flex;
-    margin: 10px 0;
-    li:first-child {
-      font-weight: bold;
-    }
-    li:not(li:first-child) {
-      padding: 0 6px;
-      margin: 0 3px;
-      cursor: pointer;
-    }
-    li:hover:not(.active, li:first-child) {
-      color: #34d399;
-    }
-    .active {
-      border-radius: 3px;
-      background-color: #34d399;
-      color: #fff;
-    }
-  }
-}
 .button {
   text-align: center;
 }
