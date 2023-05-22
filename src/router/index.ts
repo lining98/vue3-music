@@ -93,9 +93,9 @@ const routes = [
       },
       // 视频路由
       {
-        path: "videosDetails",
-        name: "videosDetails",
-        component: () => import("@/views/details/videosDetails/index.vue"),
+        path: "videoDetails",
+        name: "videoDetails",
+        component: () => import("@/views/details/videoDetails/index.vue"),
       },
       // 我的收藏路由
       {

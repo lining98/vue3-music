@@ -123,8 +123,6 @@ const getData = async () => {
   }
 };
 const load = () => {
-  console.log("aaa");
-
   loading.value = true;
   setTimeout(() => {
     getData();

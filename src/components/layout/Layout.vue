@@ -68,10 +68,13 @@ import { ref } from "vue";
         }
       }
 
-      .active>a {
+      .active {
         background: #39c6ad;
         color: #fff;
         border-radius: 5px;
+        a {
+          color: #fff;
+        }
       }
     }
   }

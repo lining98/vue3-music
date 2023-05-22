@@ -10,7 +10,11 @@
           <IconPark class="icon" :icon="Play" size="50" />
         </div>
       </div>
-      <div class="searchVideos" v-if="item.coverUrl">
+      <div
+        class="searchVideos"
+        v-if="item.coverUrl"
+        @click="toVideoDetails(item)"
+      >
         <div class="search">
           <el-image class="img" :src="item.coverUrl" lazy alt=""></el-image>
           <div class="playcount">
@@ -30,7 +34,9 @@
               {{ author.userName }}
             </span>
             <!-- 最后一个歌手后面不加分隔符 -->
-            <span class="divider" v-if="index != item.creator.length - 1">/</span>
+            <span class="divider" v-if="index != item.creator.length - 1"
+              >/</span
+            >
           </span>
         </p>
       </div>
@@ -43,8 +49,18 @@ import IconPark from "@/components/common/iconPark.vue";
 import { Play, VideoOne } from "@icon-park/vue-next";
 import { getArtistMv } from "@/api/api";
 import { useFormatDuring, useNumberFormat } from "@/utils/format";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const props = defineProps(["mvlist"]);
+
+const toVideoDetails = (item: any) => {
+  router.push({
+    name: "videoDetails",
+    query: { id: item.vid, type: item.type ? "video" : "mv" },
+  });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -130,7 +146,7 @@ const props = defineProps(["mvlist"]);
       }
     }
     p.creator {
-      .by{
+      .by {
         color: #0c73c2;
         margin-right: 5px;
       }

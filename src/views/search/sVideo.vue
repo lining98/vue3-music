@@ -4,9 +4,6 @@
     <CVideo :mvlist="dataList.videos">
       <template #artVideos></template>
     </CVideo>
-    <!-- <ul>
-      <li v-for="item in dataList.videos">{{ item.title }}</li>
-    </ul> -->
     <CPagination
       v-if="dataList.videoCount > 30"
       :count="dataList.videoCount"
