@@ -7,6 +7,7 @@
     :append-to-body="true"
     size="100%"
   >
+    <!-- 歌词 -->
     <div class="popup">
       <div class="popup-bg" :style="{ backgroundImage: picUrl }"></div>
       <div class="main">
@@ -55,16 +56,19 @@
           <!-- </ElScrollbar> -->
         </div>
       </div>
+      <!-- 评论 -->
+      <!-- <Comment /> -->
       <Footer class="footer" />
     </div>
   </el-drawer>
 </template>
 
 <script setup lang="ts">
-import Footer from "@/components/layout/footer/Footer.vue";
 import { usePlayerStore } from "@/store/player";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, onUnmounted, ref } from "vue";
+import Footer from "@/components/layout/footer/Footer.vue";
+import Comment from "@/components/common/Comment.vue";
 
 import defaultImg from "@/assets/img/OpticalDisk.png";
 
@@ -128,6 +132,7 @@ onUnmounted(() => {
       .picUrl {
         position: relative;
         width: 200px;
+        height: 200px;
         border-radius: 50%;
         border: 50px solid #131315;
         animation: rotate_360 10s linear infinite;

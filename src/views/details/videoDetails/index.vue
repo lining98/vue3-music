@@ -1,12 +1,18 @@
 <template>
   <div class="video-detail">
-    <!-- 视频/MV 详细 -->
-    <div class="detail">
-      <Details :detail="detail" :videoUrl='videoUrl' />
-    </div>
-    <div class="recommend">
+    <!-- 详情 -->
+    <div class="video-content">
+      <!-- 视频/MV 详细 -->
+      <div class="detail">
+        <Details :detail="detail" :videoUrl="videoUrl" />
+
+        <!-- 评论 -->
+        <Comment :id="route.query.id" :type="type === 'video' ? 5 : 1" />
+      </div>
+      <div class="recommend">
         <!-- 相关推荐 -->
-     <RelatedVideo />
+        <RelatedVideo />
+      </div>
     </div>
   </div>
 </template>
@@ -22,6 +28,7 @@ import {
 import { useRoute } from "vue-router";
 import Details from "./Details.vue";
 import RelatedVideo from "./RelatedVideo.vue";
+import Comment from "@/components/common/Comment.vue";
 
 const route = useRoute();
 const type = route.query.type;
@@ -31,7 +38,7 @@ const videoUrl = ref("");
 
 const getData = async () => {
   const id = route.query.id;
-  if (route.query.type === "video") {
+  if (type === "video") {
     const { data } = await getVideoDetail(String(id));
     const { urls } = await getVideoUrl(String(id));
     detail.value = data;
@@ -49,16 +56,19 @@ onMounted(getData);
 
 <style lang="scss" scoped>
 .video-detail {
-    width: 1200px;
-  display: flex;
-  justify-content: space-between;
-  .detail {
-    // flex: 1;
-    width: 700px;
-    padding-right: 30px;
-  }
-  .recommend {
-    width: 400px;
+  width: 1200px;
+  // 详情
+  .video-content {
+    display: flex;
+    justify-content: space-between;
+    .detail {
+      // flex: 1;
+      width: 700px;
+      padding-right: 30px;
+    }
+    .recommend {
+      width: 400px;
+    }
   }
 }
 </style>

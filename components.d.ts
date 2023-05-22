@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     CAlbum: typeof import('./src/components/common/CAlbum.vue')['default']
     CArtist: typeof import('./src/components/common/CArtist.vue')['default']
+    Comment: typeof import('./src/components/common/Comment.vue')['default']
     CPagination: typeof import('./src/components/common/CPagination.vue')['default']
     CPlaylist: typeof import('./src/components/common/CPlaylist.vue')['default']
     CVideo: typeof import('./src/components/common/CVideo.vue')['default']
