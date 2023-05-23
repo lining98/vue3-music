@@ -11,7 +11,6 @@ const resolve = (dir:string) => path.join(__dirname,dir)
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base:'/vue3-music/',
   resolve: {
     // 配置别名
     alias: {

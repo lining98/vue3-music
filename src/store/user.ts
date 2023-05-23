@@ -41,13 +41,6 @@ export const useUserStore = defineStore("user", {
         ElMessage.error(res.message);
       }
     },
-    // async checkLogin(){
-    //     const {data} = await loginStatus()
-    //     if(data.code === 200){
-    //         this.profile = data.profile
-    //         this.showLogin = false
-    //     }
-    // }
     async getPlaylist(userId: number) {
       this.playlist = await getUserPlaylist(userId);
     },

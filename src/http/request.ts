@@ -1,16 +1,20 @@
 import axios, { type AxiosRequestConfig } from "axios";
 import { ElMessage } from "element-plus";
 
-// axios.defaults.baseURL = "http://localhost:3000";
+let url = ''
+if(process.env.NODE_ENV === 'development'){
+  url = 'http://localhost:3000'
+} else {
+  // 生产环境
+  url = 'http://121.40.174.152:3000/'
+}
 
 const service = axios.create({
-  baseURL: "http://localhost:3000",
-  // baseURL: "http://124.222.23.222:3000",
-  // baseURL: "http://150.158.159.153:3000",
-  // baseURL: "https://service-8drbxr29-1315315277.sh.apigw.tencentcs.com/release",
+  baseURL: url,
   timeout: 20000,
   withCredentials: true,
 });
+
 
 // 请求拦截器
 service.interceptors.request.use(
