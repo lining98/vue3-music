@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { Like, VolumeSmall } from "@icon-park/vue-next";
 import { useFormatDuring } from "@/utils/format";
 import { usePlayerStore } from "@/store/player";

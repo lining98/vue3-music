@@ -4,8 +4,6 @@ import axios from "@/http/request";
 export const getGersonalized = () => axios.get("/personalized");
 
 /* 个性推荐 */
-// 获取推荐歌曲
-export const recommendSongs = () => axios.get("/recommend/songs");
 
 // 获取排行榜详情
 export const getToplistDetail = () => axios.get("/toplist/detail");
@@ -28,3 +26,10 @@ area 取值: -1:全部  7华语  96欧美  8:日本  16韩国  0:其他
 initial 首字母查询
 */
 export const getArtistList = (params:any) =>  axios.get("/artist/list", params);
+
+
+/* 每日推荐 */
+// 获取推荐歌曲
+export const recommendSongs = () => axios.get("/recommend/songs");
+// 获取推荐歌单
+export const recommendResource = () => axios.get("/recommend/resource");

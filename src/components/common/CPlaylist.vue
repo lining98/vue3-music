@@ -8,7 +8,7 @@
       @click="router.push({ name: 'playlist', query: { id: item.id } })"
     >
       <el-card shadow="hover" :body-style="{ padding: '0.5rem' }">
-        <el-image :src="item.coverImgUrl">
+        <el-image :src="item.coverImgUrl || item.picUrl">
           <template #placeholder>
             <div class="image-slot">加载中<span class="dot">...</span></div>
           </template>

@@ -14,7 +14,7 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item @click="logout">退出</el-dropdown-item>
+          <el-dropdown-item @click="quitDialogIsVisible = true"> 退出 </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -23,17 +23,20 @@
     >
   </div>
 
+<!-- 登录窗口 二维码 -->
   <el-dialog
     v-model="showLogin"
     title="登录"
     width="500"
-    :close-on-click-modal='false'
+    :close-on-click-modal="false"
     :before-close="handleClose"
   >
     <div class="loginImg">
       <h3>{{ account.message }}</h3>
       <div v-if="!account.avatarUrl">
-        <img :src="qrimg" title="点击刷新二维码" @click="changeImg" />
+        <div v-loading="loading">
+          <img :src="qrimg" title="点击刷新二维码" @click="changeImg" />
+        </div>
       </div>
       <div v-else>
         <img :src="account.avatarUrl" alt="" />
@@ -41,6 +44,17 @@
       </div>
     </div>
   </el-dialog>
+
+  <!-- 退出登录窗口 -->
+    <el-dialog v-model="quitDialogIsVisible" title="退出登录" width="30%" :center="true" >
+      <span class="quitHint">是否确认退出登录？</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="logout">确定</el-button>
+          <el-button @click="quitDialogIsVisible = false">取消</el-button>
+        </span>
+      </template>
+    </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -68,10 +82,10 @@ const { isLogin, profile, showLogin } = storeToRefs(useUserStore());
 const { getPlaylist } = useUserStore();
 const iSpassword = ref(true);
 
-
 const userId = ref();
 const qrimg = ref("");
-let timer:null;
+const quitDialogIsVisible = ref(false)
+let timer: null;
 
 const checkStatus = async (key) => {
   return await qrCheck(key);
@@ -83,8 +97,9 @@ const getLoginStatus = async (cookie = "") => {
   userId.value = data.profile?.userId;
 };
 
+const loading = ref(false);
 const account = reactive({
-  message: "",
+  message: "等待扫码",
   nickname: "",
   avatarUrl: "",
 });
@@ -94,16 +109,18 @@ const showLoginModal = () => {
   handleLogin();
 };
 
-const changeImg = ()=>{
-  handleLogin()
-}
+const changeImg = () => {
+  handleLogin();
+};
 
 const handleLogin = async () => {
+  loading.value = true;
   const cookie = localStorage.getItem("cookie");
   getLoginStatus(cookie);
   const { code, unikey } = await getKey();
   const res = await qrCreate(unikey);
   qrimg.value = res.qrimg;
+  loading.value = false;
 
   timer = setInterval(async () => {
     const statusRes = await checkStatus(unikey);
@@ -136,20 +153,20 @@ const handleClose = (done: () => void) => {
   showLogin.value = false;
 };
 
-async function logout() {
+const logout = async() => {
   const res = await getLogout();
   if (res.code === 200) {
     ElMessage.success("已退出登录");
     localStorage.clear();
     router.go(0);
   }
-}
+};
 
-async function getUser() {
+const getUser = () => {
   const details = JSON.parse(localStorage.getItem("USER"));
   profile.value = details;
   getPlaylist(details?.userId);
-}
+};
 
 onMounted(() => {
   getUser();
@@ -175,7 +192,7 @@ onMounted(() => {
   }
 }
 .loginImg {
-  // height: 250px;
+  height: 250px;
   text-align: center;
   img {
     width: 250px;

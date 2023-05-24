@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from "vue";
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { VolumeMute, VolumeSmall } from "@icon-park/vue-next";
 import { usePlayerStore } from "@/store/player";
 

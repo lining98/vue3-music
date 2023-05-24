@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { DoubleUp,DoubleDown } from "@icon-park/vue-next";
 import defaultImg from "@/assets/img/OpticalDisk.png";
 import { usePlayerStore } from "@/store/player";

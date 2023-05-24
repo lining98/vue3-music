@@ -67,7 +67,7 @@ import { ElLoading, ElMessage } from "element-plus";
 import { PlayOne } from "@icon-park/vue-next";
 import IconPark from "@/components/common/IconPark.vue";
 
-import MusicList from "@/components/common/musicList.vue";
+import MusicList from "@/components/common/MusicList.vue";
 import CAlbum from '@/components/common/CAlbum.vue'
 import CVideo from '@/components/common/CVideo.vue'
 // import MusicListAll from "@/components/common/musicListAll.vue";

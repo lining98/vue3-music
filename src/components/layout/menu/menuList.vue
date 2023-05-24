@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import IconPark from "@/components/common/iconPark.vue"; //引入公共组件
+import IconPark from "@/components/common/IconPark.vue"; //引入公共组件
 import { useMenu } from "./useMenu";
 import { useRoute, useRouter } from "vue-router";
 const route = useRoute();

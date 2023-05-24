@@ -40,7 +40,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 // import MoreText from "@/components/common/moreText.vue";
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { PlayOne } from "@icon-park/vue-next";
 import { storeToRefs } from "pinia";
 import { usePlayerStore } from "@/store/player";

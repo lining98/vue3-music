@@ -15,7 +15,7 @@ import { getPlaylistDetail, getPlaylistTrackAll } from "@/api/api";
 import { ElMessage } from "element-plus";
 
 import Info from "./Info.vue";
-import MusicList from "@/components/common/musicList.vue";
+import MusicList from "@/components/common/MusicList.vue";
 import { useRoute, useRouter } from "vue-router";
 import { usePlayerStore } from "@/store/player";
 import { storeToRefs } from "pinia";

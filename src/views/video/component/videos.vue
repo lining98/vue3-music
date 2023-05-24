@@ -51,7 +51,7 @@ import { Picture as IconPicture } from "@element-plus/icons-vue";
 import { useVideoStore } from "@/store/video";
 import { storeToRefs } from "pinia";
 import { useFormatDuring, useNumberFormat } from "@/utils/format";
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { Play, VideoOne } from "@icon-park/vue-next";
 import { useRouter } from "vue-router";
 

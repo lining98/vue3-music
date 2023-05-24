@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import PlayerVolumeSlider from "./playerVolumeSlider.vue";
 import { usePlayerStore } from "@/store/player";
 import {

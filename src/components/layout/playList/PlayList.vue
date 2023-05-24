@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { usePlayerStore } from "@/store/player";
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { Delete } from "@icon-park/vue-next";
 import { useFormatDuring } from "@/utils/format";
 

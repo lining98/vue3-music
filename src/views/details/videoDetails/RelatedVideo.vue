@@ -25,7 +25,7 @@
 import { onMounted, ref } from "vue";
 import { getRelatedAllvideo } from "@/api/video";
 import { useRoute } from "vue-router";
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { VideoOne } from "@icon-park/vue-next";
 import { useNumberFormat, useFormatDuring } from "@/utils/format";
 

@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { Play, VideoOne } from "@icon-park/vue-next";
 import { getArtistMv } from "@/api/api";
 import { useFormatDuring, useNumberFormat } from "@/utils/format";
