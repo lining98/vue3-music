@@ -1,59 +1,58 @@
 <template>
-  <ul class="mv">
-    <li v-for="item in mvlist" :key="item.id">
-      <div class="artVideos" v-if="item.imgurl16v9">
-        <div class="art">
-          <el-image class="img" :src="item.imgurl16v9" lazy alt=""></el-image>
-        </div>
-        <p>{{ item.name }}</p>
-        <div class="model">
-          <IconPark class="icon" :icon="Play" size="50" />
-        </div>
-      </div>
-      <div
-        class="searchVideos"
-        v-if="item.coverUrl"
-        @click="toVideoDetails(item)"
-      >
-        <div class="search">
-          <el-image class="img" :src="item.coverUrl" lazy alt=""></el-image>
-          <div class="playcount">
-            <IconPark class="icon" :icon="VideoOne" size="18" />{{
-              useNumberFormat(item.playTime)
-            }}
+  <div v-loading="loading">
+    <ul class="mv">
+      <li v-for="item in mvList" :key="item.data.id">
+        <div
+          class="searchVideos"
+          @click="toVideoDetails(item)"
+        >
+          <div class="search">
+            <el-image class="img" :src="item.data.coverUrl" alt=""></el-image>
+            <!-- <div class="playcount">
+              <IconPark class="icon" :icon="VideoOne" size="18" />{{
+                useNumberFormat(item.playTime)
+              }}
+            </div> -->
+            <div class="time">{{ useFormatDuring(item.data.duration) }}</div>
           </div>
-          <div class="time">{{ useFormatDuring(item.durationms) }}</div>
-        </div>
-        <p class="title">
-          <span v-if="item.type == 0">MV</span>{{ item.title }}
-        </p>
-        <p class="creator">
-          <span v-if="item.type !== 0" class="by">by</span>
-          <span v-for="(author, index) in item.creator" :key="author.id">
-            <span class="clickable" @click="toSingerDetails(author.id)">
-              {{ author.userName }}
+          <p class="title">
+            <span v-if="item.type == 0">MV</span>{{ item.data.name }}
+          </p>
+          <p class="creator">
+            <span v-if="item.type !== 0" class="by">by</span>
+            <span v-for="(author, index) in item.data.artists" :key="author.id">
+              <span class="clickable" @click="toSingerDetails(author.id)">
+                {{ author.name }}
+              </span>
+              <span class="divider" v-if="index != item.data.artists.length - 1"
+                >/</span
+              >
             </span>
-            <!-- 最后一个歌手后面不加分隔符 -->
-            <span class="divider" v-if="index != item.creator.length - 1"
-              >/</span
-            >
-          </span>
-        </p>
-      </div>
-    </li>
-  </ul>
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
-import IconPark from "@/components/common/IconPark.vue";
-import { Play, VideoOne } from "@icon-park/vue-next";
-import { getArtistMv } from "@/api/api";
-import { useFormatDuring, useNumberFormat } from "@/utils/format";
+import { onMounted, ref } from "vue";
+import { getRecentVideo } from "@/api/recent";
 import { useRouter } from "vue-router";
+import {useNumberFormat,useFormatDuring } from '@/utils/format'
+import {VideoOne} from "@icon-park/vue-next"
+import IconPark from '@/components/common/IconPark.vue'
 
-const router = useRouter();
+const router = useRouter()
 
-const {mvlist} = defineProps(["mvlist"]);
+const loading = ref(false);
+const mvList = ref([]);
+const getData = async () => {
+  loading.value = true;
+  const { data } = await getRecentVideo();
+  mvList.value = data.list;
+  loading.value = false;
+};
 
 const toVideoDetails = (item: any) => {
   router.push({
@@ -61,6 +60,8 @@ const toVideoDetails = (item: any) => {
     query: { id: item.vid, type: item.type ? "video" : "mv" },
   });
 };
+
+onMounted(getData);
 </script>
 
 <style lang="scss" scoped>
@@ -74,7 +75,6 @@ const toVideoDetails = (item: any) => {
     padding: 10px;
     cursor: pointer;
     transition: all 0.3s;
-    .artVideos,
     .searchVideos {
       position: relative;
       > div {
@@ -97,15 +97,6 @@ const toVideoDetails = (item: any) => {
           transform: translate(-50%, -50%);
         }
       }
-    }
-    .artVideos {
-      .img {
-        width: 100%;
-        height: 150px;
-      }
-    }
-    .artVideos:hover .model {
-      display: block;
     }
     .searchVideos {
       .img {

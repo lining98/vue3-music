@@ -7,6 +7,7 @@ body {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body,
@@ -49,14 +50,14 @@ h2 {
   margin: 10px 0;
 }
 
-
 h2.description {
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 2px solid #34d399;
 }
 
-video,img{
+video,
+img {
   width: 100%;
 }
 
@@ -116,6 +117,19 @@ video,img{
   font-size: 24px;
   font-weight: bold;
   padding-bottom: 10px;
+}
+
+// 表格
+.el-table__row:not(.el-table .active) {
+  --el-table-row-hover-bg-color: #f5f7fa;
+}
+.el-table .active {
+  --el-table-tr-bg-color: #c1f1db;
+}
+.cell {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 // 美化滚动条

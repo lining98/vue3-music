@@ -33,9 +33,9 @@
             <div class="bottom">
               <span class="time">{{ item.timeStr }}</span>
               <div class="zan">
-                <span>{{item.likedCount}}</span>
-                <span>icon</span>
-                <span>icon</span>
+                <span><IconPark :icon="ThumbsUp" />{{ item.likedCount }}</span>
+                <span><IconPark :icon="Share" /></span>
+                <span><IconPark :icon="Comment" /></span>
               </div>
             </div>
           </div>
@@ -64,7 +64,7 @@
             <div class="bottom">
               <span class="time">{{ item.timeStr }}</span>
               <div class="zan">
-                <span>{{item.likedCount}}</span>
+                <span>{{ item.likedCount }}</span>
                 <span>icon</span>
                 <span>icon</span>
               </div>
@@ -79,12 +79,12 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue";
-import { getCommentHot, getCommentNew,comment } from "@/api/comment";
+import { getCommentHot, getCommentNew, comment } from "@/api/comment";
+import IconPark from "@/components/common/IconPark.vue";
+import { ThumbsUp, Share, Comment } from "@icon-park/vue-next";
 
 const coments = ref("");
-
 const { id, type } = defineProps(["id", "type"]);
-
 const params = reactive({
   id: id,
   type: type,
@@ -101,12 +101,11 @@ const getComments = async () => {
   hotComents.value = hotComments;
 };
 
-const sendComment = ()=>{
-    console.log(coments.value);
+const sendComment = () => {
+  console.log(coments.value);
+};
 
-}
-
-onMounted(getComments)
+onMounted(getComments);
 </script>
 
 <style lang="scss" scoped>
@@ -150,6 +149,7 @@ onMounted(getComments)
           .reply {
             border-radius: 5px;
             background-color: #ddd;
+            box-sizing: border-box;
             padding: 10px 20px;
             margin: 10px 0;
           }
@@ -157,7 +157,7 @@ onMounted(getComments)
             display: flex;
             justify-content: space-between;
             .zan span {
-              margin: 0 5px;
+              margin: 0 3px;
             }
           }
         }

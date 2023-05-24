@@ -39,7 +39,7 @@
         :label="`专辑 ${artistDetail?.albumSize || ''}`"
         name="album"
       >
-        <CAlbum :playlist='albumList' />
+        <CAlbum :albumlist='albumList' />
       </el-tab-pane>
       <el-tab-pane :label="`MV ${artistDetail?.mvSize || ''}`" name="mvist">
         <CVideo :mvlist="mvlist" />

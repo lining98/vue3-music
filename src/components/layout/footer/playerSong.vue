@@ -11,13 +11,9 @@
       <p class="title ellipsis">{{ song.name || "云音乐" }}</p>
       <span class="author">
         <span v-for="(item, index) in song.ar">
-          <span
-            class="clickable"
-            @click="
-              router.push({ name: 'artistDetail', query: { id: item.id } })
-            "
-            >{{ item.name }}</span
-          >
+          <span class="clickable" @click="toSingerDetails(item.id)">{{
+            item.name
+          }}</span>
           <span v-if="index != song.ar.length - 1">/</span>
         </span>
       </span>
@@ -27,15 +23,27 @@
 
 <script setup lang="ts">
 import IconPark from "@/components/common/IconPark.vue";
-import { DoubleUp,DoubleDown } from "@icon-park/vue-next";
+import { DoubleUp, DoubleDown } from "@icon-park/vue-next";
 import defaultImg from "@/assets/img/OpticalDisk.png";
 import { usePlayerStore } from "@/store/player";
 import { storeToRefs } from "pinia";
 import { toRefs } from "vue";
 import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
 
 const router = useRouter();
-const { song,  showPopup } = storeToRefs(usePlayerStore());
+const { song, showPopup } = storeToRefs(usePlayerStore());
+
+function toSingerDetails(id: number) {
+  if (id) {
+    router.push({
+      name: "artistDetail",
+      query: { id: id },
+    });
+  } else {
+    ElMessage.error("无相关艺人");
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -73,7 +81,7 @@ const { song,  showPopup } = storeToRefs(usePlayerStore());
       opacity: 1;
     }
   }
-  .title{
+  .title {
     width: 280px;
   }
 

@@ -68,6 +68,7 @@ import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
 import { onMounted } from "vue";
+import { ElMessage } from "element-plus";
 
 const props = defineProps(["musicArr", "showArName"]);
 
@@ -88,10 +89,14 @@ function tableRowClassName({ row, rowIndex }: { row: any; rowIndex: number }) {
 }
 
 function toSingerDetails(id: number) {
-  router.push({
-    name: "artistDetail",
-    query: { id: id },
-  });
+  if (id) {
+    router.push({
+      name: "artistDetail",
+      query: { id: id },
+    });
+  } else {
+    ElMessage.error("无相关艺人");
+  }
 }
 function toAlbumDetails(id: number) {
   router.push({
@@ -99,7 +104,6 @@ function toAlbumDetails(id: number) {
     query: { id: id },
   });
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -117,9 +121,6 @@ function toAlbumDetails(id: number) {
   //   cursor: pointer;
   //   color: #f87171;
   // }
-  :deep(.el-table .active) {
-    --el-table-tr-bg-color: #d8fceb;
-  }
   :deep(.cell) {
     overflow: hidden;
     white-space: nowrap;

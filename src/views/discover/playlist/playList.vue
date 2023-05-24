@@ -39,7 +39,8 @@ const handleChangeCurrent = (val: any) => {
   hotPlaylist(params);
 };
 
-watch(cat, () => {
+watch(cat, (val) => {
+  params.cat = val;
   params.offset = 1;
   params.limit = 25;
   changeCat.value = false;

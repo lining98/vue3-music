@@ -102,12 +102,59 @@ const routes = [
         path: "myCollect",
         name: "myCollect",
         component: () => import("@/views/myCollect/index.vue"),
+        children: [
+          {
+            path: "/myCollect",
+            redirect: "/myCollect/collectibleSinger",
+          },
+          {
+            path: "collectibleSinger",
+            name: "collectibleSinger",
+            component: () => import("@/views/myCollect/collectibleSinger.vue"),
+          },
+          {
+            path: "collectibleAlbum",
+            name: "collectibleAlbum",
+            component: () => import("@/views/myCollect/collectibleAlbum.vue"),
+          },
+          {
+            path: "collectibleVideo",
+            name: "collectibleVideo",
+            component: () => import("@/views/myCollect/collectibleVideo.vue"),
+          },
+        ],
       },
       // 最近播放
       {
         path: "recent",
         name: "recent",
         component: () => import("@/views/recent/index.vue"),
+        children: [
+          {
+            path: "/recent",
+            redirect: "/recent/recentSongs",
+          },
+          {
+            path: "recentSongs",
+            name: "recentSongs",
+            component: () => import("@/views/recent/recentSongs.vue"),
+          },
+          {
+            path: "recentAlbums",
+            name: "recentAlbums",
+            component: () => import("@/views/recent/recentAlbums.vue"),
+          },
+          {
+            path: "recentPlaylists",
+            name: "recentPlaylists",
+            component: () => import("@/views/recent/recentPlaylists.vue"),
+          },
+          {
+            path: "recentVideos",
+            name: "recentVideos",
+            component: () => import("@/views/recent/recentVideos.vue"),
+          },
+        ],
       },
       // 搜索路由
       {
