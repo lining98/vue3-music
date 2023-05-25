@@ -32,9 +32,6 @@
 
         <MusicList :musicArr="songList" :showArName="false" />
       </el-tab-pane>
-      <!-- <el-tab-pane :label=:"全部歌曲`${artistDetail.musicSize}`" name="hotSongs">
-      <MusicListAll :musicArr="songlistall" />
-      </el-tab-pane> -->
       <el-tab-pane
         :label="`专辑 ${artistDetail?.albumSize || ''}`"
         name="album"

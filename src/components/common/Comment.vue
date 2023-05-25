@@ -4,7 +4,7 @@
     <!-- 评论区 -->
     <div class="submitComment">
       <el-input
-        v-model="coments"
+        v-model="comments"
         type="textarea"
         show-word-limit
         maxlength="140"
@@ -12,100 +12,96 @@
       ></el-input>
       <el-button type="primary" @click="sendComment">评论</el-button>
     </div>
-    <!-- 热门评论 -->
-    <h2>热门评论</h2>
-    <ul class="list">
-      <li v-for="item in hotComents" :key="item.commentId">
-        <div class="item-content">
-          <el-image lazy class="img" :src="item.user.avatarUrl" alt="" />
-          <div class="item">
-            <p>
-              <span class="name">{{ item.user.nickname }} ：</span>
-              <span>{{ item.content }}</span>
-            </p>
-            <!-- 回复 -->
-            <div class="reply" v-if="item.beReplied.length">
-              <div v-for="ite in item.beReplied" :key="ite.beRepliedCommentId">
-                <span class="name">@{{ ite.user.nickname }} ：</span>
-                <p>{{ ite.content }}</p>
+    <div v-loading="loading">
+      <!-- 热门评论 -->
+      <h2 v-if="hotComents.length">热门评论</h2>
+      <ul class="list">
+        <li v-for="item in hotComents" :key="item.commentId">
+          <div class="item-content">
+            <el-image lazy class="img" :src="item.user.avatarUrl" alt="" />
+            <div class="item">
+              <p>
+                <span class="name">{{ item.user.nickname }} ：</span>
+                <span>{{ item.content }}</span>
+              </p>
+              <!-- 回复 -->
+              <div class="reply" v-if="item.beReplied.length">
+                <div
+                  v-for="ite in item.beReplied"
+                  :key="ite.beRepliedCommentId"
+                >
+                  <span class="name">@{{ ite.user.nickname }} ：</span>
+                  <p>{{ ite.content }}</p>
+                </div>
               </div>
-            </div>
-            <div class="bottom">
-              <span class="time">{{ item.timeStr }}</span>
-              <div class="zan">
-                <span><IconPark :icon="ThumbsUp" />{{ item.likedCount }}</span>
-                <span><IconPark :icon="Share" /></span>
-                <span><IconPark :icon="Comment" /></span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <el-divider />
-      </li>
-    </ul>
-    <!-- 最新评论 -->
-    <h2>最新评论</h2>
-    <ul class="list">
-      <li v-for="item in newComents" :key="item.commentId">
-        <div class="item-content">
-          <el-image lazy class="img" :src="item.user.avatarUrl" alt="" />
-          <div class="item">
-            <p>
-              <span class="name">{{ item.user.nickname }} ：</span>
-              <span>{{ item.content }}</span>
-            </p>
-            <!-- 回复 -->
-            <div class="reply" v-if="item.beReplied">
-              <div v-for="ite in item.beReplied" :key="ite.beRepliedCommentId">
-                <span class="name">@{{ ite.user.nickname }} ：</span>
-                <p>{{ ite.content }}</p>
-              </div>
-            </div>
-            <div class="bottom">
-              <span class="time">{{ item.timeStr }}</span>
-              <div class="zan">
-                <span>{{ item.likedCount }}</span>
-                <span>icon</span>
-                <span>icon</span>
+              <div class="bottom">
+                <span class="time">{{ item.timeStr }}</span>
+                <div class="zan">
+                  <span
+                    ><IconPark :icon="ThumbsUp" />{{ item.likedCount }}</span
+                  >
+                  <span><IconPark :icon="Comment" /></span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <el-divider />
-      </li>
-    </ul>
+          <el-divider />
+        </li>
+      </ul>
+      <!-- 最新评论 -->
+      <h2 v-if="newComents.length">最新评论</h2>
+      <ul class="list">
+        <li v-for="item in newComents" :key="item.commentId">
+          <div class="item-content">
+            <el-image lazy class="img" :src="item.user.avatarUrl" alt="" />
+            <div class="item">
+              <p>
+                <span class="name">{{ item.user.nickname }} ：</span>
+                <span>{{ item.content }}</span>
+              </p>
+              <!-- 回复 -->
+              <div class="reply" v-if="item.beReplied">
+                <div
+                  v-for="ite in item.beReplied"
+                  :key="ite.beRepliedCommentId"
+                >
+                  <span class="name">@{{ ite.user.nickname }} ：</span>
+                  <p>{{ ite.content }}</p>
+                </div>
+              </div>
+              <div class="bottom">
+                <span class="time">{{ item.timeStr }}</span>
+                <div class="zan">
+                  <span
+                    ><IconPark :icon="ThumbsUp" />{{ item.likedCount }}</span
+                  >
+                  <span><IconPark :icon="Comment" /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <el-divider />
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue";
-import { getCommentHot, getCommentNew, comment } from "@/api/comment";
 import IconPark from "@/components/common/IconPark.vue";
-import { ThumbsUp, Share, Comment } from "@icon-park/vue-next";
+import { ThumbsUp, Comment } from "@icon-park/vue-next";
+import { storeToRefs } from "pinia";
+import { useCommentStore } from "@/store/comment";
 
-const coments = ref("");
-const { id, type } = defineProps(["id", "type"]);
-const params = reactive({
-  id: id,
-  type: type,
-});
+const { hotComents, newComents, loading } = defineProps([
+  "hotComents",
+  "newComents",
+  "loading",
+]);
 
-const hotComents = ref([]);
-const newComents = ref([]);
-
-const getComments = async () => {
-  const { data } = await getCommentNew(params);
-  const { hotComments } = await getCommentHot(params);
-
-  newComents.value = data.comments;
-  hotComents.value = hotComments;
-};
-
-const sendComment = () => {
-  console.log(coments.value);
-};
-
-onMounted(getComments);
+const { comments } = storeToRefs(useCommentStore());
+const { sendComment, getComment } = useCommentStore();
 </script>
 
 <style lang="scss" scoped>

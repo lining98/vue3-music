@@ -64,7 +64,6 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useFormatDuring } from "@/utils/format";
 import { ElMessage } from "element-plus";
-// import MusicList from '@/components/common/MusicList.vue'
 
 const router = useRouter();
 const { song } = storeToRefs(usePlayerStore());

@@ -1,10 +1,5 @@
 <template>
   <div class="songlist">
-    <!-- stripes -->
-    <div class="title">
-      <h3>歌曲列表</h3>
-      <span>{{ musicArr?.length || 0 }}首歌</span>
-    </div>
     <el-table
       :data="musicArr"
       style="width: 100%"

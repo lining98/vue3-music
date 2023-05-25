@@ -44,6 +44,9 @@ defineProps(["videoUrl", "detail"]);
 <style lang="scss" scoped>
 .details {
   margin-bottom: 80px;
+  video{
+    height: 377px;
+  }
   .creator {
     display: flex;
     align-items: center;

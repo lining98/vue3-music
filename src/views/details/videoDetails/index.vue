@@ -7,7 +7,13 @@
         <Details :detail="detail" :videoUrl="videoUrl" />
 
         <!-- 评论 -->
-        <Comment :id="route.query.id" :type="type === 'video' ? 5 : 1" />
+        <!-- <Comment :id="route.query.id" :type="type === 'video' ? 5 : 1" /> -->
+
+        <Comment
+          :hotComents="hotComents"
+          :newComents="newComents"
+          :laoding="loading"
+        />
       </div>
       <div class="recommend">
         <!-- 相关推荐 -->
@@ -29,6 +35,11 @@ import { useRoute } from "vue-router";
 import Details from "./Details.vue";
 import RelatedVideo from "./RelatedVideo.vue";
 import Comment from "@/components/common/Comment.vue";
+import { storeToRefs } from "pinia";
+import { useCommentStore } from "@/store/comment";
+
+const { getComment } = useCommentStore();
+const { hotComents, newComents, loading } = storeToRefs(useCommentStore());
 
 const route = useRoute();
 const type = route.query.type;
@@ -51,7 +62,14 @@ const getData = async () => {
     detail.value = data;
   }
 };
-onMounted(getData);
+onMounted(() => {
+  getData();
+  if (route.query.type === "video") {
+    getComment({ id: route.query.id, type: 5 });
+  } else {
+    getComment({ id: route.query.id, type: 1 });
+  }
+});
 </script>
 
 <style lang="scss" scoped>

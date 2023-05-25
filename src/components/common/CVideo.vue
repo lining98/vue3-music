@@ -3,7 +3,7 @@
     <li v-for="item in mvlist" :key="item.id">
       <div class="artVideos" v-if="item.imgurl16v9">
         <div class="art">
-          <img class="img" :src="item.imgurl16v9" alt="" />
+          <el-image class="img" :src="item.imgurl16v9" alt="" />
         </div>
         <p>{{ item.name }}</p>
         <div class="model">
@@ -16,7 +16,7 @@
         @click="toVideoDetails(item)"
       >
         <div class="search">
-          <img class="img" :src="item.coverUrl" alt="" />
+          <el-image class="img" :src="item.coverUrl" alt="" />
           <div class="playcount">
             <IconPark class="icon" :icon="VideoOne" size="18" />{{
               useNumberFormat(item.playTime)
@@ -67,6 +67,8 @@ const toVideoDetails = (item: any) => {
 .mv {
   display: grid;
   grid-template-columns: repeat(5,1fr);
+  // display: flex;
+  // flex-wrap: wrap;
   li {
     width: 260px;
     border-radius: 10px;
