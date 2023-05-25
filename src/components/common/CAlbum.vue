@@ -8,7 +8,7 @@
     >
       <div class="img">
         <div class="coverall"></div>
-        <el-image class="elimg" :src="item.data?.blurPicUrl" style="width: 180px">
+        <el-image class="elimg" :src="item.blurPicUrl || item.data?.blurPicUrl || item.picUrl" style="width: 180px">
           <template #placeholder>
             <div class="image-slot">加载中<span class="dot">...</span></div>
           </template>
@@ -17,7 +17,7 @@
           <IconPark class="icon" :icon="Play" size="50" />
         </div>
       </div>
-      <p>{{ item.data?.name }}</p>
+      <p>{{ item.data?.name || item.name }}</p>
       <span></span>
     </li>
   </ul>
@@ -34,8 +34,10 @@ const {albumlist} = defineProps(["albumlist"]);
 <style lang="scss" scoped>
 .album {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
   li {
     width: 220px;
     transition: all 0.3s;

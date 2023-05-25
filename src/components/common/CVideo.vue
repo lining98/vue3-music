@@ -3,7 +3,7 @@
     <li v-for="item in mvlist" :key="item.id">
       <div class="artVideos" v-if="item.imgurl16v9">
         <div class="art">
-          <el-image class="img" :src="item.imgurl16v9" lazy alt=""></el-image>
+          <img class="img" :src="item.imgurl16v9" alt="" />
         </div>
         <p>{{ item.name }}</p>
         <div class="model">
@@ -16,7 +16,7 @@
         @click="toVideoDetails(item)"
       >
         <div class="search">
-          <el-image class="img" :src="item.coverUrl" lazy alt=""></el-image>
+          <img class="img" :src="item.coverUrl" alt="" />
           <div class="playcount">
             <IconPark class="icon" :icon="VideoOne" size="18" />{{
               useNumberFormat(item.playTime)
