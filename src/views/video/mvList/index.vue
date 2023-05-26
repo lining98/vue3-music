@@ -35,12 +35,13 @@ const params = reactive({
   type: "全部",
   order: "上升最快",
   page: 1,
-  offset: 1,
-  limit: 30,
+  offset: 0,
+  limit: 24,
 });
 
 const getData = async () => {
   // loading.value = true;
+  params.offset = (params.page - 1) * 24
   try {
     const { data } = await getMVAll(params);
     if (params.page === 1) {
@@ -55,6 +56,7 @@ const getData = async () => {
 };
 
 const optionChange = (key: number | string, option: string) => {
+  params.page = 1;
   //   console.log(key, option);
   if (option == "area") params.area = key as string;
   if (option == "type") params.type = key as string;

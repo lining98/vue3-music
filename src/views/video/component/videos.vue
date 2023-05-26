@@ -3,7 +3,7 @@
     ><template #template>
       <ul class="list">
         <li v-for="item in 24" :key="item">
-          <div class="img">
+          <div>
             <el-skeleton-item
               variant="image"
               style="width: 100%; height: 120px; margin-bottom: 10px"
