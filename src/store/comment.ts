@@ -1,28 +1,35 @@
 import { defineStore } from "pinia";
-import { getCommentHot, getCommentNew, comment } from "@/api/comment";
+import { getCommentHot, getCommentNew } from "@/api/comment";
 
 export const useCommentStore = defineStore("comment", {
   state: () => {
     return {
-      comments: "", // 评论内容
-      loading: false,
+      loadingHot: false,
+      loadingNew: false,
       hotComents: [], // 热门评论
       newComents: [], // 最新评论
+      hotCommentIds:[]
     };
   },
   actions: {
     async getComment(params: any) {
-      this.loading = true;
-      const { data } = await getCommentNew(params);
-      const { hotComments } = await getCommentHot(params);
-      this.newComents = data.comments;
-      this.hotComents = hotComments;
-      this.loading = false;
+      this.commentHot(params);
+      this.commentNew(params);
     },
-
-    // 发送评论
-    sendComment() {
-      console.log(this.comments);
+    async commentHot(params: any) {
+      this.loadingHot = true;
+      const { hotComments } = await getCommentHot(params);
+      this.hotComents = hotComments;
+      this.loadingHot = false;
+      hotComments.forEach(item=>{
+        this.hotCommentIds.push(item.commentId)
+      })
+    },
+    async commentNew(params: any) {
+      this.loadingNew = true;
+      const { data } = await getCommentNew(params);
+      this.newComents = data.comments;
+      this.loadingNew = false;
     },
   },
 });

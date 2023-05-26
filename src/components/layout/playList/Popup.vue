@@ -63,9 +63,12 @@
         <!-- 评论 -->
         <div class="comment">
           <Comment
+            :id="id"
+            :type="0"
             :hotComents="hotComents"
             :newComents="newComents"
-            :loading='loading'
+            :loadingHot="loadingHot"
+            :loadingNew="loadingNew"
           />
         </div>
       </div>
@@ -90,23 +93,27 @@ import { getCommentHot, getCommentNew } from "@/api/comment";
 
 import defaultImg from "@/assets/img/OpticalDisk.png";
 import { useCommentStore } from "@/store/comment";
+import { useRouter } from "vue-router";
 
+const router = useRouter()
+
+const { hotComents, newComents, loadingHot,loadingNew } = storeToRefs(useCommentStore());
 const { id, isPause, song, lyricTime, showPopup, lyricArr } = storeToRefs(
   usePlayerStore()
 );
+id.value = song.value.id
 
-// const {getComment} = useCommentStore()
+const { getLyricDetail } = usePlayerStore();
 
-const loading = ref(false);
-const hotComents = ref([]); // 热门评论
-const newComents = ref([]); // 最新评论
 const getComment = async (params: any) => {
-  loading.value = true;
+  loadingHot.value = true;
+  loadingNew.value = true;
   const { data } = await getCommentNew(params);
   const { hotComments } = await getCommentHot(params);
   newComents.value = data.comments;
+  loadingNew.value = true;
   hotComents.value = hotComments;
-  loading.value = false;
+  loadingHot.value = true;
 };
 
 let lyric = ref();
@@ -119,11 +126,11 @@ const picUrl = computed(() => {
 
 watch(id, (val) => {
   getComment({ id: val, type: 0 });
-  // newComents.value = newComents.value;
-  // hotComents.value = hotComents.value;
 });
 
 onMounted(() => {
+  getComment({ id: song.value?.id, type: 0 });
+  getLyricDetail(song.value?.id);
   // 歌词1s滚动刷新一次
   timer = setInterval(() => {
     let p: any = document.querySelector("p.active");
@@ -226,6 +233,10 @@ onUnmounted(() => {
       rgba(255, 255, 255, 0),
       rgba(255, 255, 255, 0.7) 50%
     );
+  }
+
+  ::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
   }
 }
 

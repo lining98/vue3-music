@@ -41,7 +41,12 @@ export const getCommentNew = (data:any)=> axios.get('/comment/new',data)
 // 说明 : 调用此接口 , 传入 type, 资源 id, 和评论 id cid 和 是否点赞参数 t 即可给对 应评论点赞 ( 需要登录 )
 export const getCommentLike = (data:any)=> axios.get('/comment/like',data)
 
+// 发布/删除 评论
+export const comment = (data:any)=> axios.get('/comment',data)
 
+
+
+/*
 // 歌曲评论
 export const getCommentMusic = (data:any)=> axios.get('/comment/music',data)
 
@@ -55,9 +60,7 @@ export const getCommentPlaylist = (data:any)=> axios.get('/comment/playlist',dat
 export const getCommentVideo = (data:any)=> axios.get('/comment/video',data)
 
 // mv评论
-export const getCommentMV = (data:any)=> axios.get('/comment/mv',data)
+export const getCommentMV = (data:any)=> axios.get('/comment/mv',data) */
 
-// 发布/删除 评论
-export const comment = (data:any)=> axios.get('/comment',data)
 
 

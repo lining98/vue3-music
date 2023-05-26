@@ -7,9 +7,9 @@
         <Details :detail="detail" :videoUrl="videoUrl" />
 
         <!-- 评论 -->
-        <!-- <Comment :id="route.query.id" :type="type === 'video' ? 5 : 1" /> -->
-
         <Comment
+          :id="route.query.id"
+          :type="type === 'video' ? 5 : 1"
           :hotComents="hotComents"
           :newComents="newComents"
           :laoding="loading"

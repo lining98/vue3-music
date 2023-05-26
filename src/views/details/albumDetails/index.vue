@@ -12,6 +12,8 @@
       </el-tab-pane>
       <el-tab-pane label="评论" name="comments">
         <Comment
+          :id="route.query.id"
+          :type="3"
           :hotComents="hotComents"
           :newComents="newComents"
           :laoding="loading"
