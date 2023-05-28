@@ -90,7 +90,7 @@
 import { ref, onMounted, reactive } from "vue";
 import { getEvent } from "@/api/dynamic";
 import { formatDate } from "@/utils/format";
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { Play } from "@icon-park/vue-next";
 import { usePlayerStore } from "@/store/player";
 import { useRouter } from "vue-router";
@@ -123,8 +123,6 @@ const getData = async () => {
   }
 };
 const load = () => {
-  console.log("aaa");
-
   loading.value = true;
   setTimeout(() => {
     getData();

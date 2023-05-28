@@ -1,5 +1,5 @@
 <template>
-  <div class="songlist">
+  <div class="recent-songs" v-loading="loading">
     <el-table
       :data="musicArr"
       style="width: 100%"
@@ -9,7 +9,7 @@
       <el-table-column type="index" width="50">
         <template #default="scope, index">
           <IconPark
-            v-if="scope.row.id === song.id"
+            v-if="scope.row.data.id === song.id"
             :icon="VolumeSmall"
             theme="filled"
           />
@@ -21,33 +21,32 @@
           <IconPark :icon="Like" size="16" class="like" />
         </template>
       </el-table-column> -->
-      <el-table-column prop="name" label="音乐标题" min-width="300" />
-      <el-table-column
-        v-if="showArName"
-        prop="ar[0].name"
-        label="歌手"
-        min-width="160"
-      >
+      <el-table-column prop="data.name" label="音乐标题" min-width="300" />
+      <el-table-column prop="data.ar[0].name" label="歌手" min-width="160">
         <template #default="scope">
-          <span v-for="(author, index) in scope.row.ar" :key="author.id">
+          <span v-for="(author, index) in scope.row.data.ar" :key="author.id">
+            <!--  -->
             <span class="clickable" @click="toSingerDetails(author.id)">
               {{ author.name }}
             </span>
-            <!-- 最后一个歌手后面不加分隔符 -->
-            <span v-if="index != scope.row.ar.length - 1">/</span>
+            <span v-if="index != scope.row.data.ar.length - 1">/</span>
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="al.name" label="专辑" min-width="260">
+
+      <el-table-column prop="data.al.name" label="专辑" min-width="260">
         <template #default="scope">
-          <span class="clickable" @click="toAlbumDetails(scope.row.al.id)">{{
-            scope.row.al.name
-          }}</span>
+          <span
+            class="clickable"
+            @click="toAlbumDetails(scope.row.data.al.id)"
+            >{{ scope.row.data.al.name }}</span
+          >
         </template>
       </el-table-column>
-      <el-table-column prop="dt" label="时间" min-width="80">
+
+      <el-table-column prop="data.dt" label="时间" min-width="80">
         <template #default="scope">
-          <span>{{ useFormatDuring(scope.row.dt) }}</span>
+          <span>{{ useFormatDuring(scope.row.data.dt) }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -55,34 +54,30 @@
 </template>
 
 <script setup lang="ts">
-import IconPark from "@/components/common/IconPark.vue";
-import { Like, VolumeSmall } from "@icon-park/vue-next";
-import { useFormatDuring } from "@/utils/format";
+import { onMounted, ref } from "vue";
 import { usePlayerStore } from "@/store/player";
-import { useRoute, useRouter } from "vue-router";
+import { getRecentSong } from "@/api/recent";
+import { Like, VolumeSmall } from "@icon-park/vue-next";
+import CAlbum from "@/components/common/CAlbum.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { storeToRefs } from "pinia";
-import { useUserStore } from "@/store/user";
-import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { useFormatDuring } from "@/utils/format";
 import { ElMessage } from "element-plus";
 
-const props = defineProps(["musicArr", "showArName"]);
-
-const route = useRoute();
 const router = useRouter();
-const { profile, playlist } = storeToRefs(useUserStore());
 const { song } = storeToRefs(usePlayerStore());
 const { play, pushPlayList } = usePlayerStore();
+
 const playSong = (row: any) => {
-  play(row.id);
-  pushPlayList(true, ...props.musicArr);
+  play(row.data.id);
 };
 
 function tableRowClassName({ row, rowIndex }: { row: any; rowIndex: number }) {
-  if (row.id == song.value.id) {
+  if (row.data.id == song.value.id) {
     return "active";
   }
 }
-
 function toSingerDetails(id: number) {
   if (id) {
     router.push({
@@ -93,29 +88,24 @@ function toSingerDetails(id: number) {
     ElMessage.error("无相关艺人");
   }
 }
-function toAlbumDetails(id: number) {
-  router.push({
-    name: "albumDetail",
-    query: { id: id },
-  });
-}
+
+const loading = ref(false);
+const musicArr = ref([]);
+const getData = async () => {
+  loading.value = true;
+  const { data, total } = await getRecentSong();
+  musicArr.value = data.list;
+  musicArr.value.forEach(
+    (item: any, index: number) => (item.index = index + 1)
+  );
+  loading.value = false;
+};
+
+onMounted(getData);
 </script>
 
 <style lang="scss" scoped>
-.songlist {
-  .title {
-    display: flex;
-    align-items: flex-end;
-    border-bottom: 3px solid #34d399;
-    h3 {
-      font-size: 22px;
-      margin-right: 10px;
-    }
-  }
-  // .like:hover {
-  //   cursor: pointer;
-  //   color: #f87171;
-  // }
+.recent-songs {
   :deep(.cell) {
     overflow: hidden;
     white-space: nowrap;

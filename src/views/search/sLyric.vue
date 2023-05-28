@@ -62,7 +62,7 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CPagination from "@/components/common/CPagination.vue";
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { Play } from "@icon-park/vue-next";
 import { useFormatDuring } from "@/utils/format";
 

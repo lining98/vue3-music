@@ -32,14 +32,11 @@
 
         <MusicList :musicArr="songList" :showArName="false" />
       </el-tab-pane>
-      <!-- <el-tab-pane :label=:"全部歌曲`${artistDetail.musicSize}`" name="hotSongs">
-      <MusicListAll :musicArr="songlistall" />
-      </el-tab-pane> -->
       <el-tab-pane
         :label="`专辑 ${artistDetail?.albumSize || ''}`"
         name="album"
       >
-        <CAlbum :playlist='albumList' />
+        <CAlbum :albumlist='albumList' />
       </el-tab-pane>
       <el-tab-pane :label="`MV ${artistDetail?.mvSize || ''}`" name="mvist">
         <CVideo :mvlist="mvlist" />
@@ -67,7 +64,7 @@ import { ElLoading, ElMessage } from "element-plus";
 import { PlayOne } from "@icon-park/vue-next";
 import IconPark from "@/components/common/IconPark.vue";
 
-import MusicList from "@/components/common/musicList.vue";
+import MusicList from "@/components/common/MusicList.vue";
 import CAlbum from '@/components/common/CAlbum.vue'
 import CVideo from '@/components/common/CVideo.vue'
 // import MusicListAll from "@/components/common/musicListAll.vue";

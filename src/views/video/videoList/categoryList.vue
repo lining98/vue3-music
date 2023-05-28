@@ -43,7 +43,7 @@ import {
   Sphere,
   TeaDrink,
 } from "@icon-park/vue-next";
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { storeToRefs } from "pinia";
 import { useVideoStore } from "@/store/video";
 

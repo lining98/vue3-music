@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     CAlbum: typeof import('./src/components/common/CAlbum.vue')['default']
     CArtist: typeof import('./src/components/common/CArtist.vue')['default']
+    Comment: typeof import('./src/components/common/Comment.vue')['default']
     CPagination: typeof import('./src/components/common/CPagination.vue')['default']
     CPlaylist: typeof import('./src/components/common/CPlaylist.vue')['default']
     CVideo: typeof import('./src/components/common/CVideo.vue')['default']
@@ -26,13 +27,21 @@ declare module '@vue/runtime-core' {
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
+<<<<<<< HEAD
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
+=======
+    ElEmpty: typeof import('element-plus/es')['ElEmpty']
+>>>>>>> 0131918b7f8ca5e98eb39eb57a7a09b2b7cbfe50
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
     ElPagination: typeof import('element-plus/es')['ElPagination']
+<<<<<<< HEAD
+=======
+    ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
+>>>>>>> 0131918b7f8ca5e98eb39eb57a7a09b2b7cbfe50
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSkeleton: typeof import('element-plus/es')['ElSkeleton']
@@ -45,13 +54,13 @@ declare module '@vue/runtime-core' {
     ElTag: typeof import('element-plus/es')['ElTag']
     Footer: typeof import('./src/components/layout/footer/Footer.vue')['default']
     Header: typeof import('./src/components/layout/header/Header.vue')['default']
-    IconPark: typeof import('./src/components/common/iconPark.vue')['default']
+    IconPark: typeof import('./src/components/common/IconPark.vue')['default']
     Layout: typeof import('./src/components/layout/Layout.vue')['default']
     List: typeof import('./src/components/layout/menu/List.vue')['default']
     Menu: typeof import('./src/components/layout/menu/Menu.vue')['default']
     MenuList: typeof import('./src/components/layout/menu/menuList.vue')['default']
     MoreText: typeof import('./src/components/common/moreText.vue')['default']
-    MusicList: typeof import('./src/components/common/musicList.vue')['default']
+    MusicList: typeof import('./src/components/common/MusicList.vue')['default']
     MyList: typeof import('./src/components/layout/menu/myList.vue')['default']
     PlayerAction: typeof import('./src/components/layout/footer/playerAction.vue')['default']
     PlayerController: typeof import('./src/components/layout/footer/playerController.vue')['default']

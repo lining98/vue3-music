@@ -4,17 +4,17 @@
     <div
       class="item"
       v-for="item in playlists"
-      :key="item.id"
-      @click="router.push({ name: 'playlist', query: { id: item.id } })"
+      :key="item.data?.id"
+      @click="router.push({ name: 'playlist', query: { id: item.data?.id } })"
     >
       <el-card shadow="hover" :body-style="{ padding: '0.5rem' }">
-        <el-image :src="item.coverImgUrl">
+        <el-image :src="item.picUrl || item.coverImgUrl || item.data?.coverImgUrl">
           <template #placeholder>
             <div class="image-slot">加载中<span class="dot">...</span></div>
           </template>
         </el-image>
         <div class="name">
-          <p class="ellipsis">{{ item.name }}</p>
+          <p class="ellipsis">{{ item.data?.name || item.name }}</p>
         </div>
       </el-card>
     </div>

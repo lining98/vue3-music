@@ -1,11 +1,16 @@
 <template>
   <div class="module-menu" v-if="isLogin">
     <div class="menus-title">我的音乐</div>
-    <div class="menus-item">
-      <router-link :to="{ name: 'myCollect' }">我的收藏</router-link>
-    </div>
-    <div class="menus-item">
-      <router-link :to="{ name: 'recent' }">最近播放</router-link>
+    <div
+      class="menus-item"
+      :class="route.path.indexOf(menu.key) >= 0 ? 'active' : ''"
+      v-for="menu in myMenus"
+      :key="menu.key"
+      @click="router.push({ name: menu.name })"
+    >
+      <a>
+        <span>{{ menu.title }}</span>
+      </a>
     </div>
     <el-collapse class="collapse" v-model="activeNames">
       <el-collapse-item title="创建的歌单" name="myPlayLists">
@@ -35,6 +40,11 @@ const activeNames = ref(["myPlayLists"]);
 const { isLogin, playlist } = storeToRefs(useUserStore());
 
 const userId = JSON.parse(localStorage.getItem("USER"))?.userId || "";
+
+const myMenus = [
+  {title: "我的收藏", name: "collectibleSinger", key: "myCollect"},
+  {title: "最近播放", name: "recentSongs", key: "recent"},
+];
 
 onMounted(async () => {
   playlist.value = await getUserPlaylist(userId);

@@ -115,7 +115,7 @@ export const usePlayerStore = defineStore({
       this.audio.src = data.url;
       this.id = id;
       this.songDetail();
-      this.getLyricDetail();
+      this.getLyricDetail(id);
       this.isPause = true;
       this.songUrl = data;
 
@@ -137,8 +137,8 @@ export const usePlayerStore = defineStore({
       localStorage.setItem("songDetail", JSON.stringify(this.song));
     },
     // 获取歌词
-    async getLyricDetail() {
-      const { lrc } = await getLyric(this.id);
+    async getLyricDetail(id:number) {
+      const { lrc } = await getLyric(id);
       this.lyricArr = formatLyric(lrc.lyric);
     },
 

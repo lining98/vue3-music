@@ -11,7 +11,13 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="评论" name="comments">
-        评论
+        <Comment
+          :id="route.query.id"
+          :type="3"
+          :hotComents="hotComents"
+          :newComents="newComents"
+          :laoding="loading"
+        />
       </el-tab-pane>
       <el-tab-pane label="专辑详情" name="desc">
         <p style="white-space: pre-wrap" v-html="albumDetail?.description"></p>
@@ -24,12 +30,17 @@
 import { onBeforeMount, onMounted, reactive, ref, toRefs, watch } from "vue";
 import { getAlbumDetail } from "@/api/api";
 import { ElMessage } from "element-plus";
-
-import Info from "./Info.vue";
-import MusicList from "@/components/common/musicList.vue";
+import { useCommentStore } from "@/store/comment";
 import { useRoute } from "vue-router";
 import { usePlayerStore } from "@/store/player";
 import { storeToRefs } from "pinia";
+
+import Info from "./Info.vue";
+import MusicList from "@/components/common/MusicList.vue";
+import Comment from "@/components/common/Comment.vue";
+
+const { getComment } = useCommentStore();
+const { hotComents, newComents, loading } = storeToRefs(useCommentStore());
 
 const tab = ref("songs");
 const songList = ref([]);
@@ -37,7 +48,7 @@ const albumDetail = ref({});
 
 const route = useRoute();
 
-const { play, pushPlayList,randomPlay } = usePlayerStore();
+const { play, pushPlayList, randomPlay } = usePlayerStore();
 const { loopType } = storeToRefs(usePlayerStore());
 const playAll = () => {
   pushPlayList(true, ...songList.value);
@@ -65,12 +76,15 @@ const getData = async (id: number) => {
   const { songs, album } = await getAlbumDetail(id);
   albumDetail.value = album;
   songList.value = songs;
-  songList.value.forEach((item: any, index: number) => (item.index = index + 1));
+  songList.value.forEach(
+    (item: any, index: number) => (item.index = index + 1)
+  );
   albumLoading.value = false;
 };
 
 onMounted(async () => {
   getData(Number(route.query.id));
+  getComment({ id: route.query.id, type: 3 });
 });
 </script>
 

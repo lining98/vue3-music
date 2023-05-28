@@ -31,7 +31,7 @@ import { onMounted, reactive, ref } from "vue";
 import { ArrowRight } from "@element-plus/icons-vue";
 import { getPlaylistCatlist } from "@/api/discover";
 import {  MusicOne,  Piano,  SmilingFace,  Sphere,  TeaDrink,} from "@icon-park/vue-next";
-import IconPark from "@/components/common/iconPark.vue";
+import IconPark from "@/components/common/IconPark.vue";
 import { storeToRefs } from "pinia";
 import { useDiscoverStore } from '@/store/discover'
 
