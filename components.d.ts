@@ -28,21 +28,15 @@ declare module '@vue/runtime-core' {
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
-<<<<<<< HEAD
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
-=======
     ElEmpty: typeof import('element-plus/es')['ElEmpty']
->>>>>>> 0131918b7f8ca5e98eb39eb57a7a09b2b7cbfe50
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
     ElPagination: typeof import('element-plus/es')['ElPagination']
-<<<<<<< HEAD
-=======
     ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
->>>>>>> 0131918b7f8ca5e98eb39eb57a7a09b2b7cbfe50
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSkeleton: typeof import('element-plus/es')['ElSkeleton']
