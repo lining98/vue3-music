@@ -45,7 +45,6 @@
                 <span v-if="index != song.ar.length - 1">/</span>
               </span>
             </div>
-            <!-- <ElScrollbar> -->
             <div class="lyric" ref="lyric">
               <p
                 v-for="(item, index) in lyricArr"
@@ -57,7 +56,6 @@
                 {{ item.lrc }}
               </p>
             </div>
-            <!-- </ElScrollbar> -->
           </div>
         </div>
         <!-- 评论 -->
@@ -65,10 +63,10 @@
           <Comment
             :id="id"
             :type="0"
-            :hotComents="hotComents"
-            :newComents="newComents"
-            :loadingHot="loadingHot"
-            :loadingNew="loadingNew"
+            :hotComents="hotSongComents"
+            :newComents="newSongComents"
+            :loadingHot="loadingSongHot"
+            :loadingNew="loadingSongNew"
           />
         </div>
       </div>
@@ -92,29 +90,20 @@ import Comment from "@/components/common/Comment.vue";
 import { getCommentHot, getCommentNew } from "@/api/comment";
 
 import defaultImg from "@/assets/img/OpticalDisk.png";
-import { useCommentStore } from "@/store/comment";
 import { useRouter } from "vue-router";
+import { useCommentStore } from "@/store/comment";
 
-const router = useRouter()
+const router = useRouter();
 
-const { hotComents, newComents, loadingHot,loadingNew } = storeToRefs(useCommentStore());
 const { id, isPause, song, lyricTime, showPopup, lyricArr } = storeToRefs(
   usePlayerStore()
 );
-id.value = song.value.id
+const { hotSongComents,newSongComents,loadingSongHot,loadingSongNew } = storeToRefs(useCommentStore())
+id.value = song.value.id;
 
 const { getLyricDetail } = usePlayerStore();
+const { getSongComment,commentSongHot,commentSongNew } = useCommentStore()
 
-const getComment = async (params: any) => {
-  loadingHot.value = true;
-  loadingNew.value = true;
-  const { data } = await getCommentNew(params);
-  const { hotComments } = await getCommentHot(params);
-  newComents.value = data.comments;
-  loadingNew.value = true;
-  hotComents.value = hotComments;
-  loadingHot.value = true;
-};
 
 let lyric = ref();
 let timer: NodeJS.Timer;
@@ -125,11 +114,11 @@ const picUrl = computed(() => {
 });
 
 watch(id, (val) => {
-  getComment({ id: val, type: 0 });
+  getSongComment({ id: val, type: 0 });
 });
 
 onMounted(() => {
-  getComment({ id: song.value?.id, type: 0 });
+  getSongComment({ id: song.value?.id, type: 0 });
   getLyricDetail(song.value?.id);
   // 歌词1s滚动刷新一次
   timer = setInterval(() => {

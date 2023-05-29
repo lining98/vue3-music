@@ -41,10 +41,10 @@
             <div style="padding-left: 20px">
               <div class="tags">
                 标签：
-                <span v-for="item in playlist.tags" :key="item.id">
-                  <span v-if="item">{{ item }}</span>
-                  <span v-else>暂无标签</span>
+                <span v-if="playlist.tags.length">
+                  <span class="tags-item" v-for="item in playlist.tags" :key="item.id">{{ item }}</span>
                 </span>
+                <span v-else>暂无标签</span>
               </div>
               <div>
                 <span>歌曲：{{ playlist.trackCount }}</span
@@ -122,7 +122,7 @@ defineProps<{
         span {
           margin: 0 3px;
         }
-        span::before {
+        .tags-item::before {
           content: "#";
         }
         span:hover {

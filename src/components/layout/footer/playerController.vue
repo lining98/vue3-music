@@ -22,7 +22,7 @@
     <!-- 音量 -->
     <el-popover placement="top" :width="50" trigger="click">
       <template #reference>
-        <IconPark class="vicon" :icon="VolumeSmall" size="18"  />
+        <IconPark class="vicon" :icon="VolumeSmall" size="18" />
       </template>
       <PlayerVolumeSlider class="volume" />
     </el-popover>
@@ -43,11 +43,14 @@ import {
   ShuffleOne,
   VolumeSmall,
 } from "@icon-park/vue-next";
-import { ref, toRefs } from "vue";
-const showVolume = ref(false)
-const { isPause, loopType, togglePlay, toggleLoop, next, prev } = toRefs(
+import { onMounted, ref, toRefs } from "vue";
+const showVolume = ref(false);
+const { id, isPause, loopType, togglePlay, toggleLoop, next, prev } = toRefs(
   usePlayerStore()
 );
+onMounted(() => {
+  id.value = 0;
+});
 </script>
 
 <style lang="scss" scoped>
@@ -62,9 +65,9 @@ const { isPause, loopType, togglePlay, toggleLoop, next, prev } = toRefs(
     color: #39c6ad;
   }
   // 音量
-  :deep(.el-popover.el-popper){
+  :deep(.el-popover.el-popper) {
     min-width: 0 !important;
-    .player-volume{
+    .player-volume {
       width: 40px;
     }
   }

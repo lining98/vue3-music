@@ -1,17 +1,45 @@
 import { defineStore } from "pinia";
-import { getCommentHot, getCommentNew } from "@/api/comment";
+import { getCommentHot, getCommentNew, comment } from "@/api/comment";
+import { ElMessage } from "element-plus";
 
 export const useCommentStore = defineStore("comment", {
   state: () => {
     return {
       loadingHot: false,
       loadingNew: false,
+      loadingSongHot: false,
+      loadingSongNew: false,
       hotComents: [], // 热门评论
       newComents: [], // 最新评论
-      hotCommentIds:[]
+      hotSongComents: [], // 歌曲热门评论
+      newSongComents: [], // 歌曲最新评论
+      hotCommentIds: [],
+      hotSongCommentIds: [],
     };
   },
   actions: {
+    // 评论歌曲
+    async getSongComment(params: any) {
+      this.commentSongHot(params);
+      this.commentSongNew(params);
+    },
+    async commentSongHot(params: any) {
+      this.loadingSongHot = true;
+      const { hotComments } = await getCommentHot(params);
+      this.hotSongComents = hotComments;
+      this.loadingSongHot = false;
+      hotComments.forEach((item) => {
+        this.hotSongCommentIds.push(item.commentId);
+      });
+    },
+    async commentSongNew(params: any) {
+      this.loadingSongNew = true;
+      const { data } = await getCommentNew(params);
+      this.newSongComents = data.comments;
+      this.loadingSongNew = false;
+    },
+
+    // 评论其他 歌单/专辑/视频/mv
     async getComment(params: any) {
       this.commentHot(params);
       this.commentNew(params);
@@ -21,9 +49,9 @@ export const useCommentStore = defineStore("comment", {
       const { hotComments } = await getCommentHot(params);
       this.hotComents = hotComments;
       this.loadingHot = false;
-      hotComments.forEach(item=>{
-        this.hotCommentIds.push(item.commentId)
-      })
+      hotComments.forEach((item) => {
+        this.hotCommentIds.push(item.commentId);
+      });
     },
     async commentNew(params: any) {
       this.loadingNew = true;
