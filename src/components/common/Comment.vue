@@ -91,16 +91,14 @@ const replyParams = reactive({
 const sendComment = throttle(async () => {
   let res;
   if (content.value.indexOf("回复") == -1) {
-    console.log("评论");
     params.content = content.value;
     res = await comment(params);
   } else {
-    console.log("回复");
     replyParams.content = content.value.split("：")[1];
     res = await comment(replyParams);
   }
   if (res.code === 200) {
-    ElMessage.success("回复评论成功");
+    ElMessage.success("评论成功");
     setTimeout(() => {
       params.type === 0
         ? commentSongNew({ id: id, type: type })

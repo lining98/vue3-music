@@ -118,5 +118,9 @@ export const getArtistSongs = (id: number) =>
 // 获取喜欢音乐列表
 export const getLikelist = (id: number) => axios.get(`/likelist?uid=${id}`);
 
+
+// 获取喜欢音乐列表
+export const likeSong = (id: number,like:boolean) => axios.get(`/like?id=${id}&like=${like}`);
+
 // 获取专辑内容
 export const getAlbumDetail = (id: number) => axios.get(`/album?id=${id}`);

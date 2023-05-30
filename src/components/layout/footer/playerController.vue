@@ -19,38 +19,48 @@
     />
     <!-- 下一首 -->
     <IconPark :icon="GoEnd" @click="next" size="24" />
-    <!-- 音量 -->
-    <el-popover placement="top" :width="50" trigger="click">
-      <template #reference>
-        <IconPark class="vicon" :icon="VolumeSmall" size="18" />
-      </template>
-      <PlayerVolumeSlider class="volume" />
-    </el-popover>
+    <!-- 喜欢 -->
+    <IconPark
+      class="icon-like"
+      :class="likes.indexOf(id) !== -1 ? 'like' : ''"
+      :icon="Like"
+      @click="like"
+      size="20"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import { usePlayerStore } from "@/store/player";
+import { useUserStore } from "@/store/user";
+import { likeSong } from "@/api/api";
+import {  Play,  GoStart,  PauseOne,  GoEnd,  PlayOnce,  LoopOnce,  ShuffleOne,  Like} from "@icon-park/vue-next";
+import { onMounted, ref, toRefs } from "vue";
+
 import IconPark from "@/components/common/IconPark.vue";
 import PlayerVolumeSlider from "./playerVolumeSlider.vue";
-import { usePlayerStore } from "@/store/player";
-import {
-  Play,
-  GoStart,
-  PauseOne,
-  GoEnd,
-  PlayOnce,
-  LoopOnce,
-  ShuffleOne,
-  VolumeSmall,
-} from "@icon-park/vue-next";
-import { onMounted, ref, toRefs } from "vue";
+
 const showVolume = ref(false);
+const {likes} = toRefs(useUserStore())
 const { id, isPause, loopType, togglePlay, toggleLoop, next, prev } = toRefs(
   usePlayerStore()
 );
-onMounted(() => {
-  id.value = 0;
-});
+
+const { getLikeList } = useUserStore();
+
+// likes.value = localStorage.getItem("likes")
+
+const userId = JSON.parse(localStorage.getItem('USER')).userId
+
+const like = async() => {
+  let isLike = likes.value.indexOf(id.value) ==-1
+  await likeSong(id.value,isLike)
+  getLikeList(userId)
+};
+
+onMounted(()=>{
+  getLikeList(userId)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -60,16 +70,12 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   column-gap: 18px;
-  .i-icon:hover {
+  .i-icon:hover:not(.icon-like) {
     cursor: pointer;
     color: #39c6ad;
   }
-  // 音量
-  :deep(.el-popover.el-popper) {
-    min-width: 0 !important;
-    .player-volume {
-      width: 40px;
-    }
+  .like {
+    color: red;
   }
 }
 </style>

@@ -16,11 +16,16 @@
           <span v-else>{{ scope.row.index }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column width="50">
+      <el-table-column width="50">
         <template #default="scope">
-          <IconPark :icon="Like" size="16" class="like" />
+          <IconPark
+            :icon="Like"
+            size="16"
+            :class="scope.row.like ? 'like' : ''"
+            @click="like(scope.row.id)"
+          />
         </template>
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column prop="name" label="音乐标题" min-width="300" />
       <el-table-column
         v-if="showArName"
@@ -62,10 +67,22 @@ import { usePlayerStore } from "@/store/player";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
+import { likeSong } from "@/api/api";
 import { onMounted } from "vue";
 import { ElMessage } from "element-plus";
 
-const props = defineProps(["musicArr", "showArName"]);
+const { id } = storeToRefs(usePlayerStore());
+const { likes } = storeToRefs(useUserStore());
+const { getLikeList } = useUserStore();
+
+const { musicArr, showArName } = defineProps(["musicArr", "showArName"]);
+const musicList = () => {
+  musicArr.forEach((item: any, index: number) => {
+    item.index = index + 1;
+    item.like = likes.value.indexOf(item.id) !== -1;
+  });
+};
+musicList();
 
 const route = useRoute();
 const router = useRouter();
@@ -74,7 +91,7 @@ const { song } = storeToRefs(usePlayerStore());
 const { play, pushPlayList } = usePlayerStore();
 const playSong = (row: any) => {
   play(row.id);
-  pushPlayList(true, ...props.musicArr);
+  pushPlayList(true, ...musicArr);
 };
 
 function tableRowClassName({ row, rowIndex }: { row: any; rowIndex: number }) {
@@ -99,6 +116,18 @@ function toAlbumDetails(id: number) {
     query: { id: id },
   });
 }
+
+const userId = JSON.parse(localStorage.getItem("USER")).userId;
+const like = async (id: number) => {
+  let isLike = likes.value.indexOf(id) == -1;
+  const res = await likeSong(id, isLike);
+  if (res.code === 200) {
+    getLikeList(userId);
+    musicList();
+  } else {
+    ElMessage.error(res.message);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -112,10 +141,9 @@ function toAlbumDetails(id: number) {
       margin-right: 10px;
     }
   }
-  // .like:hover {
-  //   cursor: pointer;
-  //   color: #f87171;
-  // }
+  .like {
+    color: #f87171;
+  }
   :deep(.cell) {
     overflow: hidden;
     white-space: nowrap;

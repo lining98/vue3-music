@@ -63,7 +63,7 @@ import {
   loginStatus,
 } from "@/api/login";
 
-import { getLikelist } from "@/api/api";
+const { getLikeList } = useUserStore();
 const router = useRouter();
 
 const { login } = useUserStore();
@@ -126,9 +126,7 @@ const handleLogin = async () => {
       await getLoginStatus(statusRes.cookie);
       localStorage.setItem("cookie", statusRes.cookie);
       getPlaylist(userId.value);
-
-      const { ids } = await getLikelist(userId.value);
-      localStorage.setItem("likes", ids);
+      getLikeList(userId.value);
       ElMessage.success("授权登录成功");
       clearInterval(timer);
       showLogin.value = false;

@@ -118,7 +118,7 @@ watch(id, (val) => {
 });
 
 onMounted(() => {
-  if (localStorage.getItem("cookie" && song.value.id)) {
+  if (localStorage.getItem("cookie")) {
     getSongComment({ id: song.value?.id, type: 0 });
     getLyricDetail(song.value?.id);
   }
