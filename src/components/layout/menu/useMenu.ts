@@ -30,38 +30,7 @@ export function useMenu() {
         },
         {
           title: "视频",
-          name: "videoList",
-          key:'video',
-          icon: VideoOne,
-        },
-        {
-          title: "每日推荐",
-          name: "recommendation",
-          key:'recommendation',
-          icon: ThumbsUp,
-        },
-      ],
-    },
-  ];
-  const myMenus: IMenus[] = [
-    {
-      title: "我的音乐",
-      menus: [
-        {
-          title: "发现音乐",
-          name: "recommend",
-          key:'discover',
-          icon: Camera,
-        },
-        {
-          title: "动态",
-          name: "dynamic",
-          key:'dynamic',
-          icon: Music,
-        },
-        {
-          title: "视频",
-          name: "videoList",
+          name: "video",
           key:'video',
           icon: VideoOne,
         },
@@ -76,6 +45,5 @@ export function useMenu() {
   ];
   return {
     menus,
-    myMenus
   };
 }

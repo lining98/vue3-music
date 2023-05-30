@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getCommentHot, getCommentNew, comment } from "@/api/comment";
+import { getAllComment,getCommentHot, getCommentNew, comment } from "@/api/comment";
 import { ElMessage } from "element-plus";
 
 export const useCommentStore = defineStore("comment", {
@@ -18,7 +18,7 @@ export const useCommentStore = defineStore("comment", {
     };
   },
   actions: {
-    // 评论歌曲
+    // 获取评论歌曲
     async getSongComment(params: any) {
       this.commentSongHot(params);
       this.commentSongNew(params);
@@ -39,7 +39,7 @@ export const useCommentStore = defineStore("comment", {
       this.loadingSongNew = false;
     },
 
-    // 评论其他 歌单/专辑/视频/mv
+    // 获取评论其他 歌单/专辑/视频/mv
     async getComment(params: any) {
       this.commentHot(params);
       this.commentNew(params);

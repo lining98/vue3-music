@@ -46,7 +46,7 @@
                 @click="commentLike(item, isSong)"
                 ><IconPark :icon="ThumbsUp" />{{ item.likedCount }}</span
               >
-              <span><IconPark :icon="Comment" /></span>
+              <span @click="reply(item)"><IconPark :icon="Comment" /></span>
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import IconPark from "@/components/common/IconPark.vue";
 import { ThumbsUp, Comment } from "@icon-park/vue-next";
 import { storeToRefs } from "pinia";
@@ -95,12 +95,13 @@ const params = reactive({
   type: formatType(route.name),
 });
 
-const { title, comments, isHot, isSong } = defineProps([
-  "title",
-  "comments",
-  "isHot",
-  "isSong",
-]);
+defineProps<{
+  title: string;
+  comments: [];
+  isHot: boolean;
+  isSong: boolean;
+  reply?: () => void;
+}>();
 
 // 删除评论
 const commentDel = throttle(async (item: any, isSong) => {
@@ -134,6 +135,7 @@ const commentDel = throttle(async (item: any, isSong) => {
 
 // 给评论点赞
 const commentLike = async (item: any, isSong) => {
+  if (!localStorage.getItem("cookie")) return ElMessage.warning("请先登录！");
   if (isSong) {
     // 是否为歌曲
     params.type = 0;
@@ -154,6 +156,7 @@ const commentLike = async (item: any, isSong) => {
       : getComment({ id: params.id, type: params.type });
   }, 500);
 };
+
 </script>
 
 <style lang="scss" scoped>

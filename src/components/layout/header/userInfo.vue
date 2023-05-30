@@ -14,7 +14,7 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item @click="quitDialogIsVisible = true"> 退出 </el-dropdown-item>
+          <el-dropdown-item @click="quit"> 退出 </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -23,7 +23,7 @@
     >
   </div>
 
-<!-- 登录窗口 二维码 -->
+  <!-- 登录窗口 二维码 -->
   <el-dialog
     v-model="showLogin"
     title="登录"
@@ -44,17 +44,6 @@
       </div>
     </div>
   </el-dialog>
-
-  <!-- 退出登录窗口 -->
-    <el-dialog v-model="quitDialogIsVisible" title="退出登录" width="30%" :center="true" >
-      <span class="quitHint">是否确认退出登录？</span>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button type="primary" @click="logout">确定</el-button>
-          <el-button @click="quitDialogIsVisible = false">取消</el-button>
-        </span>
-      </template>
-    </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -64,7 +53,7 @@ import type { TabsPaneContext } from "element-plus";
 import { useUserStore } from "@/store/user";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import {
   useLoginEmail,
   getLogout,
@@ -84,7 +73,6 @@ const iSpassword = ref(true);
 
 const userId = ref();
 const qrimg = ref("");
-const quitDialogIsVisible = ref(false)
 let timer: null;
 
 const checkStatus = async (key) => {
@@ -153,7 +141,24 @@ const handleClose = (done: () => void) => {
   showLogin.value = false;
 };
 
-const logout = async() => {
+const quit = () => {
+  ElMessageBox.confirm("确定要退出登录吗?", "退出登录", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  })
+    .then(() => {
+      logout();
+    })
+    .catch(() => {
+      ElMessage({
+        type: "info",
+        message: "取消退出登录",
+      });
+    });
+};
+
+const logout = async () => {
   const res = await getLogout();
   if (res.code === 200) {
     ElMessage.success("已退出登录");
@@ -192,8 +197,9 @@ onMounted(() => {
   }
 }
 .loginImg {
-  height: 250px;
+  min-height: 250px;
   text-align: center;
+  padding-bottom: 20px;
   img {
     width: 250px;
     cursor: pointer;

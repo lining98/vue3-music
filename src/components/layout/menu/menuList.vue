@@ -26,12 +26,16 @@ const router = useRouter();
 
 const { menus } = useMenu();
 
-const toMenuRouter = (name:string)=>{
-  if((name === 'dynamic' || name === 'recommendation') && !localStorage.getItem('cookie')){
-    ElMessage.warning('该页面需要登录才能访问')
-  }else{
-    router.push({ name: name })
+const toMenuRouter = (name: string) => {
+  if (
+    (name === "dynamic" || name === "recommendation") &&
+    !localStorage.getItem("cookie")
+  ) {
+    ElMessage.warning("该页面需要登录才能访问");
+  } else if (name === "video") {
+    router.push({ name: localStorage.getItem('cookie')? 'videoList':'mvList'});
+  } else {
+    router.push({ name: name });
   }
-
-}
+};
 </script>

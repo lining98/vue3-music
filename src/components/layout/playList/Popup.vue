@@ -98,12 +98,12 @@ const router = useRouter();
 const { id, isPause, song, lyricTime, showPopup, lyricArr } = storeToRefs(
   usePlayerStore()
 );
-const { hotSongComents,newSongComents,loadingSongHot,loadingSongNew } = storeToRefs(useCommentStore())
+const { hotSongComents, newSongComents, loadingSongHot, loadingSongNew } =
+  storeToRefs(useCommentStore());
 id.value = song.value.id;
 
 const { getLyricDetail } = usePlayerStore();
-const { getSongComment,commentSongHot,commentSongNew } = useCommentStore()
-
+const { getSongComment, commentSongHot, commentSongNew } = useCommentStore();
 
 let lyric = ref();
 let timer: NodeJS.Timer;
@@ -118,8 +118,10 @@ watch(id, (val) => {
 });
 
 onMounted(() => {
-  getSongComment({ id: song.value?.id, type: 0 });
-  getLyricDetail(song.value?.id);
+  if (localStorage.getItem("cookie" && song.value.id)) {
+    getSongComment({ id: song.value?.id, type: 0 });
+    getLyricDetail(song.value?.id);
+  }
   // 歌词1s滚动刷新一次
   timer = setInterval(() => {
     let p: any = document.querySelector("p.active");

@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     CArtist: typeof import('./src/components/common/CArtist.vue')['default']
     Comment: typeof import('./src/components/common/Comment.vue')['default']
     CommentList: typeof import('./src/components/common/CommentList.vue')['default']
+    copy: typeof import('./src/components/common/Comment copy.vue')['default']
     CPagination: typeof import('./src/components/common/CPagination.vue')['default']
     CPlaylist: typeof import('./src/components/common/CPlaylist.vue')['default']
     CVideo: typeof import('./src/components/common/CVideo.vue')['default']

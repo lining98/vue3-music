@@ -2,9 +2,10 @@
   <!-- 封装评论组件 -->
   <div class="comment">
     <!-- 评论区 -->
-    <div class="submitComment">
+    <div class="submitComment" v-if="isLogin">
       <el-input
-        v-model="params.content"
+        ref="commentTextarea"
+        v-model="content"
         type="textarea"
         show-word-limit
         maxlength="140"
@@ -14,12 +15,34 @@
     </div>
     <div>
       <div v-if="type === 0">
-        <CommentList title="热门评论" :comments="hotComents" :isHot="true" :isSong ='true' />
-        <CommentList title="最新评论" :comments="newComents" :isHot="false" :isSong ='true' />
+        <CommentList
+          title="热门评论"
+          :comments="hotComents"
+          :isHot="true"
+          :isSong="true"
+        />
+        <CommentList
+          title="最新评论"
+          :comments="newComents"
+          :isHot="false"
+          :isSong="true"
+        />
       </div>
       <div v-else>
-        <CommentList title="热门评论" :comments="hotComents" :isHot="true" :isSong ='false' />
-        <CommentList title="最新评论" :comments="newComents" :isHot="false"  :isSong ='false'/>
+        <CommentList
+          title="热门评论"
+          :comments="hotComents"
+          :isHot="true"
+          :isSong="false"
+          :reply="(item) => toReply(item)"
+        />
+        <CommentList
+          title="最新评论"
+          :comments="newComents"
+          :isHot="false"
+          :isSong="false"
+          :reply="(item) => toReply(item)"
+        />
       </div>
     </div>
   </div>
@@ -39,6 +62,8 @@ const { loadingHot, loadingNew, hotCommentIds } = storeToRefs(
   useCommentStore()
 );
 
+const isLogin: boolean = Boolean(localStorage.getItem("cookie"));
+
 const { getComment, commentNew, commentSongNew } = useCommentStore();
 const { id, type, hotComents, newComents } = defineProps([
   "id",
@@ -46,29 +71,73 @@ const { id, type, hotComents, newComents } = defineProps([
   "hotComents",
   "newComents",
 ]);
+const content = ref("");
+const commentTextarea = ref("");
 const params = reactive({
   t: 1,
   id: id,
   type: type,
-  content: "",
+  content: content.value,
+});
+const replyParams = reactive({
+  t: 2,
+  type: type,
+  id:id,
+  // threadId: "",
+  commentId: 0,
+  content: content.value,
 });
 // 发送评论
 const sendComment = throttle(async () => {
-  const res = await comment(params);
+  let res;
+  if (content.value.indexOf("回复") == -1) {
+    console.log("评论");
+    params.content = content.value;
+    res = await comment(params);
+  } else {
+    console.log("回复");
+    replyParams.content = content.value.split("：")[1];
+    res = await comment(replyParams);
+  }
   if (res.code === 200) {
-    ElMessage.success("评论成功");
+    ElMessage.success("回复评论成功");
     setTimeout(() => {
       params.type === 0
         ? commentSongNew({ id: id, type: type })
         : commentNew({ id: id, type: type });
     }, 500);
 
-    params.content = "";
+    content.value = "";
   } else {
     ElMessage.error(res.message);
   }
 }, 800);
 
+// 评论
+const toComment = async () => {
+  params.t = 1;
+  // const res = await comment(params);
+  // if (res.code === 200) {
+  //   ElMessage.success("评论成功");
+  //   setTimeout(() => {
+  //     params.type === 0
+  //       ? commentSongNew({ id: id, type: type })
+  //       : commentNew({ id: id, type: type });
+  //   }, 500);
+
+  //   params.content = "";
+  // } else {
+  //   ElMessage.error(res.message);
+  // }
+};
+
+// 回复
+const toReply = async (item) => {
+  content.value = `回复 - ${item.user.nickname}：`;
+  commentTextarea.value.focus();
+  replyParams.commentId = item.commentId;
+  // replyParams.threadId = item.threadId;
+};
 </script>
 
 <style lang="scss" scoped>
