@@ -137,13 +137,14 @@ onMounted(getData);
   }
   // 全球媒体榜
   .global {
+    margin-top: 30px;
     .global-list {
-      //   flex-wrap: wrap;
+      margin-top: 15px;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       .item {
         width: 200px;
-        margin: 0 10px 20px;
+        margin: 0 10px 30px;
         cursor: pointer;
         .img {
           width: 100%;

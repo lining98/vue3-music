@@ -37,7 +37,8 @@ onMounted(getData);
   grid-template-columns: repeat(5, 1fr);
   // flex-wrap: wrap;
   li {
-    width: 13rem;
+    width: 15rem;
+    height: 16rem;
     margin: 0 0.5rem 1rem;
     border-radius: 10px;
     cursor: pointer;

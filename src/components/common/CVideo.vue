@@ -1,7 +1,7 @@
 <template>
   <ul class="mv">
     <li v-for="item in mvlist" :key="item.id">
-      <div class="artVideos" v-if="item.imgurl16v9">
+      <div class="artVideos" v-if="item.imgurl16v9" @click="toMv(item.id)">
         <div class="art">
           <el-image class="img" :src="item.imgurl16v9" alt="" />
         </div>
@@ -10,12 +10,8 @@
           <IconPark class="icon" :icon="Play" size="50" />
         </div>
       </div>
-      <div
-        class="searchVideos"
-        v-if="item.coverUrl"
-        @click="toVideoDetails(item)"
-      >
-        <div class="search">
+      <div class="searchVideos" v-if="item.coverUrl">
+        <div class="search" @click="toVideoDetails(item)">
           <el-image class="img" :src="item.coverUrl" alt="" />
           <div class="playcount">
             <IconPark class="icon" :icon="VideoOne" size="18" />{{
@@ -53,7 +49,11 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const {mvlist} = defineProps(["mvlist"]);
+const { mvlist } = defineProps(["mvlist"]);
+
+const toMv = (id: number) => {
+   router.push({ name:'videoDetails', query: {id: id, type: 'mv' } })
+};
 
 const toVideoDetails = (item: any) => {
   router.push({
@@ -66,7 +66,7 @@ const toVideoDetails = (item: any) => {
 <style lang="scss" scoped>
 .mv {
   display: grid;
-  grid-template-columns: repeat(5,1fr);
+  grid-template-columns: repeat(5, 1fr);
   // display: flex;
   // flex-wrap: wrap;
   li {

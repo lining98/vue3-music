@@ -35,7 +35,7 @@ const { playlists } = defineProps(["playlists"]);
   grid-template-columns: repeat(5, 1fr);
 
   .item {
-    width: 13rem;
+    width: 16rem;
     margin: 1rem 0.5rem;
     cursor: pointer;
 

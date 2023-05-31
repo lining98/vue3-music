@@ -34,7 +34,7 @@ service.interceptors.response.use(
     return res;
   },
   (err) => {
-    ElMessage.error("network error");
+    ElMessage.error("网络连接超时！");
     return Promise.reject(err);
   }
 );

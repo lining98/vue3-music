@@ -1,4 +1,5 @@
 <template>
+  <!-- 动态页面 -->
   <div class="dynamic" v-infinite-scroll="load">
     <h2 class="description">{{ msg }}</h2>
     <el-skeleton :loading="firstLoading" animated
@@ -40,10 +41,7 @@
                   @click="play(JSON.parse(item.json).song?.id)"
                 >
                   <img
-                    :src="
-                      JSON.parse(item.json).song?.img80x80 ||
-                      JSON.parse(item.json).song?.extProperties?.img80x80
-                    "
+                    :src="JSON.parse(item.json).song?.album.blurPicUrl"
                     alt=""
                   />
                   <div class="play"><IconPark :icon="Play" size="22" /></div>
@@ -80,9 +78,14 @@
       </template>
     </el-skeleton>
     <div class="loadMore">
-    <el-button link type="primary" class="text-center w-full" :loading="loading"
-      >加载更多</el-button
-    ></div>
+      <el-button
+        link
+        type="primary"
+        class="text-center w-full"
+        :loading="loading"
+        >加载更多</el-button
+      >
+    </div>
   </div>
 </template>
 
@@ -221,7 +224,7 @@ onMounted(() => {
     }
   }
 
-  .loadMore{
+  .loadMore {
     text-align: center;
   }
 }

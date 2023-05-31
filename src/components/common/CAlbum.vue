@@ -3,8 +3,8 @@
   <ul class="album">
     <li
       v-for="item in albumlist"
-      :key="item.id"
-      @click="router.push({ name: 'albumDetail', query: { id: item.id } })"
+      :key="item.id || item.data?.id"
+      @click="router.push({ name: 'albumDetail', query: { id: item.id || item.data?.id } })"
     >
       <div class="img">
         <div class="coverall"></div>

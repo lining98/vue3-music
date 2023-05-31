@@ -137,7 +137,7 @@ export const usePlayerStore = defineStore({
       localStorage.setItem("songDetail", JSON.stringify(this.song));
     },
     // 获取歌词
-    async getLyricDetail(id:number) {
+    async getLyricDetail(id: number) {
       const { lrc } = await getLyric(id);
       this.lyricArr = formatLyric(lrc.lyric);
     },
@@ -254,7 +254,7 @@ export const userPlayerInit = () => {
   let timer: NodeJs.Timer;
   const { init, interval, playEnd } = usePlayerStore();
 
-  const { ended } = storeToRefs(usePlayerStore());
+  const { ended, isPause, song } = storeToRefs(usePlayerStore());
 
   //监听播放结束
   watch(ended, (ended) => {
@@ -262,6 +262,10 @@ export const userPlayerInit = () => {
     setTimeout(() => {
       playEnd();
     }, 1500);
+  });
+
+  watch(isPause, (bool) => {
+    document.title = bool ? song.value.name : "云音乐";
   });
 
   //   启动定时器

@@ -70,7 +70,7 @@ const optionChange = (key: number | string, option: string) => {
 
 const loadMore = () => {
   params.page++;
-  params.offset = params.page * (params.page - 1);
+  params.offset =(params.page - 1) * 30;
   getData();
 };
 

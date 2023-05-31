@@ -8,7 +8,7 @@
 
 ## 技术栈
 
-​ 本项目由 vite、vue3、pinia、ts、element-plus 写的高仿网易云音乐，实现了网易云音乐的主要功能。页面的样式布局整体采用的是 flex 弹性布局，使用 scss CSS 预编译器用作 CSS 编码。
+​ 本项目由 vite、vue3、pinia、ts、element-plus 写的一个音乐网站，实现了网易云音乐的主要功能。页面的样式布局整体采用的是 flex 弹性布局，使用 scss CSS 预编译器用作 CSS 编码。
 
 访问地址： [云音乐](http://121.40.174.152/#/discover/recommend)
 

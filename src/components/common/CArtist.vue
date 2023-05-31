@@ -7,7 +7,7 @@
       @click="router.push({ name: 'artistDetail', query: { id: item.id } })"
     >
       <div class="img">
-        <el-image :src="item.img1v1Url"></el-image>
+        <el-image lazy :src="item.img1v1Url"></el-image>
       </div>
       <p>{{ item.name }}</p>
     </li>
