@@ -16,7 +16,7 @@
           <span v-else>{{ scope.row.index }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="50">
+      <el-table-column width="50" v-if="isLogin && showLike">
         <template #default="scope">
           <IconPark
             :icon="Like"
@@ -67,31 +67,26 @@ import { usePlayerStore } from "@/store/player";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/store/user";
-import { likeSong } from "@/api/api";
-import { onMounted } from "vue";
 import { ElMessage } from "element-plus";
 
-const { id } = storeToRefs(usePlayerStore());
-const { likes } = storeToRefs(useUserStore());
-const { getLikeList } = useUserStore();
-
-const { musicArr, showArName } = defineProps(["musicArr", "showArName"]);
-const musicList = () => {
-  musicArr.forEach((item: any, index: number) => {
-    item.index = index + 1;
-    item.like = likes.value.indexOf(item.id) !== -1;
-  });
-};
-musicList();
+const props = defineProps<{
+  musicArr: [];
+  showArName: boolean;
+  showLike: boolean;
+  like?: () => void;
+}>();
 
 const route = useRoute();
 const router = useRouter();
-const { profile, playlist } = storeToRefs(useUserStore());
+const isLogin: boolean = Boolean(localStorage.getItem("cookie"));
+const { profile, playlist,likes } = storeToRefs(useUserStore());
 const { song } = storeToRefs(usePlayerStore());
 const { play, pushPlayList } = usePlayerStore();
 const playSong = (row: any) => {
   play(row.id);
-  pushPlayList(true, ...musicArr);
+  if (props.musicArr) {
+    pushPlayList(true, ...props.musicArr);
+  }
 };
 
 function tableRowClassName({ row, rowIndex }: { row: any; rowIndex: number }) {
@@ -116,18 +111,6 @@ function toAlbumDetails(id: number) {
     query: { id: id },
   });
 }
-
-const userId = JSON.parse(localStorage.getItem("USER")).userId;
-const like = async (id: number) => {
-  let isLike = likes.value.indexOf(id) == -1;
-  const res = await likeSong(id, isLike);
-  if (res.code === 200) {
-    getLikeList(userId);
-    musicList();
-  } else {
-    ElMessage.error(res.message);
-  }
-};
 </script>
 
 <style lang="scss" scoped>
@@ -142,7 +125,7 @@ const like = async (id: number) => {
     }
   }
   .like {
-    color: #f87171;
+    color: red;
   }
   :deep(.cell) {
     overflow: hidden;

@@ -4,8 +4,8 @@
     <div
       class="item"
       v-for="item in playlists"
-      :key="item.data?.id"
-      @click="router.push({ name: 'playlist', query: { id: item.data?.id } })"
+      :key="item.data?.id || item.id"
+      @click="router.push({ name: 'playlist', query: { id: item.data?.id || item.id } })"
     >
       <el-card shadow="hover" :body-style="{ padding: '0.5rem' }">
         <el-image :src="item.picUrl || item.coverImgUrl || item.data?.coverImgUrl">

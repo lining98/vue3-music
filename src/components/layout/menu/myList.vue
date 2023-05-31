@@ -24,9 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs, onMounted, reactive, watch } from "vue";
+import { ref, toRefs, reactive, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { getUserPlaylist } from "@/api/api";
 import { IUserPlaylist } from "@/models/userPlaylist";
 
 import { storeToRefs } from "pinia";
@@ -42,13 +41,9 @@ const { isLogin, playlist } = storeToRefs(useUserStore());
 const userId = JSON.parse(localStorage.getItem("USER"))?.userId || "";
 
 const myMenus = [
-  {title: "我的收藏", name: "collectibleSinger", key: "myCollect"},
-  {title: "最近播放", name: "recentSongs", key: "recent"},
+  { title: "我的收藏", name: "collectibleSinger", key: "myCollect" },
+  { title: "最近播放", name: "recentSongs", key: "recent" },
 ];
-
-onMounted(async () => {
-  playlist.value = await getUserPlaylist(userId);
-});
 </script>
 
 <style lang="scss" scoped>

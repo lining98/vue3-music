@@ -12,7 +12,6 @@
           :type="type === 'video' ? 5 : 1"
           :hotComents="hotComents"
           :newComents="newComents"
-          :laoding="loading"
         />
       </div>
       <div class="recommend">
@@ -39,7 +38,7 @@ import { storeToRefs } from "pinia";
 import { useCommentStore } from "@/store/comment";
 
 const { getComment } = useCommentStore();
-const { hotComents, newComents, loading } = storeToRefs(useCommentStore());
+const { hotComents, newComents } = storeToRefs(useCommentStore());
 
 const route = useRoute();
 const type = route.query.type;

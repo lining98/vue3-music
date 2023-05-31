@@ -2,10 +2,14 @@
   <div class="daily">
     <DailyTop />
     <el-tabs v-model="activeName">
-      <el-tab-pane label="歌曲" name="songs" v-loading='songsLoading'>
-        <MusicList :musicArr="dailySongs" :showArName='true' />
+      <el-tab-pane label="歌曲" name="songs" v-loading="songsLoading">
+        <MusicList
+          :musicArr="dailySongs"
+          :showArName="true"
+          :showLike="false"
+        />
       </el-tab-pane>
-      <el-tab-pane label="歌单" name="resource" v-loading='resourceLoading'>
+      <el-tab-pane label="歌单" name="resource" v-loading="resourceLoading">
         <CPlaylist :playlists="dailyResource" />
       </el-tab-pane>
     </el-tabs>
@@ -20,12 +24,12 @@ import MusicList from "@/components/common/MusicList.vue";
 import CPlaylist from "@/components/common/CPlaylist.vue";
 
 const activeName = ref("songs");
-const songsLoading = ref(false)
-const resourceLoading = ref(false)
+const songsLoading = ref(false);
+const resourceLoading = ref(false);
 const dailySongs = ref([]);
 const dailyResource = ref([]);
 
-const getDate = async () => {
+const getData = async () => {
   songsLoading.value = true;
   const { data } = await recommendSongs();
   dailySongs.value = data.dailySongs;
@@ -36,7 +40,7 @@ const getDate = async () => {
   resourceLoading.value = false;
 };
 
-onMounted(getDate);
+onMounted(getData);
 </script>
 
 <style lang="scss" scoped></style>

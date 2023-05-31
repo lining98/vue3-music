@@ -1,6 +1,6 @@
 <template>
   <div class="artist">
-    <div class="info" v-loading="isLoading">
+    <div class="info">
       <img :src="artistDetail.cover" alt="" />
       <div class="detail">
         <h1>
@@ -23,20 +23,25 @@
         </div>
       </div>
     </div>
-    <el-tabs v-model="selectedTag"  v-loading="isLoading">
+    <el-tabs v-model="selectedTag" v-loading="isLoading">
       <el-tab-pane label="热门歌曲" name="hotSongs">
         <el-button size="default" round @click="playAll">
           <IconPark :icon="PlayOne" class="mr-1" size="16" />
           播放全部
         </el-button>
 
-        <MusicList :musicArr="songList" :showArName="false" />
+        <MusicList
+          :musicArr="songList"
+          :showArName="false"
+          :showLike="true"
+          :like="(id) => likeS(id)"
+        />
       </el-tab-pane>
       <el-tab-pane
         :label="`专辑 ${artistDetail?.albumSize || ''}`"
         name="album"
       >
-        <CAlbum :albumlist='albumList' />
+        <CAlbum :albumlist="albumList" />
       </el-tab-pane>
       <el-tab-pane :label="`MV ${artistDetail?.mvSize || ''}`" name="mvist">
         <CVideo :mvlist="mvlist" />
@@ -63,16 +68,19 @@ import { storeToRefs } from "pinia";
 import { ElLoading, ElMessage } from "element-plus";
 import { PlayOne } from "@icon-park/vue-next";
 import IconPark from "@/components/common/IconPark.vue";
-
 import MusicList from "@/components/common/MusicList.vue";
-import CAlbum from '@/components/common/CAlbum.vue'
-import CVideo from '@/components/common/CVideo.vue'
-// import MusicListAll from "@/components/common/musicListAll.vue";
+import CAlbum from "@/components/common/CAlbum.vue";
+import CVideo from "@/components/common/CVideo.vue";
 import { useRoute } from "vue-router";
+import { throttle } from "@/utils/utils";
 
 import { usePlayerStore } from "@/store/player";
-const { play, pushPlayList, randomPlay } = usePlayerStore();
+import { useUserStore } from "@/store/user";
+
 const { loopType } = storeToRefs(usePlayerStore());
+const { play, pushPlayList, randomPlay } = usePlayerStore();
+const { likes } = storeToRefs(useUserStore());
+const { Like } = useUserStore();
 
 let isLoading = ref(true);
 const artistDetail = ref({});
@@ -94,22 +102,35 @@ const playAll = () => {
   }
 };
 
-async function getData(artId: number) {
-  if (artId == 0) {
-    return ElMessage.error("无相关艺人");
-  }
+const getSongs = async (artId: number) => {
   isLoading.value = true;
-  // 获取歌手详情
-  const details = await getArtistDetail(artId);
-  artistDetail.value = details.data.artist;
 
   // 获取歌手最热50首歌曲
   const hotSongsdetail = await getArtistTopSong(artId);
   songList.value = hotSongsdetail.songs;
-  songList.value.forEach(
-    (item: any, index: number) => (item.index = index + 1)
-  );
+  songList.value.forEach((item: any, index: number) => {
+    item.index = index + 1;
+    item.like = likes.value.indexOf(item.id) !== -1;
+  });
   isLoading.value = false;
+};
+
+const likeS = throttle((songId: number) => {
+  Like(songId);
+  setTimeout(() => {
+    getSongs(id);
+  }, 200);
+  console.log("songList", songList);
+}, 500);
+
+const getData = async (artId: number) => {
+  if (artId == 0) {
+    return ElMessage.error("无相关艺人");
+  }
+  getSongs(artId);
+  // 获取歌手详情
+  const details = await getArtistDetail(artId);
+  artistDetail.value = details.data.artist;
 
   // 获取歌手专辑
   const { hotAlbums } = await getArtistAlbum(artId);
@@ -118,21 +139,21 @@ async function getData(artId: number) {
   // 获取歌手MV
   const mvDetails = await getArtistMv(artId);
   mvlist.value = mvDetails.mvs;
+};
 
-  // 获取全部歌曲
-  // const allSongs = await getArtists(id);
-  // songalllist.value = allSongs.songs;
-
-}
-
-watch(()=>route.query.id,()=>{
-  if(route.name === 'artistDetail'){
-    getData(Number(route.query.id))
+watch(
+  () => route.query.id,
+  () => {
+    if (route.name === "artistDetail") {
+      getData(Number(route.query.id));
+    }
   }
-})
+);
 
 onMounted(() => {
-  getData(id);
+  setTimeout(() => {
+    getData(id);
+  }, 0);
 });
 </script>
 

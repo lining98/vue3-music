@@ -100,7 +100,6 @@ const { id, isPause, song, lyricTime, showPopup, lyricArr } = storeToRefs(
 );
 const { hotSongComents, newSongComents, loadingSongHot, loadingSongNew } =
   storeToRefs(useCommentStore());
-id.value = song.value.id;
 
 const { getLyricDetail } = usePlayerStore();
 const { getSongComment, commentSongHot, commentSongNew } = useCommentStore();
@@ -118,7 +117,7 @@ watch(id, (val) => {
 });
 
 onMounted(() => {
-  if (localStorage.getItem("cookie")) {
+  if (localStorage.getItem("songDetail")) {
     getSongComment({ id: song.value?.id, type: 0 });
     getLyricDetail(song.value?.id);
   }

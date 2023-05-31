@@ -34,33 +34,45 @@
 import { usePlayerStore } from "@/store/player";
 import { useUserStore } from "@/store/user";
 import { likeSong } from "@/api/api";
-import {  Play,  GoStart,  PauseOne,  GoEnd,  PlayOnce,  LoopOnce,  ShuffleOne,  Like} from "@icon-park/vue-next";
+import {
+  Play,
+  GoStart,
+  PauseOne,
+  GoEnd,
+  PlayOnce,
+  LoopOnce,
+  ShuffleOne,
+  Like,
+} from "@icon-park/vue-next";
 import { onMounted, ref, toRefs } from "vue";
 
 import IconPark from "@/components/common/IconPark.vue";
 import PlayerVolumeSlider from "./playerVolumeSlider.vue";
+import { ElMessage } from "element-plus";
 
 const showVolume = ref(false);
-const {likes} = toRefs(useUserStore())
+const { likes } = toRefs(useUserStore());
 const { id, isPause, loopType, togglePlay, toggleLoop, next, prev } = toRefs(
   usePlayerStore()
 );
 
 const { getLikeList } = useUserStore();
 
-// likes.value = localStorage.getItem("likes")
+const userId = JSON.parse(localStorage.getItem("USER"))?.userId || 0;
 
-const userId = JSON.parse(localStorage.getItem('USER')).userId
-
-const like = async() => {
-  let isLike = likes.value.indexOf(id.value) ==-1
-  await likeSong(id.value,isLike)
-  getLikeList(userId)
+const like = async () => {
+  let isLike = likes.value.indexOf(id.value) == -1;
+  let msg = isLike ? "喜欢歌曲" : "取消喜欢";
+  await likeSong(id.value, isLike);
+  getLikeList(userId);
+  ElMessage.success(msg);
 };
 
-onMounted(()=>{
-  getLikeList(userId)
-})
+onMounted(() => {
+  if (userId) {
+    getLikeList(userId);
+  }
+});
 </script>
 
 <style lang="scss" scoped>

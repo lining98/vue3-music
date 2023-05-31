@@ -67,11 +67,10 @@ const { getLikeList } = useUserStore();
 const router = useRouter();
 
 const { login } = useUserStore();
-const { isLogin, profile, showLogin } = storeToRefs(useUserStore());
+const { userId, isLogin, profile, showLogin } = storeToRefs(useUserStore());
 const { getPlaylist } = useUserStore();
 const iSpassword = ref(true);
 
-const userId = ref();
 const qrimg = ref("");
 let timer: null;
 
@@ -172,7 +171,9 @@ const getUser = () => {
 };
 
 onMounted(() => {
-  getUser();
+  if (localStorage.getItem("cookie")) {
+    getUser();
+  }
 });
 </script>
 

@@ -154,7 +154,7 @@ const commentLike = async (item: any, isSong) => {
     params.type === 0
       ? getSongComment({ id: id.value, type: 0 })
       : getComment({ id: params.id, type: params.type });
-  }, 500);
+  }, 300);
 };
 
 </script>
