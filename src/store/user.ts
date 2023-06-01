@@ -24,27 +24,6 @@ export const useUserStore = defineStore("user", {
     },
   },
   actions: {
-    // 邮箱登录
-    // async login(email: string, password: string) {
-    //   const res = await useLoginEmail(email, password);
-    //   if (res.code == 200) {
-    //     ElMessage.success("登录成功!");
-    //     this.token = res.token;
-    //     this.cookie = res.cookie;
-    //     document.cookie = res.cookie;
-    //     this.profile = res.profile;
-
-    //     localStorage.setItem("token", this.token);
-    //     localStorage.setItem("cookie", this.cookie);
-    //     localStorage.setItem("USER", JSON.stringify(this.profile));
-    //     this.getPlaylist(this.profile.userId);
-
-    //     // this.checkLogin()
-    //     this.showLogin = false;
-    //   } else {
-    //     ElMessage.error(res.message);
-    //   }
-    // },
     // 获取我的歌单
     async getPlaylist(userId: number) {
       this.playlist = await getUserPlaylist(userId);
@@ -64,6 +43,7 @@ export const useUserStore = defineStore("user", {
       if (res.code === 200) {
         ElMessage.success(msg);
         this.getLikeList(this.userId);
+        this.getPlaylist(this.userId);
       } else if (res.code === 405) {
         ElMessage.error(res.message);
       } else {

@@ -44,7 +44,7 @@ import {
   ShuffleOne,
   Like,
 } from "@icon-park/vue-next";
-import { onMounted, ref, toRefs } from "vue";
+import { onMounted, ref, toRefs, watch } from "vue";
 
 import IconPark from "@/components/common/IconPark.vue";
 import PlayerVolumeSlider from "./playerVolumeSlider.vue";
@@ -52,9 +52,8 @@ import { ElMessage } from "element-plus";
 
 const showVolume = ref(false);
 const { likes } = toRefs(useUserStore());
-const { id, isPause, loopType, togglePlay, toggleLoop, next, prev } = toRefs(
-  usePlayerStore()
-);
+const { id, title, isPause, loopType, togglePlay, toggleLoop, next, prev } =
+  toRefs(usePlayerStore());
 
 const { getLikeList } = useUserStore();
 
@@ -67,6 +66,13 @@ const like = async () => {
   getLikeList(userId);
   ElMessage.success(msg);
 };
+
+watch(title, (val) => {
+  document.title = val + " | 云音乐";
+});
+watch(isPause, (bool) => {
+  document.title = bool ? title.value + " | 云音乐" : "云音乐";
+});
 
 onMounted(() => {
   if (userId) {

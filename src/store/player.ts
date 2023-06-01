@@ -27,6 +27,7 @@ export const usePlayerStore = defineStore({
     songUrl: {} as ISongUrl,
     // song: {} as ISongDetail, // 音乐详情
     song: JSON.parse(localStorage.getItem("songDetail")) || ({} as ISongDetail),
+    title: "",
     lyricDetail: {},
     lyricArr: [],
     yrc: [],
@@ -92,6 +93,7 @@ export const usePlayerStore = defineStore({
       this.url = "";
       this.id = 0;
       this.song = {} as ISongDetail;
+      this.title = '';
       this.isPlaying = false;
       this.isPause = false;
       this.sliderInput = false;
@@ -132,6 +134,7 @@ export const usePlayerStore = defineStore({
     // 根据id获取音乐详情
     async songDetail() {
       this.song = await getSongDetail(this.id);
+      this.title = this.song.name;
 
       this.pushPlayList(false, this.song);
       localStorage.setItem("songDetail", JSON.stringify(this.song));
@@ -240,8 +243,6 @@ export const usePlayerStore = defineStore({
     // 定时器
     interval() {
       if (this.isPlaying && !this.sliderInput) {
-        // this.currentTime = parseInt(this.audio.currentTime.toString());
-        // this.duration = parseInt(this.audio.duration.toString());
         this.currentTime = this.audio.currentTime;
         this.duration = this.audio.duration;
         this.ended = this.audio.ended;
@@ -254,7 +255,7 @@ export const userPlayerInit = () => {
   let timer: NodeJs.Timer;
   const { init, interval, playEnd } = usePlayerStore();
 
-  const { ended, isPause, song } = storeToRefs(usePlayerStore());
+  const { ended } = storeToRefs(usePlayerStore());
 
   //监听播放结束
   watch(ended, (ended) => {
@@ -262,10 +263,6 @@ export const userPlayerInit = () => {
     setTimeout(() => {
       playEnd();
     }, 1500);
-  });
-
-  watch(isPause, (bool) => {
-    document.title = bool ? song.value.name : "云音乐";
   });
 
   //   启动定时器
