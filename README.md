@@ -17,7 +17,7 @@
 - 安装
 
 ```sh
-npm i
+npm install
 #或者
 yarn
 ```
