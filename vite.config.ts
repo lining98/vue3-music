@@ -11,23 +11,26 @@ const resolve = (dir: string) => path.join(__dirname, dir);
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/music/",
-  resolve: {
-    // 配置别名
-    alias: {
-      "@": resolve("src"),
-      coms: resolve("src/components"),
-      utils: resolve("src/utils"),
-    },
-  },
-  plugins: [
-    vue(),
+	base: "/music/",
+	resolve: {
+		// 配置别名
+		alias: {
+			"@": resolve("src"),
+			coms: resolve("src/components"),
+			utils: resolve("src/utils"),
+		},
+	},
+	plugins: [
+		vue(),
 
-    AutoImport({
-      resolvers: [ElementPlusResolver()],
-    }),
-    Components({
-      resolvers: [ElementPlusResolver()],
-    }),
-  ],
+		AutoImport({
+			resolvers: [ElementPlusResolver()],
+		}),
+		Components({
+			resolvers: [ElementPlusResolver()],
+		}),
+	],
+	server: {
+		port: 9898,
+	},
 });

@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import MenuList from "./menuList.vue";
-import MyList from "./myList.vue";
+import MenuList from './menuList.vue';
+import MyList from './myList.vue';
 </script>
 
 <template>
-  <MenuList />
-  <MyList />
+	<MenuList />
+	<MyList />
 </template>
-
-<style lang="" scoped></style>

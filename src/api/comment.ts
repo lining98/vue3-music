@@ -1,7 +1,6 @@
-import axios from "@/http/request";
+import axios from '@/utils/request';
 
 /* 评论接口 */
-
 
 /*
 必选参数 :
@@ -24,7 +23,7 @@ offset: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)*20, 其中 20 为 
 before: 分页参数,取上一页最后一项的 time 获取下一页数据(获取超过 5000 条评论的时候需要用到)
 */
 // 热门评论
-export const getCommentHot = (data:any)=> axios.get('/comment/hot',data)
+export const getCommentHot = (data: any) => axios.get('/comment/hot', data);
 
 /*
 可选参数 :
@@ -34,17 +33,14 @@ export const getCommentHot = (data:any)=> axios.get('/comment/hot',data)
     cursor: 当sortType为 3 时且页数不是第一页时需传入,值为上一条数据的 time
 */
 // 新版评论接口
-export const getCommentNew = (data:any)=> axios.get('/comment/new',data)
-
+export const getCommentNew = (data: any) => axios.get('/comment/new', data);
 
 // 给评论点赞
 // 说明 : 调用此接口 , 传入 type, 资源 id, 和评论 id cid 和 是否点赞参数 t 即可给对 应评论点赞 ( 需要登录 )
-export const getCommentLike = (data:any)=> axios.get('/comment/like',data)
+export const getCommentLike = (data: any) => axios.get('/comment/like', data);
 
 // 发布/删除 评论
-export const comment = (data:any)=> axios.get('/comment',data)
-
-
+export const comment = (data: any) => axios.get('/comment', data);
 
 /*
 // 歌曲评论
@@ -61,6 +57,3 @@ export const getCommentVideo = (data:any)=> axios.get('/comment/video',data)
 
 // mv评论
 export const getCommentMV = (data:any)=> axios.get('/comment/mv',data) */
-
-
-
