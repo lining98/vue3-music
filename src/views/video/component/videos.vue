@@ -41,17 +41,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+// import { ref } from 'vue';
 import { Picture as IconPicture } from '@element-plus/icons-vue';
-import { useVideoStore } from '@/store/video';
-import { storeToRefs } from 'pinia';
 import { useFormatDuring, useNumberFormat } from '@/utils/format';
 import IconPark from '@/components/common/IconPark.vue';
-import { Play, VideoOne } from '@icon-park/vue-next';
+import { VideoOne } from '@icon-park/vue-next';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const { cat, catId, videos } = storeToRefs(useVideoStore());
 
 const props = defineProps(['videos', 'isMv', 'loading']);
 
@@ -68,7 +65,7 @@ const toVideoDetails = (item: any) => {
 		});
 	}
 
-	// router.push({ name: 'videoDetails', query: { id: isMv?item.id:item.data.vid,type:isMv:'mv':'video' } })
+	F;
 };
 </script>
 
@@ -85,6 +82,7 @@ const toVideoDetails = (item: any) => {
 			position: relative;
 			font-size: 12px;
 			color: #f5f5f5;
+			min-height: 100px;
 			.count {
 				position: absolute;
 				right: 5px;

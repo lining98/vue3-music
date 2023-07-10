@@ -48,10 +48,6 @@ const taps = [
 		name: 'searchLyric',
 	},
 ];
-
-// const handleClick = (tab: TabsPaneContext) => {
-//   router.push(`${tab.paneName}`)
-// }
 </script>
 
 <style lang="scss" scoped>
