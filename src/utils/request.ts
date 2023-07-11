@@ -1,5 +1,6 @@
 import axios, { type AxiosRequestConfig } from 'axios';
 import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
 
 let url = '';
 if (process.env.NODE_ENV === 'development') {
@@ -8,6 +9,8 @@ if (process.env.NODE_ENV === 'development') {
 	// 生产环境
 	url = 'http://121.40.174.152:3000/';
 }
+
+const router = useRouter()
 
 const service = axios.create({
 	baseURL: url,
@@ -37,7 +40,11 @@ service.interceptors.response.use(
 		const status = error.response.status;
 		switch (status) {
 			case 301:
-				message = 'Cookie过期';
+				message = 'Cookie过期，请重新登录';
+				router.push('/')
+				localStorage.removeItem('cookie');
+				localStorage.removeItem('USER');
+				location.reload();
 				break;
 			case 401:
 				message = 'Token过期';

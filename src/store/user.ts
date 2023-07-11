@@ -33,8 +33,6 @@ export const useUserStore = defineStore('user', {
 				this.likes = ids;
 			} else {
 				ElMessage.error('登录过期，请重新登录！');
-				localStorage.removeItem('cookie');
-				location.reload();
 			}
 		},
 
