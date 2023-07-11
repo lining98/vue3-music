@@ -8,9 +8,9 @@
 		:infinite-scroll-immediate="false"
 	>
 		<h2 class="description">{{ msg }}</h2>
-		<el-skeleton :loading="firstLoading" animated
-			><template #template>
-				<div class="item" v-for="item in 5" :key="item">
+		<el-skeleton :loading="firstLoading" animated>
+			<template #template>
+				<div class="item" v-for="item in 2" :key="item">
 					<div class="item-content">
 						<el-skeleton-item variant="image" style="width: 40px; height: 40px; margin-right: 10px" />
 						<div class="right">

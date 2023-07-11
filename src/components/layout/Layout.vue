@@ -18,7 +18,11 @@ import { ref } from 'vue';
 			<Header />
 			<ElScrollbar class="main">
 				<div class="container">
-					<router-view />
+					<router-view v-slot="{ Component }">
+						<keep-alive :include="['home','videoList']">
+							<component :is="Component" />
+						</keep-alive>
+					</router-view>
 				</div>
 				<el-backtop target=".module .module-main .el-scrollbar__wrap" :bottom="100" />
 			</ElScrollbar>

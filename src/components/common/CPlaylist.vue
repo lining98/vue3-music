@@ -8,11 +8,13 @@
 			@click="router.push({ name: 'playlist', query: { id: item.data?.id || item.id } })"
 		>
 			<el-card shadow="hover" :body-style="{ padding: '0.5rem' }">
-				<el-image :src="item.picUrl || item.coverImgUrl || item.data?.coverImgUrl">
-					<template #placeholder>
-						<div class="image-slot">加载中<span class="dot">...</span></div>
-					</template>
-				</el-image>
+				<div class="img">
+					<img :src="item.picUrl || item.coverImgUrl || item.data?.coverImgUrl" />
+					<div class="playCount" v-if="item.playcount">
+						<IconPark :icon="Headset" />
+						<span>{{ useNumberFormat(item.playcount) }}</span>
+					</div>
+				</div>
 				<div class="name">
 					<p class="ellipsis">{{ item.data?.name || item.name }}</p>
 				</div>
@@ -22,8 +24,10 @@
 </template>
 
 <script setup lang="ts">
+import { Headset } from '@icon-park/vue-next';
 import { defineProps } from 'vue';
 import { useRouter } from 'vue-router';
+import { useNumberFormat } from '@/utils/format';
 const router = useRouter();
 const { playlists } = defineProps(['playlists']);
 </script>
@@ -39,10 +43,19 @@ const { playlists } = defineProps(['playlists']);
 		margin: 1rem 0.5rem;
 		cursor: pointer;
 
-		.el-image {
-			width: 100%;
-			min-height: 10rem;
-			border-radius: 0.5rem;
+		.img {
+			position: relative;
+			.playCount {
+				width: 100%;
+				height: 25px;
+				position: absolute;
+				bottom: 5px;
+				background-color: rgba($color: #000000, $alpha: 0.3);
+				color: #f0f0f0;
+				padding-left: 6px;
+				display: flex;
+				align-items: center;
+			}
 		}
 
 		span {

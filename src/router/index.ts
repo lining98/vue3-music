@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
 const router = createRouter({
 	history: createWebHashHistory(),
@@ -203,10 +203,8 @@ const router = createRouter({
 			],
 		},
 	],
-	// 滚动行为
-	scrollBehavior() {
+	scrollBehavior(to, from, savedPosition) {
 		return {
-			left: 0,
 			top: 0,
 		};
 	},

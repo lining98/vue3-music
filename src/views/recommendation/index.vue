@@ -1,4 +1,5 @@
 <template>
+  <!-- 每日推荐 -->
   <div class="daily">
     <DailyTop />
     <el-tabs v-model="activeName">

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { getVideoGroupById } from '@/api/video';
-import { Loading } from '@icon-park/vue-next';
 import { ElMessage } from 'element-plus';
 
 export const useVideoStore = defineStore('video', {

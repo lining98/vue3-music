@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { getVideoGroupList, getVideoCategoryList } from '@/api/video';
 import { storeToRefs } from 'pinia';
 import { useVideoStore } from '@/store/video';
@@ -48,14 +48,14 @@ const load = () => {
 };
 
 onMounted(() => {
+	videos.value = [];
 	if (isLogin) {
 		getData();
 	}
 });
+onBeforeUnmount(() => {
+	useVideoStore().$reset();
+});
 </script>
 
-<style lang="scss" scoped>
-.videos {
-	min-height: 1080px;
-}
-</style>
+<style lang="scss" scoped></style>
