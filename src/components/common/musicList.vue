@@ -1,6 +1,12 @@
 <template>
 	<div class="songlist">
-		<el-table :data="musicArr" style="width: 100%" :row-class-name="tableRowClassName" @row-dblclick="playSong">
+		<el-table
+			:data="musicArr"
+			style="width: 100%"
+			:row-class-name="tableRowClassName"
+			@row-dblclick="playSong"
+			@row-contextmenu="contextmenu"
+		>
 			<el-table-column type="index" width="50">
 				<template #default="scope, index">
 					<IconPark v-if="scope.row.id === song.id" :icon="VolumeSmall" theme="filled" />
@@ -43,9 +49,8 @@ import IconPark from '@/components/common/IconPark.vue';
 import { Like, VolumeSmall } from '@icon-park/vue-next';
 import { useFormatDuring } from '@/utils/format';
 import { usePlayerStore } from '@/store/player';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useUserStore } from '@/store/user';
 import { ElMessage } from 'element-plus';
 
 const props = defineProps<{
@@ -55,10 +60,8 @@ const props = defineProps<{
 	like?: () => void;
 }>();
 
-const route = useRoute();
 const router = useRouter();
 const isLogin: boolean = Boolean(localStorage.getItem('cookie'));
-const { profile, playlist, likes } = storeToRefs(useUserStore());
 const { song } = storeToRefs(usePlayerStore());
 const { play, pushPlayList } = usePlayerStore();
 const playSong = (row: any) => {
@@ -89,6 +92,15 @@ function toAlbumDetails(id: number) {
 		name: 'albumDetail',
 		query: { id: id },
 	});
+}
+
+// 右键点击事件
+function contextmenu(row, column, event) {
+	// location.assign('http://121.40.174.152/music')
+	// console.log(row);
+	// console.log(column);
+	// console.log(event);
+	// event.preventDefault()
 }
 </script>
 

@@ -30,7 +30,7 @@ import { onMounted, ref, toRefs, watch } from 'vue';
 import IconPark from '@/components/common/IconPark.vue';
 import { ElMessage } from 'element-plus';
 
-const { likes } = toRefs(useUserStore());
+const { likes, isLogin } = toRefs(useUserStore());
 const { id, title, isPause, loopType, togglePlay, toggleLoop, next, prev } = toRefs(usePlayerStore());
 
 const { getLikeList } = useUserStore();
@@ -38,11 +38,15 @@ const { getLikeList } = useUserStore();
 const userId = JSON.parse(localStorage.getItem('USER'))?.userId || 0;
 
 const like = async () => {
-	let isLike = likes.value.indexOf(id.value) == -1;
-	let msg = isLike ? '喜欢歌曲' : '取消喜欢';
-	await likeSong(id.value, isLike);
-	getLikeList(userId);
-	ElMessage.success(msg);
+	if (isLogin.value) {
+		let isLike = likes.value.indexOf(id.value) == -1;
+		let msg = isLike ? '喜欢歌曲' : '取消喜欢';
+		await likeSong(id.value, isLike);
+		getLikeList(userId);
+		ElMessage.success(msg);
+	}else{
+		ElMessage.error('请先登录');
+	}
 };
 
 watch(title, (val) => {
