@@ -6,6 +6,10 @@ import { ISongDetail } from '@/models/song';
 import { getSongUrl, getSongDetail, getLyric } from '@/api/api';
 import { ElMessage } from 'element-plus';
 import { formatLyric } from '@/utils/format';
+import { debounce } from '@/utils/utils';
+
+import { useUserStore } from '@/store/user';
+const { isLogin } = storeToRefs(useUserStore());
 
 const KEYS = {
 	volume: 'PLAYER-VOLUME',
@@ -21,7 +25,7 @@ export const usePlayerStore = defineStore({
 		showPlayList: false,
 		showPopup: false,
 
-		id: 0,
+		id: isLogin ? JSON.parse(localStorage.getItem('songDetail')).id : 0,
 		url: '',
 		songUrl: {} as ISongUrl,
 		// song: {} as ISongDetail, // 音乐详情
@@ -255,12 +259,13 @@ export const userPlayerInit = () => {
 
 	const { ended } = storeToRefs(usePlayerStore());
 
+	// 调用防抖函数，防止调用两次接口
+	const debouncedPlayEnd = debounce(playEnd, 200);
+
 	//监听播放结束
 	watch(ended, (ended) => {
 		if (!ended) return;
-		setTimeout(() => {
-			playEnd();
-		}, 1500);
+		debouncedPlayEnd();
 	});
 
 	//   启动定时器

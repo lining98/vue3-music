@@ -13,23 +13,15 @@
 							class="picUrl"
 							:style="`animation-play-state:${isPause ? 'running' : 'paused'} `"
 							alt=""
-							:src="song.al?.picUrl || defaultImg" />
+							:src="song.al?.picUrl || defaultImg"
+						/>
 					</div>
 					<!-- 歌词部分 -->
 					<div class="lyric-content">
 						<div class="name">
 							<h2>{{ song.name }}</h2>
 							<span v-for="(item, index) in song.ar">
-								<span
-									class="clickable"
-									@click="
-										router.push({
-											name: 'artistDetail',
-											query: { id: item.id },
-										})
-									"
-									>{{ item.name }}</span
-								>
+								<span class="clickable" @click="toArtistDetail(item)">{{ item.name }}</span>
 								<span v-if="index != song.ar.length - 1">/</span>
 							</span>
 						</div>
@@ -39,7 +31,8 @@
 								:key="index"
 								:class="{
 									active: lyricTime >= item.time && lyricTime <= item.next,
-								}">
+								}"
+							>
 								{{ item.lrc }}
 							</p>
 						</div>
@@ -53,7 +46,8 @@
 						:hotComents="hotSongComents"
 						:newComents="newSongComents"
 						:loadingHot="loadingSongHot"
-						:loadingNew="loadingSongNew" />
+						:loadingNew="loadingSongNew"
+					/>
 				</div>
 			</div>
 			<Footer class="footer" />
@@ -105,6 +99,14 @@ watch(showPopup, (val) => {
 		getLyricDetail(id.value);
 	}
 });
+
+const toArtistDetail = (item) => {
+	showPopup.value = false;
+	router.push({
+		name: 'artistDetail',
+		query: { id: item.id },
+	});
+};
 
 onMounted(() => {
 	// 歌词1s滚动刷新一次

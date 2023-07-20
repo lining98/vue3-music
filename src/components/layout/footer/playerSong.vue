@@ -25,7 +25,6 @@ import { DoubleUp, DoubleDown } from '@icon-park/vue-next';
 import defaultImg from '@/assets/img/OpticalDisk.png';
 import { usePlayerStore } from '@/store/player';
 import { storeToRefs } from 'pinia';
-import { toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 
@@ -33,6 +32,7 @@ const router = useRouter();
 const { song, showPopup } = storeToRefs(usePlayerStore());
 
 function toSingerDetails(id: number) {
+	showPopup.value = false;
 	if (id) {
 		router.push({
 			name: 'artistDetail',
