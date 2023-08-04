@@ -4,7 +4,7 @@
 
 首先还是得感谢 [网易云音乐 NodeJS 版 API](https://binaryify.github.io/NeteaseCloudMusicApi/#/) 提供的 API 练手，给予了学习的机会。
 
-为了探索最前沿的前端技术栈, 一切为了好玩, 肝代码不易,觉得喜欢的可以点个 star。
+为了探索最前沿的前端技术栈, 一切为了好玩, 觉得喜欢的可以点个 star。
 
 ## 技术栈
 

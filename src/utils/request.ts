@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'development') {
 	url = 'http://localhost:3000';
 } else {
 	// 生产环境
-	url = 'http://121.40.174.152:3000/';
+	url = 'http://111.229.203.202:3000/';
 }
 
 const service = axios.create({
