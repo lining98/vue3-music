@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, toRefs } from 'vue';
+import { onMounted, ref } from 'vue';
 import { Search } from '@icon-park/vue-next';
 import { storeToRefs } from 'pinia';
 import type { ISearchHotDetail } from '@/models/search';

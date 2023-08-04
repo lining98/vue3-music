@@ -1,7 +1,7 @@
 <template>
 	<div class="login">
 		<el-dropdown style="" v-if="isLogin">
-			<span class="el-dropdown-link" @click="userLogin">
+			<span class="el-dropdown-link">
 				<ElAvatar size="default" round :src="profile?.avatarUrl ?? ''"></ElAvatar>
 
 				<span class="user" style="margin-left: 5px; font-size: 15px">{{ profile.nickname }}</span>
@@ -22,6 +22,7 @@
 			<div v-if="!account.avatarUrl">
 				<div v-loading="loading">
 					<img :src="qrimg" title="点击刷新二维码" @click="changeImg" />
+					<p>请用网易云App扫码登录！</p>
 				</div>
 			</div>
 			<div v-else>
@@ -47,7 +48,8 @@ const { userId, isLogin, profile, showLogin } = storeToRefs(useUserStore());
 const { getPlaylist } = useUserStore();
 
 const qrimg = ref('');
-let timer: null;
+let timer: NodeJS.Timer;
+
 
 const checkStatus = async (key) => {
 	return await qrCheck(key);
@@ -89,6 +91,7 @@ const handleLogin = async () => {
 		account.message = statusRes.message;
 		if (statusRes.code === 800) {
 			ElMessage.error('二维码已过期,请重新获取');
+			qrimg.value = '';
 			clearInterval(timer);
 		}
 		if (statusRes.code === 802) {
@@ -176,6 +179,7 @@ onMounted(() => {
 	padding-bottom: 20px;
 	img {
 		width: 250px;
+		height: 250px;
 		cursor: pointer;
 	}
 }

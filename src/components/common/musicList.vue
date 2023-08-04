@@ -54,7 +54,7 @@ import { storeToRefs } from 'pinia';
 import { ElMessage } from 'element-plus';
 
 const props = defineProps<{
-	musicArr: [];
+	musicArr?: [];
 	showArName: boolean;
 	showLike: boolean;
 	like?: () => void;

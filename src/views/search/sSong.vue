@@ -1,7 +1,7 @@
 <template>
 	<div>共搜到{{ dataList.songCount }}首音乐</div>
 	<div v-loading="loading">
-		<MusicList :musicArr="dataList.songs" :showArName="true" :showLike="false" />
+		<MusicList :musicArr="dataList?.songs || []" :showArName="true" :showLike="false" />
 		<CPagination
 			v-if="dataList.songCount > 30"
 			:count="dataList.songCount"

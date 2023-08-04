@@ -25,7 +25,7 @@ export const usePlayerStore = defineStore({
 		showPlayList: false,
 		showPopup: false,
 
-		id: isLogin ? JSON.parse(localStorage.getItem('songDetail')).id : 0,
+		id: JSON.parse(localStorage.getItem('songDetail'))?.id || 0,
 		url: '',
 		songUrl: {} as ISongUrl,
 		// song: {} as ISongDetail, // 音乐详情

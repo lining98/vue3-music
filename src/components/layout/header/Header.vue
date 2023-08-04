@@ -16,17 +16,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
 import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue';
 import SearchPop from './searchPop.vue';
 import UserInfo from './userInfo.vue';
-import { storeToRefs } from 'pinia';
-import { useSearchStore } from '@/store/search';
 import { useRouter } from 'vue-router';
 const router = useRouter();
-
-const iconSize = ref(30);
-const { showSearchView, searchKeyword } = storeToRefs(useSearchStore());
 </script>
 
 <style lang="scss" scoped>
