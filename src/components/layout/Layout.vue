@@ -19,9 +19,9 @@ import { ref } from 'vue';
 			<ElScrollbar class="main">
 				<div class="container">
 					<router-view v-slot="{ Component }">
-						<!-- <keep-alive :include="['home','videoList']"> -->
+						<keep-alive :include="['dynamic', 'video']">
 							<component :is="Component" />
-						<!-- </keep-alive> -->
+						</keep-alive>
 					</router-view>
 				</div>
 				<el-backtop target=".module .module-main .el-scrollbar__wrap" :bottom="100" />

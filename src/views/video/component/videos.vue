@@ -64,8 +64,6 @@ const toVideoDetails = (item: any) => {
 			query: { id: item.data.vid, type: 'video' },
 		});
 	}
-
-	F;
 };
 </script>
 
